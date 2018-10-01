@@ -1,0 +1,33 @@
+#RewriteBase /
+#RewriteEngine on
+#RewriteRule ^$ index.php?/ [QSA, L]
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^(.*)$ index.php?RUTA_INFORMACION=$1 [L,QSA]
+# 
+#
+#
+# Se establece la ruta como el archivo principal o pagina principal
+# DirectoryIndex www/WEBSimular/Api/index.php
+
+RewriteEngine On
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+# Para metodo GET, POST, PUT
+RewriteRule ^WEBSimular/api/([a-zA-Z]+)$ estudiantesControlador.php
+RewriteRule ^WEBSimular/api/([a-zA-Z]+)/$ estudiantesControlador.php
+
+# Para metodo GET por Id y metodo DELETE
+RewriteRule ^WEBSimular/api/([a-zA-Z]+)/([0-9]+)$ estudiantesControlador.php
+RewriteRule ^WEBSimular/api/([a-zA-Z]+)/([0-9]+)/$ estudiantesControlador.php
+
+# Expresiones regulares
+## Alfanumericos | ([a-zA-Z0-9]+)
+## Numericos     | ([0-9]+)
+## Caracteres    | ([a-zA-Z]+)
+
+RewriteRule ^(.*)$ index.php?RUTA_INFORMACION=$1 [L,QSA]

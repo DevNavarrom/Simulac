@@ -1,0 +1,55 @@
+<div class="col-sm-8 contact-form">
+    <!-- div da direita -->
+    <form class="form" (ngSubmit)="registrar(formest.value)" #formest="ngForm" novalidate>
+        <div class="row">
+            <div class="col-xs-6 col-md-3 form-group">
+                <input class="form-control" id="inputIdEst" name="txtIdEst" [(ngModel)]="estudiante.idest"
+                placeholder="Id Estudiante"
+                    type="text" required autofocus />
+            </div>
+            <div class="col-xs-4 col-md-9 form-group">
+                <input class="form-control" id="inputNombre" name="txtNombre"
+                    placeholder="Nombre Estudiante" type="text" [(ngModel)]="estudiante.nombre"/>
+            </div>
+        </div> 
+        <div class="row">
+            <div class="col-xs-6 col-md-9 form-group">
+                <input class="form-control" id="inputGrupo" name="txtGrupo" placeholder="Grupo"
+                    type="text" [(ngModel)]="estudiante.grupo"/>
+            </div>
+            <div class="col-xs-4 col-md-3 form-group">
+                <select class="form-control" id="selSexo" name="selSexo" [(ngModel)]="estudiante.sexo">
+                    <option value="">Sexo</option>
+                    <option value="F">F</option>
+                    <option value="M">M</option>
+                </select>
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-xs-12 col-md-12 form-group">
+                <button class="btn btn-primary pull-right" type="submit" (click)="registrar()">Guardar</button>
+                <!--<button class="btn btn-primary pull-right" type="submit">Limpar</button>-->
+                <!--<button class="btn btn-primary pull-right" type="submit">Enviar</button>-->
+            </div>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nombres</th>
+                    <th scope="col">Grupo</th>
+                    <th scope="col">Sexo</th>
+                </tr>
+            </thead>
+            <tr *ngFor="let item of estudiantes">
+                <td>{{item.idest}}</td>
+                <td>{{item.nombre}}</td>
+                <td>{{item.grupo}}</td>
+                <td>{{item.sexo}}</td>
+            </tr>
+        </table>
+    </form>
+</div> <!-- fim div da direita -->

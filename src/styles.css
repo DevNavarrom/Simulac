@@ -1,1 +1,199 @@
 /* You can add global styles to this file, and also import other style files */
+/*.form {
+    margin-left: 20px;
+    margin-right: 20px;
+}*/
+.image{
+    height: 20px;
+    width: 20px;
+}
+/*a{
+    color: #FFFFFF;
+}*/
+#contenedor-vistas {
+    margin-top: 40px;
+    align-content: center;
+}
+
+#sidebar > li > a {
+    /*color: #FFFFFF;*/
+    margin-top: 5px;
+    cursor: pointer;
+}
+#sidebar_menu {
+    height: 150px;
+}
+#page-content-wrapper > a {
+    /*color: #6E7579;*/
+    font: 1em Arial;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#sidebar > li > a:hover {
+    /*color: #FFFFFF;*/
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+#sidebar > li {
+    margin-top: 5px;
+}
+
+.row{
+    margin-left:0px;
+    margin-right:0px;
+}
+
+#wrapper {
+    padding-left: 70px;
+    transition: all .4s ease 0s;
+    height: 100%
+}
+
+#sidebar-wrapper {
+    margin-left: -150px;
+    left: 70px;
+    width: 150px;
+    background: #0079B2;
+    position: fixed;
+    height: 100%;
+    z-index: 10000;
+    transition: all .4s ease 0s;
+}
+
+.sidebar-nav {
+    display: block;
+    float: left;
+    width: 150px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#page-content-wrapper {
+    padding-left: 10;
+    margin-left: 0;
+    width: 100%;
+    /*height: auto;*/
+    height: 40px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+#wrapper.active {
+    padding-left: 150px;
+}
+#wrapper.active #sidebar-wrapper {
+    left: 150px;
+}
+
+#page-content-wrapper {
+  width: 100%;
+}
+
+#sidebar_menu li a, .sidebar-nav li a {
+    color: #FFFFFF;
+    display: block;
+    float: left;
+    text-decoration: none;
+    width: 150px;
+    background: #0079B2;
+    /*border-top: 1px solid #0079B2;
+    border-bottom: 1px solid #0079B2;*/
+    -webkit-transition: #FFFFFF .5s;
+    -moz-transition: #FFFFFF .5s;
+    -o-transition: #FFFFFF .5s;
+    -ms-transition: #FFFFFF .5s;/*background*/
+    transition: #FFFFF0 .5s;
+}
+.sidebar_name {
+    padding-top: 25px;
+    color: #fff;
+    opacity: .7;
+}
+
+.sidebar-nav li {
+  line-height: 60px;
+  text-indent: 20px;
+}
+
+.sidebar-nav li a {
+  color: #FFFFFF;
+  display: block;
+  text-decoration: none;
+}
+
+.sidebar-nav li a:hover {
+  color: #fff;
+  background: rgba(1, 107, 171, 0.8);
+  text-decoration: none;
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+  text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+  /*height: 65px;*/
+  line-height: 60px;
+  font-size: 18px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+  color: #FFFFFF;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+  color: #fff;
+  background: none;
+}
+
+.user_icon
+{
+    /*float:right;
+   padding-right: 65px;
+   padding-top:20px;*/
+   width: 48px;
+    height: 48px;
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 25px;
+   /*align-items: center;
+   margin-left: auto;
+    margin-right: auto;
+    display: block;*/
+}
+.sub_icon
+{
+    float:right;
+   padding-right: 65px;
+   padding-top:10px;
+}
+.content-header {
+  height: 65px;
+  line-height: 65px;
+}
+
+.content-header h1 {
+  margin: 0;
+  margin-left: 20px;
+  line-height: 65px;
+  display: inline-block;
+}
+
+@media (max-width:767px) {
+#wrapper {
+    padding-left: 70px;
+    transition: all .4s ease 0s;
+}
+#sidebar-wrapper {
+    left: 70px;
+}
+#wrapper.active {
+    padding-left: 150px;
+}
+#wrapper.active #sidebar-wrapper {
+    left: 150px;
+    width: 150px;
+    transition: all .4s ease 0s;
+}
+}
