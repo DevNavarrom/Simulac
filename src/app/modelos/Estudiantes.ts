@@ -1,13 +1,13 @@
 
 export class Estudiantes{
-    public idest: string; 
+    public id_estudiante: string; 
     public nombre: string; 
-    public grupo: string; 
+    public programa: string; 
     public sexo: string;
-    constructor(ides: string, nombre: string, grupo: string, sexo: string){
-        this.idest = ides;
+    constructor(ides: string, nombre: string, programa: string, sexo: string){
+        this.id_estudiante = ides;
         this.nombre = nombre;
-        this.grupo = grupo;
+        this.programa = programa;
         this.sexo = sexo;
     }
 

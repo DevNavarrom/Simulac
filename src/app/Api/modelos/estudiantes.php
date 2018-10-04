@@ -16,30 +16,25 @@ define ("sexo", "sexo");*/
 class Estudiantes {
 
 	const TABLA = "estudiantes";
-    const ID = "idest";
+    const ID = "id_estudiante";
     const NOMBRE = "nombre";
-    const GRUPO = "grupo";
+    const PROGRAMA = "programa";
 	const SEXO = "sexo";
 	
     public static function insertarEstudiante($infoEstudiante){
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 			
-			$query = "INSERT INTO estudiantes". "( ".self::ID.", ".self::NOMBRE.", ".self::GRUPO.", ".self::SEXO.") VALUES (?, ?, ?, ?);";
+			$query = "INSERT INTO estudiantes". "( ".self::ID.", ".self::NOMBRE.", ".self::PROGRAMA.", ".self::SEXO.") VALUES (?, ?, ?, ?);";
 			
-			//echo json_encode($infoEstudiante->idest, JSON_PRETTY_PRINT);
-			//$query = "INSERT INTO estudiantes(idest, nombre, grupo, sexo) VALUES ('$infoEstudiante->idest', '$infoEstudiante->nombre', '$infoEstudiante->grupo', '$infoEstudiante->sexo')";
                 
 			$sentencia = $conexion->prepare($query);
 			
-            $sentencia->bindParam(1, $infoEstudiante["idest"]);
+            $sentencia->bindParam(1, $infoEstudiante["id_estudiante"]);
 			$sentencia->bindParam(2, $infoEstudiante["nombre"]);
-			$sentencia->bindParam(3, $infoEstudiante["grupo"]);
+			$sentencia->bindParam(3, $infoEstudiante["programa"]);
 			$sentencia->bindParam(4, $infoEstudiante["sexo"]);
-			/*$sentencia->bindParam(1, $infoEstudiante[0]);
-			$sentencia->bindParam(2, $infoEstudiante[1]);
-			$sentencia->bindParam(3, $infoEstudiante[2]);
-            $sentencia->bindParam(4, $infoEstudiante[3]);*/
+		
 		
             if($sentencia->execute()){
 				return
@@ -51,8 +46,7 @@ class Estudiantes {
 				throw new ExceptionApi(CREACION_FALLIDA, "error en la sentencia");
 			}
         }catch(PDOException $e){
-			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO ".$e->getMessage());
-		}
+			throw new ExceptionApi($e->getCode(), "ERROR en conexion PDO ");		}
     }
 
     public static function getEstudiantes(){
@@ -60,9 +54,7 @@ class Estudiantes {
             $conexion = Conexion::getInstancia()->getConexion();
 
 			$sentencia = $conexion->prepare("SELECT * FROM estudiantes");
-			
-			//$sentencia = $conexion->query($query);
-			//$vista->imprimir("SELECT * FROM ".tabla);
+		
 			if($sentencia->execute()){
 				http_response_code(200);
 				return
@@ -81,7 +73,7 @@ class Estudiantes {
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
-			$query = "SELECT * FROM ".self::TABLA." WHERE idest = ?;";
+			$query = "SELECT * FROM ".self::TABLA." WHERE ".self::ID." = ?;";
 
 			$sentencia = $conexion->prepare($query);
 

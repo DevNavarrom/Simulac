@@ -26,7 +26,7 @@ export class EstudiantesComponent implements OnInit {
 
   ngOnInit() {
     this.mostrarTodos();
-    this.estudiante = new Estudiantes("1010", "Juancha Maria","1D","F");
+    this.estudiante = new Estudiantes("1010", "Juan","1D","F");
   }
 
   mostrarTodos():void{
@@ -44,12 +44,18 @@ export class EstudiantesComponent implements OnInit {
 
   registrar(formest:NgForm){
     this._estudiantesService.postEstudiantes(this.estudiante).subscribe(datos => {
-      console.log(datos);
-      if (datos['mensaje']=='null') {
+      console.log("METODO POST:::::::::::::" + datos['mensaje']);
+      if (datos['estado']==1) {
         alert(datos['mensaje']);
-      }else {
-        alert('No guardado');
+        this.mostrarTodos();
+      } else if(datos['estado']==23000)
+      {
+        alert("El estudiante ya se encuentra registrado");
       }
+      else{
+        alert("No guardado");
+      }
+
     });
     //this._estudiantesService.postEstudiantes(this.estudiante).map();
   }

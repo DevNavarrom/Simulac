@@ -25,7 +25,7 @@ export class EstudiantesService {
 
   postEstudiantes(estudiante:Estudiantes){
     let headers = new HttpHeaders({'Content-Type':'application/json'});
-    console.log(JSON.stringify(estudiante)+{headers});
+    //console.log(JSON.stringify(estudiante)+{headers});
     return this.http.post(`${this.url}estudiantes/registro`, JSON.stringify(estudiante))
                     .pipe(
                       map(res => {

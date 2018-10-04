@@ -13,6 +13,10 @@ set_exception_handler(function($exception) use ($vista){
 		"estado" => $exception->estado,
 		"mensaje" => $exception->getMessage()
 	);
+	if( $exception->estado==23000){// si el error es una clave duplicada retorna el mensaje
+		
+		$vista->imprimir($cuerpo);
+	}else{
 
 	if($exception->getCode()){
 		// vistaJson pondrá el codigo en la cabecera
@@ -22,6 +26,7 @@ set_exception_handler(function($exception) use ($vista){
 	}
 
 	$vista->imprimir($cuerpo);// imprimimos el JSON y el codigo en la cabecera
+}
 });
 
 // convertimos en array lo que redireccionamos con el archivo .htaccess
