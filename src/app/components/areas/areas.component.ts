@@ -40,6 +40,7 @@ export class AreasComponent implements OnInit {
   editarArea(area: Areas)
   {
     const dialogRef = this.dialog.open(EditarAreaComponent, {
+      panelClass: 'my-panel',
       width: '350px',
       data: area
     });
