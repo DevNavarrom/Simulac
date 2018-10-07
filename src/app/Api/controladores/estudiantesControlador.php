@@ -11,9 +11,12 @@ class EstudiantesControlador{
 			return Estudiantes::getEstudiantes();
 
 		}else if(count($peticion) == 1){
-			return Estudiantes::buscarPorId($peticion[0]);
+			return Estudiantes::buscarEstudiante($peticion[0]);
 
-		}
+		}else
+	{
+		return Estudiantes::eliminarEstudiante($peticion[1]);
+	}
 	}
 	
 	public static function post($peticion){
@@ -26,6 +29,9 @@ class EstudiantesControlador{
 				
 				case 'registro':
 					return Estudiantes::insertarEstudiante($data);
+					break;
+				case 'editar':
+					return Estudiantes::actualizarEstudiante($data);
 					break;
 				default:
 					throw new ExceptionApi(PARAMETROS_INCORRECTOS, "parametros incorrectos");
