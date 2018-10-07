@@ -119,16 +119,16 @@ class Usuarios {
 		}
 	}
 
-	public static function login($user,$pass){
+	public static function login($infoUsuario){
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
-			$query = "select * from  usuario where user=? and password =?;";
+			$query = "select * from usuario where user=? and password =?;";
 
 			$sentencia = $conexion->prepare($query);
 
-			$sentencia->bindParam(1, $user);
-			$sentencia->bindParam(2, $pass);
+			$sentencia->bindParam(1, $infoUsuario["user"]);
+			$sentencia->bindParam(2, $infoUsuario["password"]);
 
 			if($sentencia->execute()){
 				http_response_code(200);

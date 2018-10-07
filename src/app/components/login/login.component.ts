@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Usuarios, ILogin } from '../../modelos/Usuarios';
+import { UsuariosService } from '../../services/usuarios.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,10 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   login:boolean = true;
-  constructor( private fb: FormBuilder, title: Title, private _router:Router ) { 
+  _usuario:Usuarios = null;
+  usuarioLogueado;
+
+  constructor( private fb: FormBuilder, title: Title, private _router:Router, private _usuariosService:UsuariosService ) { 
     title.setTitle('Login Angular 5');
     this.buildForm();
   }
@@ -23,16 +28,23 @@ export class LoginComponent implements OnInit {
 
   buildForm() {
     this.loginForm = this.fb.group({
-      email: ['', Validators.compose([Validators.required, Validators.email]) ],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(6)]) ],
+      usuario: ['', Validators.compose([Validators.required]) ],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(4)]) ],
     });
   }
 
   submit() {
-    const email = this.loginForm.get('email').value;
-    const password = this.loginForm.get('password').value;
+    console.log("Submit ejecutado");
+    const usuario = this.loginForm.value.usuario;
+    const password = this.loginForm.value.password;
 
-    if (email == "deimer@gmai" && password=="123456") {
+    this._usuario = new Usuarios("","","",usuario, password);
+    
+    this._usuariosService.login(this._usuario).subscribe((res) => {
+      this.usuarioLogueado = res['datos']}
+    );
+  
+    if (this.usuarioLogueado != null) {
       //alert("¡Bienvemid0!");
       this.login = false;
       this._router.navigate(['/home']);
