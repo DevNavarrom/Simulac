@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-examenes',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExamenesComponent implements OnInit {
 
-  constructor() { }
+  constructor( private _router:Router ) { }
 
   ngOnInit() {
+  }
+
+  editarExamen(){
+    //TODO pedir por parametro el id del examen seleccionado en la tabla para el caso de edicion, si es nuevo 0
+    this._router.navigate(['/examen', 0]);
   }
 
 }
