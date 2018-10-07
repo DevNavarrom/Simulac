@@ -21,7 +21,8 @@ class UsuariosControlador{
 	
 	public static function post($peticion){
         // obtenemos el fichero que viene con la peticion POST
-      
+		$data = json_decode(file_get_contents('php://input'), true);
+
 		if(!empty($peticion[0])){
 			switch ($peticion[0]) {
 					case 'registro':
@@ -58,11 +59,11 @@ class UsuariosControlador{
 				break;
 				case 'login':
 		
-				$user=$_POST["txtUser"];
-				$pass=$_POST["txtPass"];
+				/*$user=$_POST["txtUser"];
+				$pass=$_POST["txtPass"];*/
 		
 			
-				return Usuarios::login($user,$pass);
+				return Usuarios::login($data);
 				break;
 				
 				default:

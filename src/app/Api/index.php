@@ -5,6 +5,7 @@ require_once 'utils/ExceptionApi.php';
 require_once 'vistas/vistaJSON.php';
 require_once 'controladores/estudiantesControlador.php';
 require_once 'controladores/areasControlador.php';
+require_once 'controladores/usuariosControlador.php';
 
 $vista = new vistaJSON();
 
@@ -33,7 +34,7 @@ set_exception_handler(function($exception) use ($vista){
 // convertimos en array lo que redireccionamos con el archivo .htaccess
 $peticionArray = explode("/", $_GET["RUTA_INFORMACION"]);
 
-$recursosDisponibles  = array('estudiantes','areas');
+$recursosDisponibles  = array('estudiantes','areas','usuarios');
 
 $recurso = array_shift($peticionArray);
 
@@ -65,7 +66,10 @@ switch ($metodo) {
 				case 'areas':
 				$vista->imprimir(AreasControlador::post($peticionArray));
                 break;
-            
+				case 'usuarios':
+				$vista->imprimir(UsuariosControlador::post($peticionArray));
+				break;
+				
             default:
                 $vista->imprimir($peticionArray);
                 break;

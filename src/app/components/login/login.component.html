@@ -1,16 +1,15 @@
+
 <div class="div-content container col-md-12" *ngIf="login">
   <form class="form-login col-md-6 justify-content-center align-items-center" [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
+    
     <div class="form-group">
-      <label class="center-block">Email:
-        <input class="form-control" formControlName="email">
+      <label class="center-block">Usuario
+        <input class="form-control" formControlName="usuario">
       </label>
-  
-      <div *ngIf="loginForm.get('email').errors" class="alert alert-danger">
-        <div *ngIf="loginForm.get('email').errors['required']">
+
+      <div *ngIf="loginForm.get('usuario').errors" class="alert alert-danger">
+        <div *ngIf="loginForm.get('usuario').errors['required']">
           Email requerido
-        </div>
-        <div *ngIf="loginForm.get('email').errors['email']">
-          Email incorrecto
         </div>
       </div>
     </div>
@@ -35,6 +34,7 @@
     <button type="reset" class="btn btn-default btn-block">Reset</button>
   
   </form>
+
 </div>
 <app-navbar *ngIf="!login">
 
