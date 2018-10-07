@@ -20,11 +20,12 @@ import { HomeComponent } from './components/home/home.component';
 import { AreasComponent } from './components/areas/areas.component';
 import { ExamenesComponent } from './components/examenes/examenes.component';
 import { PreguntasComponent } from './components/preguntas/preguntas.component';
-import { EditarEstudianteComponent } from './components/estudiantes/editarestudiante/editar-estudiante.component';
 import { LoginComponent } from './components/login/login.component';
 
 import { MaterialModule } from './material.module';
+import { EditarEstudianteComponent } from './components/estudiantes/editarestudiante/editar-estudiante.component';
 import { EditarAreaComponent } from './components/areas/editararea/editar-area.component';
+
 
 
 
@@ -41,9 +42,9 @@ import { EditarAreaComponent } from './components/areas/editararea/editar-area.c
     AreasComponent,
     ExamenesComponent,
     PreguntasComponent,
+    LoginComponent,
     EditarEstudianteComponent,
-    EditarAreaComponent,
-    LoginComponent
+    EditarAreaComponent   
   ],
   imports: [
     BrowserModule,
@@ -52,7 +53,7 @@ import { EditarAreaComponent } from './components/areas/editararea/editar-area.c
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MaterialModule
+     MaterialModule
   ],
   providers: [EstudiantesService],
   bootstrap: [AppComponent]
