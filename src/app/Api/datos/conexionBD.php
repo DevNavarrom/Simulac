@@ -13,7 +13,7 @@ class Conexion {
 
 	private static $dsn = "mysql:host=localhost;dbname=secudb";
 	private static $myuser = "root"; // Nombre del usuario
-	private static $mypass = "admin123"; // Constraseña
+	private static $mypass = "2504"; // Constraseña
 	private static $opciones = array(
 		PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
 	);

@@ -20,17 +20,8 @@ import { HomeComponent } from './components/home/home.component';
 import { AreasComponent } from './components/areas/areas.component';
 import { ExamenesComponent } from './components/examenes/examenes.component';
 import { PreguntasComponent } from './components/preguntas/preguntas.component';
-<<<<<<< HEAD
-import { LoginComponent } from './components/login/login.component';
-import { EditarexamenComponent } from './components/examenes/editarexamen/editarexamen.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-=======
 import { EditarEstudianteComponent } from './components/estudiantes/editarestudiante/editar-estudiante.component';
-
-
-//SERVICES
-import { EstudiantesService } from './services/estudiantes.service';
->>>>>>> b20d8519439f4de3d88bdd6912baad4ab257a7f2
+import { LoginComponent } from './components/login/login.component';
 
 import { MaterialModule } from './material.module';
 import { EditarAreaComponent } from './components/areas/editararea/editar-area.component';
@@ -49,15 +40,10 @@ import { EditarAreaComponent } from './components/areas/editararea/editar-area.c
     HomeComponent,
     AreasComponent,
     ExamenesComponent,
-<<<<<<< HEAD
-    EditarexamenComponent,
-    PreguntasComponent,
-    LoginComponent
-=======
     PreguntasComponent,
     EditarEstudianteComponent,
-    EditarAreaComponent   
->>>>>>> b20d8519439f4de3d88bdd6912baad4ab257a7f2
+    EditarAreaComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -65,12 +51,8 @@ import { EditarAreaComponent } from './components/areas/editararea/editar-area.c
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-<<<<<<< HEAD
-    BrowserAnimationsModule
-=======
     BrowserAnimationsModule,
     MaterialModule
->>>>>>> b20d8519439f4de3d88bdd6912baad4ab257a7f2
   ],
   providers: [EstudiantesService],
   bootstrap: [AppComponent]
