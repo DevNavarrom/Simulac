@@ -4,6 +4,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
+//SERVICES
+import { EstudiantesService } from './services/estudiantes.service';
+
+
 //RUTAS
 import { APP_ROUTING } from './app.routes';
 
@@ -15,9 +19,9 @@ import { HomeComponent } from './components/home/home.component';
 import { AreasComponent } from './components/areas/areas.component';
 import { ExamenesComponent } from './components/examenes/examenes.component';
 import { PreguntasComponent } from './components/preguntas/preguntas.component';
-
-//SERVICES
-import { EstudiantesService } from './services/estudiantes.service';
+import { LoginComponent } from './components/login/login.component';
+import { EditarexamenComponent } from './components/examenes/editarexamen/editarexamen.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -28,14 +32,17 @@ import { EstudiantesService } from './services/estudiantes.service';
     HomeComponent,
     AreasComponent,
     ExamenesComponent,
-    PreguntasComponent
+    EditarexamenComponent,
+    PreguntasComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     APP_ROUTING,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [EstudiantesService],
   bootstrap: [AppComponent]

@@ -6,15 +6,23 @@ import { HomeComponent } from './components/home/home.component';
 import { AreasComponent } from './components/areas/areas.component';
 import { ExamenesComponent } from './components/examenes/examenes.component';
 import { PreguntasComponent } from './components/preguntas/preguntas.component';
+import { NavbarComponent } from './components/shared/navbar/navbar.component';
+import { LoginComponent } from './components/login/login.component';
+import { EditarexamenComponent } from './components/examenes/editarexamen/editarexamen.component';
 
 
 const APP_ROUTES: Routes = [
     { path: 'home', component: HomeComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'inicio', component: NavbarComponent },
     { path: 'estudiantes', component: EstudiantesComponent },
     { path: 'areas', component: AreasComponent },
     { path: 'examenes', component: ExamenesComponent },
+    { path: 'examen/:id', component: EditarexamenComponent },
     { path: 'preguntas', component: PreguntasComponent },
-    { path: '**', pathMatch: 'full', redirectTo: 'home' }
+    { path: '**', pathMatch: 'full', redirectTo: 'login' }
+
+    //{ path: 'inicio/:id', component: NavbarComponent },
 
     //{ path: 'path/:routeParam', component: MyComponent },
     //{ path: 'staticPath', component: ... },
