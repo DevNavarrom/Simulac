@@ -17,6 +17,12 @@
     color: #FFFFFF;
 }*/
 
+.my-panel .mat-dialog-container {
+    overflow: hidden;
+    border-radius: 7px;
+    padding: 5px;
+}
+
 #contenedor-vistas {
     margin-top: 40px;
     align-content: center;

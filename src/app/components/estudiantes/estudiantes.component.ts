@@ -26,7 +26,7 @@ export class EstudiantesComponent implements OnInit {
 
   ngOnInit() {
     this.mostrarTodos();
-    this.estudiante = new Estudiantes( '' ,  '' , '' , '' );
+    this.estudiante = new Estudiantes( '' ,  '' , '' , 'Sexo' );
     this.datoBuscar='';
   }
 
@@ -46,7 +46,7 @@ export class EstudiantesComponent implements OnInit {
 
 
     if (this.estudiante.id_estudiante != '' && this.estudiante.nombre != '' && this.estudiante.programa !='') {
-    if (this.estudiante.sexo !== '') {
+    if (this.estudiante.sexo !== 'Sexo') {
 
       this.estudiante.programa = this.estudiante.programa.toUpperCase();
     this._estudiantesService.postEstudiantes(this.estudiante).subscribe(datos => {
@@ -87,6 +87,7 @@ export class EstudiantesComponent implements OnInit {
   editarEstudiante(estudiante: Estudiantes)
   {
     const dialogRef = this.dialog.open(EditarEstudianteComponent, {
+      panelClass: 'my-panel',
       width: '350px',
       data: estudiante
     });
