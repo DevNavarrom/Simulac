@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 //RUTAS
@@ -15,12 +16,22 @@ import { HomeComponent } from './components/home/home.component';
 import { AreasComponent } from './components/areas/areas.component';
 import { ExamenesComponent } from './components/examenes/examenes.component';
 import { PreguntasComponent } from './components/preguntas/preguntas.component';
+import { EditarEstudianteComponent } from './components/estudiantes/editarestudiante/editar-estudiante.component';
+
 
 //SERVICES
 import { EstudiantesService } from './services/estudiantes.service';
 
+import { MaterialModule } from './material.module';
+import { EditarAreaComponent } from './components/areas/editararea/editar-area.component';
+
+
 
 @NgModule({
+  entryComponents: [
+    EditarEstudianteComponent,
+    EditarAreaComponent
+  ],
   declarations: [
     AppComponent,
     NavbarComponent,
@@ -28,14 +39,18 @@ import { EstudiantesService } from './services/estudiantes.service';
     HomeComponent,
     AreasComponent,
     ExamenesComponent,
-    PreguntasComponent
+    PreguntasComponent,
+    EditarEstudianteComponent,
+    EditarAreaComponent   
   ],
   imports: [
     BrowserModule,
     APP_ROUTING,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [EstudiantesService],
   bootstrap: [AppComponent]

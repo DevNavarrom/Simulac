@@ -22,19 +22,17 @@ class Areas {
             $sentencia->bindParam(1, $infoArea["id_area"]);
 			$sentencia->bindParam(2, $infoArea["desc_area"]);
 		
-            if($sentencia->execute()){
-				return 
+			if($sentencia->execute()){
+				return
 					[
 						"estado" => CREACION_EXITOSA,
-						"mensaje" => "Area guardada satisfactoriamente."
+						"mensaje" => "Area creada satisfactoriamente."
 					];
-				
 			}else{
 				throw new ExceptionApi(CREACION_FALLIDA, "error en la sentencia");
 			}
         }catch(PDOException $e){
-			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO ".$e->getMessage());
-		}
+			throw new ExceptionApi($e->getCode(), "ERROR en conexion PDO ");		}
 	}
 	public static function actualizarArea($infoArea){
         try{
@@ -67,7 +65,7 @@ class Areas {
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 
-			$sentencia = $conexion->prepare("SELECT * FROM ".self::TABLA);
+			$sentencia = $conexion->prepare("SELECT * FROM ".self::TABLA." order by ".self::DESCRIPCION.";");
 			
 		
 			if($sentencia->execute()){
@@ -109,6 +107,30 @@ class Areas {
 			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO");
 		}
 	}
+	public static function buscarArea($dato){
+		try{
+			$conexion = Conexion::getInstancia()->getConexion();
+
+			$query = "SELECT * FROM ".self::TABLA." WHERE ".self::ID." like  '$dato%' or ".self::DESCRIPCION." like '$dato%' ;";
+
+
+			$sentencia= $conexion->prepare($query);
+
+			if($sentencia->execute()){
+				http_response_code(200);
+				return
+					[
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+					];
+			}else{
+				throw new ExceptionApi(ESTADO_FALLIDO, "ERROR en la consulta");
+			}
+		}catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO".$e->getMessage());
+		}
+	}
+		
 		
 	public static function eliminarArea($id){
 		try{

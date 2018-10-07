@@ -4,6 +4,7 @@ require_once 'utils/constantes.php';
 require_once 'utils/ExceptionApi.php';
 require_once 'vistas/vistaJSON.php';
 require_once 'controladores/estudiantesControlador.php';
+require_once 'controladores/areasControlador.php';
 
 $vista = new vistaJSON();
 
@@ -47,7 +48,10 @@ switch ($metodo) {
         switch ($recurso) {
             case 'estudiantes':
                 $vista->imprimir(EstudiantesControlador::get($peticionArray));
-                break;
+				break;
+			case 'areas':
+			  $vista->imprimir(AreasControlador::get($peticionArray));
+			break;
             
             default:
                 throw new ExceptionApi(100, "ERROR URL");
@@ -57,6 +61,9 @@ switch ($metodo) {
         switch ($recurso) {
 			case 'estudiantes':
 				$vista->imprimir(EstudiantesControlador::post($peticionArray));
+				break;
+				case 'areas':
+				$vista->imprimir(AreasControlador::post($peticionArray));
                 break;
             
             default:

@@ -1,0 +1,27 @@
+<form [formGroup]="forma">
+
+
+    <div class="col-xs-6 col-md-12 form-group">
+        <input class="form-control" formControlName="id_area" placeholder="ID area" />
+
+    </div>
+
+    <div class="col-xs-4 col-md-12 form-group">
+        <input class="form-control" placeholder="Descripción area" type="text" formControlName="desc_area" />
+    </div>
+
+    <br />
+
+
+    <div class="row">
+        <div class="col-xs-6 col-md-6 form-group">
+            <button class="btn btn-primary" type="submit" (click)="guardarCambios()">Editar</button>
+
+        </div>
+        <br />
+        <div class="col-xs-6 col-md-6 form-group">
+            <button class="btn btn-outline-primary" type="submit" (click)="onNoClick()">Salir</button>
+        </div>
+    </div>
+
+</form>

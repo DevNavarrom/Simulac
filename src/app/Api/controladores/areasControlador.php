@@ -10,7 +10,7 @@ class AreasControlador{
 			return Areas::getAreas();
 
 		}else if (count($peticion) ==1){
-			return Areas::buscarPorId($peticion[0]);					
+			return Areas::buscarArea($peticion[0]);					
 
 		}else
 		{
@@ -20,22 +20,15 @@ class AreasControlador{
 	}
 	
 	public static function post($peticion){
-		// obtenemos el fichero que viene con la peticion POST
-		$id=$_POST["txtIdArea"];
-		$desc=$_POST["txtDescArea"];
-
-		$datosArray = [
-			"id_area" => $id,
-			"desc_area" => $desc	
-		];
+		$data = json_decode(file_get_contents('php://input'), true);
 
 		if(!empty($peticion[0])){
 			switch ($peticion[0]) {
 					case 'registro':
-					return Areas::insertarArea($datosArray);
+					return Areas::insertarArea($data);
 					break;
 				case 'editar':
-				return Areas::actualizarArea($datosArray);
+				return Areas::actualizarArea($data);
 				break;
 				
 				default:
