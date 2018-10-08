@@ -66,15 +66,13 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block" [disabled]="!loginForm.valid">Ingresar</button>
-
-        <button type="reset" class="btn btn-default btn-block">Reset</button>
+        <button type="submit" class="btn btn-outline-light btn-block" [disabled]="!loginForm.valid">Ingresar</button>
 
       </form>
 
     </div>
     <div id="tab02" class="tab-contents bg-tabs">
-        <form class="form-login col-md-12 justify-content-center align-items-center" [formGroup]="loginForm" (ngSubmit)="submit()"
+        <form class="form-login col-md-12 justify-content-center align-items-center" [formGroup]="loginEstudiante" (ngSubmit)="submit()"
         novalidate>
       
         <div class="row div-image justify-content-center align-self-center">
@@ -88,8 +86,9 @@
             <div class="col-xs-4 col-md-2 form-group">
                 <button type="button" class="btn btn-outline-light">Ingresar</button>
             </div>
+            <a href="#" (click)="registrarNuevo()" class="btn btn-primary active" role="button" aria-pressed="true">Registrar</a>
         </div>
-        
+
       </form>
         
     </div>

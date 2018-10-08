@@ -1,0 +1,55 @@
+<div class="main-login main-center">
+  <form class="form-horizontal"  [formGroup]="formRegistro">
+    
+    <div class="form-group">
+      <label for="id" class="cols-sm-2 control-label">Identificación</label>
+      <div class="cols-sm-10">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+          <input type="text" class="form-control" id="id" formControlName="idEstudiante" />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="nombre" class="cols-sm-2 control-label">Nombre</label>
+      <div class="cols-sm-10">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+          <input type="text" class="form-control" id="nombre" formControlName="nombre"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="programa" class="cols-sm-2 control-label">Programa</label>
+      <div class="cols-sm-10">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+          <input type="text" class="form-control" name="programa" id="programa" formControlName="programa"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="sexo" class="cols-sm-2 control-label">Sexo</label>
+      <div class="cols-sm-10">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+          <input type="text" class="form-control" name="sexo" id="sexo" formControlName="sexo"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-left: 0%; margin-right: 0%">
+      <div class="form-group ">
+        <button type="button" class="btn btn-primary btn-lg btn-block login-button" (click)="registrar()">Registrar</button>
+      </div>
+      <br />
+      <div class="col-xs-6 col-md-6 form-group btn-block">
+          <button class="btn btn-outline-primary  btn-block" type="submit" (click)="onNoClick()">Salir</button>
+      </div>
+  </div>
+    
+  </form>
+</div>
