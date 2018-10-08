@@ -11,11 +11,17 @@ class EstudiantesControlador{
 			return Estudiantes::getEstudiantes();
 
 		}else if(count($peticion) == 1){
+			
 			return Estudiantes::buscarEstudiante($peticion[0]);
+			
 
 		}else
 	{
+		if($peticion[0]=='buscar'){
+			return Estudiantes::buscarPorId($peticion[1]);
+		}else{
 		return Estudiantes::eliminarEstudiante($peticion[1]);
+		}
 	}
 	}
 	

@@ -7,6 +7,7 @@ import { UsuariosService } from '../../services/usuarios.service';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import { RegistroComponent } from '../login/registro/registro.component';
 import { Estudiantes } from '../../modelos/Estudiantes';
+import { EstudiantesService } from '../../services/estudiantes.service';
 
 @Component({
   selector: 'app-login',
@@ -16,20 +17,21 @@ import { Estudiantes } from '../../modelos/Estudiantes';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  loginEstudiante: FormGroup;
-
+  estudiantesForm: FormGroup;
   login:boolean = true;
   _usuario:Usuarios = null;
   usuarioLogueado:Usuarios;
   estudiante:Estudiantes;
 
   constructor( private fb: FormBuilder, title: Title, private _router:Router, 
-    private _usuariosService:UsuariosService, public dialog: MatDialog ) { 
+    private _usuariosService:UsuariosService,private _estudiantesService:EstudiantesService,
+     public dialog: MatDialog ) { 
     title.setTitle('Login Angular 5');
     this.buildForm();
   }
 
   ngOnInit() {
+  
   }
 
   buildForm() {
@@ -37,9 +39,12 @@ export class LoginComponent implements OnInit {
       usuario: ['', Validators.compose([Validators.required]) ],
       password: ['', Validators.compose([Validators.required, Validators.minLength(4)]) ],
     });
-    this.loginEstudiante = this.fb.group({
+   
+    this.estudiantesForm = this.fb.group({
       idEstudiante: ['', Validators.compose([Validators.required]) ]
     });
+
+    
   }
 
   submit() {
@@ -63,13 +68,40 @@ export class LoginComponent implements OnInit {
     
 }
 
+ingresoEstudiante()
+{
+  console.log("ingreso; "+this.estudiantesForm.value.idEstudiante);
+  if(this.estudiantesForm.value.idEstudiante != ''){
+  this._estudiantesService.getEstudiante(this.estudiantesForm.value.idEstudiante).subscribe((res) => {
+    this.estudiante = res['datos'] ;
+    
+    console.log("datos: "+ res['datos'][0])
+    if(this.estudiante[0] !=null){
+
+        this.login = false;
+        this._router.navigate(['/home']);
+    }
+    else{
+      alert("El estudiante no se encuentra registrado, por favor registrese");
+      this.registrarNuevo();
+    }
+      
+    
+  }
+  );
+}
+else
+{
+  alert("Ingrese su identificación");
+}
+}
 registrarNuevo(){
-  const idEstudiante = this.loginEstudiante.value.idEstudiante;
-  this.estudiante = new Estudiantes(idEstudiante, "","","");
+  
+  this.estudiante = new Estudiantes(this.estudiantesForm.value.idEstudiante , "","","");
   
   const dialogRef = this.dialog.open(RegistroComponent, {
     panelClass: 'my-panel',
-    width: '450px',
+    width: '350px',
     data: this.estudiante
   });
 
@@ -79,21 +111,23 @@ registrarNuevo(){
      
       return;
     }
-    this.estudiante = new Estudiantes(result.idEstudiante, result.nombre,result.programa,result.sexo);
-    console.log(this.estudiante.nombre);
-    /*let ar: Areas;
-    ar= new Areas(result.id_area,result.desc_area);
-         ar.desc_area=ar.desc_area.toUpperCase();
 
-    this._areasService.editarArea(ar).subscribe(datos => {
+   let estu: Estudiantes;
+    estu= new Estudiantes(result.id_estudiante,result.nombre,result.programa,result.sexo);
+    estu.nombre=estu.nombre.toUpperCase();
+    estu.programa=estu.programa.toUpperCase();
+    this._estudiantesService.postEstudiantes(estu).subscribe(datos => {
       if (datos['estado'] == 1) {
         alert(datos['mensaje']);
-        this.mostrarTodas();
+        this.login = false;
+        this._router.navigate(['/home']);
+
+        
       } else {
-        alert('No editada');
+        alert('No registrado');
       }
 
-    });*/
+    });
     
     });
 }

@@ -23,6 +23,10 @@ export class EstudiantesService {
     return this.http.get(`${this.url}estudiantes`);
   }
 
+  getEstudiante(id: string) {
+    return this.http.get(`${this.url}estudiantes/buscar/`+id);
+  }
+
   postEstudiantes(estudiante: Estudiantes) {
     // let headers = new HttpHeaders({'Content-Type': 'application/json'});
     // console.log(JSON.stringify(estudiante)+{headers});
