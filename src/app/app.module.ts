@@ -25,6 +25,8 @@ import { LoginComponent } from './components/login/login.component';
 import { MaterialModule } from './material.module';
 import { EditarEstudianteComponent } from './components/estudiantes/editarestudiante/editar-estudiante.component';
 import { EditarAreaComponent } from './components/areas/editararea/editar-area.component';
+import { TemasComponent } from './components/temas/temas.component';
+import { EditarTemasComponent } from './components/temas/editartemas/editar-temas.component';
 
 
 
@@ -32,7 +34,8 @@ import { EditarAreaComponent } from './components/areas/editararea/editar-area.c
 @NgModule({
   entryComponents: [
     EditarEstudianteComponent,
-    EditarAreaComponent
+    EditarAreaComponent,
+    EditarTemasComponent
   ],
   declarations: [
     AppComponent,
@@ -44,7 +47,9 @@ import { EditarAreaComponent } from './components/areas/editararea/editar-area.c
     PreguntasComponent,
     LoginComponent,
     EditarEstudianteComponent,
-    EditarAreaComponent   
+    EditarAreaComponent,
+    TemasComponent,
+    EditarTemasComponent   
   ],
   imports: [
     BrowserModule,

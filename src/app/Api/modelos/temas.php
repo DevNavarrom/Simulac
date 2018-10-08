@@ -35,20 +35,21 @@ class Temas {
 				throw new ExceptionApi(CREACION_FALLIDA, "error en la sentencia");
 			}
         }catch(PDOException $e){
-			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO ".$e->getMessage());
+			throw new ExceptionApi($e->getCode(), "ERROR en conexion PDO ".$e->getMessage());
 		}
 	}
 	public static function actualizarTema($infoTema){
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 			
-			$query = "UPDATE ".self::TABLA." SET  ".self::ID_AREA." =?, ".self::DESCRIPCION." =? WHERE ".self::ID."=?;";
+	$query = "UPDATE ".self::TABLA." SET   ".self::DESCRIPCION." =? WHERE ".self::ID."=? and ".self::ID_AREA." =?;";
 			
             $sentencia = $conexion->prepare($query);
             
-			$sentencia->bindParam(1, $infoTema["id_area"]);
-            $sentencia->bindParam(2, $infoTema["desc_tema"]);            
-			$sentencia->bindParam(3, $infoTema["id_tema"]);
+			
+            $sentencia->bindParam(1, $infoTema["desc_tema"]);            
+			$sentencia->bindParam(2, $infoTema["id_tema"]);
+			$sentencia->bindParam(3, $infoTema["id_area"]);
 
 		
             if($sentencia->execute()){
@@ -70,7 +71,7 @@ class Temas {
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 
-			$sentencia = $conexion->prepare("SELECT * FROM ".self::TABLA." NATURAL JOIN area");
+			$sentencia = $conexion->prepare("SELECT * FROM ".self::TABLA." NATURAL JOIN area limit 30;");
 			
 		
 			if($sentencia->execute()){
@@ -113,15 +114,40 @@ class Temas {
 		}
 	}
 		
-	public static function eliminarTema($id){
+	public static function buscarTema($dato){
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
-			$query = "DELETE FROM ".self::TABLA." WHERE ".self::ID." = ?;";
+			$query = "SELECT * FROM ".self::TABLA." natural join area  WHERE ".self::ID." like '$dato%' or "
+			.self::ID_AREA." like '$dato%' or ".self::DESCRIPCION." like '$dato%'  ;";
+			$sentencia= $conexion->prepare($query);
+
+			if($sentencia->execute()){
+				http_response_code(200);
+				return
+					[
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+					];
+			}else{
+				throw new ExceptionApi(ESTADO_FALLIDO, "ERROR en la consulta");
+			}
+		}catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO");
+		}
+	}
+		
+	public static function eliminarTema($infoTema){
+		try{
+			$conexion = Conexion::getInstancia()->getConexion();
+
+			$query = "DELETE FROM ".self::TABLA." WHERE ".self::ID." = ? and ".self::ID_AREA." = ? ;";
 
 			$sentencia = $conexion->prepare($query);
 
-			$sentencia->bindParam(1, $id);
+			$sentencia->bindParam(1, $infoTema["id_tema"]);
+			$sentencia->bindParam(2, $infoTema["id_area"]);
+			
 
 			if($sentencia->execute()){
 				return

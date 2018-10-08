@@ -7,8 +7,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AreasService {
-  private area: Areas = null;
-  estudiantes: Areas[];
+
   url = 'http://localhost/WEBSimulac/src/app/api/';
   constructor(private http: HttpClient) { }
 

@@ -53,7 +53,7 @@ class Estudiantes {
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 
-			$sentencia = $conexion->prepare("SELECT * FROM estudiantes order by ".self::NOMBRE.";");
+			$sentencia = $conexion->prepare("SELECT * FROM estudiantes order by ".self::NOMBRE." limit 30;");
 		
 			if($sentencia->execute()){
 				http_response_code(200);

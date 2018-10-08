@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { EstudiantesComponent } from './components/estudiantes/estudiantes.component';
 import { HomeComponent } from './components/home/home.component';
 import { AreasComponent } from './components/areas/areas.component';
+import { TemasComponent } from './components/temas/temas.component';
 import { ExamenesComponent } from './components/examenes/examenes.component';
 import { PreguntasComponent } from './components/preguntas/preguntas.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -18,6 +19,7 @@ const APP_ROUTES: Routes = [
     { path: 'areas', component: AreasComponent },
     { path: 'examenes', component: ExamenesComponent },
     { path: 'preguntas', component: PreguntasComponent },
+    { path: 'temas', component: TemasComponent },
     { path: '**', pathMatch: 'full', redirectTo: 'login' }
 
     //{ path: 'inicio/:id', component: NavbarComponent },

@@ -65,7 +65,7 @@ class Areas {
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 
-			$sentencia = $conexion->prepare("SELECT * FROM ".self::TABLA." order by ".self::DESCRIPCION.";");
+			$sentencia = $conexion->prepare("SELECT * FROM ".self::TABLA." order by ".self::DESCRIPCION." limit 30;");
 			
 		
 			if($sentencia->execute()){

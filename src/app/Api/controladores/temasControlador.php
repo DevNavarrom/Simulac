@@ -10,34 +10,25 @@ class TemasControlador{
 			return Temas::getTemas();
 
 		}else if (count($peticion) ==1){
-			return Temas::buscarPorId($peticion[0]);					
+			return Temas::buscarTema($peticion[0]);					
 
-		}else
-		{
-			return Temas::eliminarTema($peticion[1]);
-		}
-	
+		}	
 	}
 	
 	public static function post($peticion){
-        // obtenemos el fichero que viene con la peticion POST
-        $id=$_POST["txtIdTema"];
-		$idArea=$_POST["txtIdArea"];
-		$desc=$_POST["txtDescTema"];
+		$data = json_decode(file_get_contents('php://input'), true);
 
-		$datosArray = [
-            "id_tema" => $id,
-			"id_area" => $idArea,
-			"desc_tema" => $desc	
-		];
 
 		if(!empty($peticion[0])){
 			switch ($peticion[0]) {
 					case 'registro':
-					return Temas::insertarTema($datosArray);
+					return Temas::insertarTema($data);
 					break;
 				case 'editar':
-				return Temas::actualizarTema($datosArray);
+				return Temas::actualizarTema($data);
+				break;
+				case 'eliminar':
+				return Temas::eliminarTema($data);
 				break;
 				
 				default:

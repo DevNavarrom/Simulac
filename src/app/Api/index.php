@@ -6,7 +6,7 @@ require_once 'vistas/vistaJSON.php';
 require_once 'controladores/estudiantesControlador.php';
 require_once 'controladores/areasControlador.php';
 require_once 'controladores/usuariosControlador.php';
-
+require_once 'controladores/temasControlador.php';
 $vista = new vistaJSON();
 
 // definimos una funcion para manejar las excepciones
@@ -34,7 +34,7 @@ set_exception_handler(function($exception) use ($vista){
 // convertimos en array lo que redireccionamos con el archivo .htaccess
 $peticionArray = explode("/", $_GET["RUTA_INFORMACION"]);
 
-$recursosDisponibles  = array('estudiantes','areas','usuarios');
+$recursosDisponibles  = array('estudiantes','areas','usuarios','temas');
 
 $recurso = array_shift($peticionArray);
 
@@ -53,6 +53,9 @@ switch ($metodo) {
 			case 'areas':
 			  $vista->imprimir(AreasControlador::get($peticionArray));
 			break;
+			case 'temas':
+			  $vista->imprimir(TemasControlador::get($peticionArray));
+			break;
             
             default:
                 throw new ExceptionApi(100, "ERROR URL");
@@ -68,6 +71,9 @@ switch ($metodo) {
                 break;
 				case 'usuarios':
 				$vista->imprimir(UsuariosControlador::post($peticionArray));
+				break;
+				case 'temas':
+				$vista->imprimir(TemasControlador::post($peticionArray));
 				break;
 				
             default:
