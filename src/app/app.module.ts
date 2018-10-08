@@ -27,6 +27,7 @@ import { EditarEstudianteComponent } from './components/estudiantes/editarestudi
 import { EditarAreaComponent } from './components/areas/editararea/editar-area.component';
 import { TemasComponent } from './components/temas/temas.component';
 import { EditarTemasComponent } from './components/temas/editartemas/editar-temas.component';
+import { RegistroComponent } from './components/login/registro/registro.component';
 
 
 
@@ -35,7 +36,8 @@ import { EditarTemasComponent } from './components/temas/editartemas/editar-tema
   entryComponents: [
     EditarEstudianteComponent,
     EditarAreaComponent,
-    EditarTemasComponent
+    EditarTemasComponent,
+    RegistroComponent
   ],
   declarations: [
     AppComponent,
@@ -49,7 +51,8 @@ import { EditarTemasComponent } from './components/temas/editartemas/editar-tema
     EditarEstudianteComponent,
     EditarAreaComponent,
     TemasComponent,
-    EditarTemasComponent   
+    EditarTemasComponent,   
+    RegistroComponent   
   ],
   imports: [
     BrowserModule,
