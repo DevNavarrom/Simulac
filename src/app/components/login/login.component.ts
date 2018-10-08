@@ -50,19 +50,13 @@ export class LoginComponent implements OnInit {
     
     this._usuariosService.login(this._usuario).subscribe((res) => {
       this.usuarioLogueado = res['datos'] ;
-      
-      if (this.usuarioLogueado[0] != null) {
-        if (this.usuarioLogueado[0].user == this._usuario.user && this.usuarioLogueado[0].password == this._usuario.password) {
-          //alert("¡Bienvemid0!");
+        if (this.usuarioLogueado[0] != null && this.usuarioLogueado[0].user == this._usuario.user && this.usuarioLogueado[0].password == this._usuario.password) {
           this.login = false;
           this._router.navigate(['/home']);
-          //this._router.navigate(['/inicio', "1067917149"]);
           
         } else {
-          alert("Usuari0 0 c0ntraseña inc0reccta");
-        }
-      }
-      
+          alert("Usuario o contraseña incoreccta");
+        }     
       
     }
     );
