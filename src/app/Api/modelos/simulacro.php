@@ -13,6 +13,7 @@ class Simulacro {
     const FECHA = "fecha";
     const RESPONSABLE = "responsable";
 	const GRUPO = "grupo";
+	const ESTADO= "estado";
 	
     public static function insertarSimulacro($infoSimulacro){
         try{
@@ -74,7 +75,27 @@ class Simulacro {
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 
-			$sentencia = $conexion->prepare("SELECT ".self::ID.",  DATE_FORMAT(".self::FECHA.",'%d/%m/%Y') as fecha ,".self::RESPONSABLE.",".self::GRUPO." FROM ".self::TABLA);
+			$sentencia = $conexion->prepare("SELECT ".self::ID.",  DATE_FORMAT(".self::FECHA.",'%d/%m/%Y') as fecha ,".self::RESPONSABLE.","
+			.self::GRUPO.", ".self::ESTADO." FROM ".self::TABLA);
+		
+			if($sentencia->execute()){
+				http_response_code(200);
+				return
+					[
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+					];
+			}else{
+				throw new ExceptionApi(ESTADO_FALLIDO, "error en la consulta");
+			}
+        }catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO");
+		}
+	}
+	public static function getSimulacrosActivos(){
+        try{
+            $conexion = Conexion::getInstancia()->getConexion();
+			$sentencia = $conexion->prepare("CALL `spSimulacrosActivos`();" );
 		
 			if($sentencia->execute()){
 				http_response_code(200);

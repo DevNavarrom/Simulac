@@ -28,6 +28,8 @@ import { EditarAreaComponent } from './components/areas/editararea/editar-area.c
 import { TemasComponent } from './components/temas/temas.component';
 import { EditarTemasComponent } from './components/temas/editartemas/editar-temas.component';
 import { RegistroComponent } from './components/login/registro/registro.component';
+import { EstudiantesSimulacroComponent } from './components/estudiantes-simulacro/estudiantes-simulacro.component';
+import { NavbarEstudiantesComponent } from './components/shared/navbar-estudiantes/navbar-estudiantes.component';
 
 
 
@@ -52,7 +54,9 @@ import { RegistroComponent } from './components/login/registro/registro.componen
     EditarAreaComponent,
     TemasComponent,
     EditarTemasComponent,   
-    RegistroComponent   
+    RegistroComponent, 
+    EstudiantesSimulacroComponent, 
+    NavbarEstudiantesComponent   
   ],
   imports: [
     BrowserModule,

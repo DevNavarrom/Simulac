@@ -121,6 +121,7 @@ export class EstudiantesComponent implements OnInit {
     },
     (err) => {
       this.error = err;
+    
     }
     );
   }

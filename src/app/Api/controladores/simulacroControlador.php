@@ -14,7 +14,13 @@ class SimulacroControlador{
 
 		}else
 		{
+			
+			if($peticion[0] == 'activos')
+			{
+				return Simulacro::getSimulacrosActivos();
+			}else{
 			return Simulacro::eliminarSimulacro($peticion[1]);
+			}
 		}
 	
 	}
