@@ -30,6 +30,8 @@ import { EditarTemasComponent } from './components/temas/editartemas/editar-tema
 import { RegistroComponent } from './components/login/registro/registro.component';
 import { EstudiantesSimulacroComponent } from './components/estudiantes-simulacro/estudiantes-simulacro.component';
 import { NavbarEstudiantesComponent } from './components/shared/navbar-estudiantes/navbar-estudiantes.component';
+import { CrearexamenComponent } from './components/examenes/crearexamen/crearexamen.component';
+import { PreguntasExamenComponent } from './components/examenes/preguntas-examen/preguntas-examen.component';
 
 
 
@@ -57,6 +59,7 @@ import { NavbarEstudiantesComponent } from './components/shared/navbar-estudiant
     RegistroComponent, 
     EstudiantesSimulacroComponent, 
     NavbarEstudiantesComponent   
+    ,CrearexamenComponent, PreguntasExamenComponent   
   ],
   imports: [
     BrowserModule,
