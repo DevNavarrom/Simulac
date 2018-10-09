@@ -39,7 +39,8 @@ import { PreguntasExamenComponent } from './components/examenes/preguntas-examen
     EditarEstudianteComponent,
     EditarAreaComponent,
     EditarTemasComponent,
-    RegistroComponent
+    RegistroComponent,
+    PreguntasExamenComponent
   ],
   declarations: [
     AppComponent,
