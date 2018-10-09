@@ -9,6 +9,7 @@ import { ExamenesComponent } from './components/examenes/examenes.component';
 import { PreguntasComponent } from './components/preguntas/preguntas.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
+import { CrearexamenComponent } from './components/examenes/crearexamen/crearexamen.component';
 
 
 const APP_ROUTES: Routes = [
@@ -18,6 +19,7 @@ const APP_ROUTES: Routes = [
     { path: 'estudiantes', component: EstudiantesComponent },
     { path: 'areas', component: AreasComponent },
     { path: 'examenes', component: ExamenesComponent },
+    { path: 'examen/:id', component: CrearexamenComponent },
     { path: 'preguntas', component: PreguntasComponent },
     { path: 'temas', component: TemasComponent },
     { path: '**', pathMatch: 'full', redirectTo: 'login' }
