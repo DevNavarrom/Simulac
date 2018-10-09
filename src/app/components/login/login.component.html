@@ -98,6 +98,7 @@
     </div>
 
 </div>
-<app-navbar *ngIf="!login">
-
+<app-navbar-estudiantes *ngIf="!login && !loginEstudent">
+</app-navbar-estudiantes>
+<app-navbar *ngIf="!login && loginEstudent">
 </app-navbar>

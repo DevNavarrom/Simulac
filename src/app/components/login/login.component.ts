@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   estudiantesForm: FormGroup;
   login:boolean = true;
+  loginEstudent:boolean = true;
   _usuario:Usuarios = null;
   usuarioLogueado:Usuarios;
   estudiante:Estudiantes;
@@ -70,14 +71,14 @@ export class LoginComponent implements OnInit {
 
 ingresoEstudiante()
 {
-  console.log("ingreso; "+this.estudiantesForm.value.idEstudiante);
+  
   if(this.estudiantesForm.value.idEstudiante != ''){
   this._estudiantesService.getEstudiante(this.estudiantesForm.value.idEstudiante).subscribe((res) => {
     this.estudiante = res['datos'] ;
     
-    console.log("datos: "+ res['datos'][0])
     if(this.estudiante[0] !=null){
-
+      console.log("ingreso; "+this.estudiantesForm.value.idEstudiante);
+        this.loginEstudent = false;
         this.login = false;
         this._router.navigate(['/home']);
     }
@@ -119,9 +120,9 @@ registrarNuevo(){
     this._estudiantesService.postEstudiantes(estu).subscribe(datos => {
       if (datos['estado'] == 1) {
         alert(datos['mensaje']);
+        this.loginEstudent = false;
         this.login = false;
-        this._router.navigate(['/home']);
-
+        this._router.navigate(['/estudiantes/simulacros']);
         
       } else {
         alert('No registrado');

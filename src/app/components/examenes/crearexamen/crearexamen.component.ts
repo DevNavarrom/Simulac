@@ -22,17 +22,20 @@ export class CrearexamenComponent implements OnInit {
 
   ngOnInit() {
     this.cargarAreas();
-    this.area_select="0";
+    //this.area_select="0";
     this.cargarTemas();
     this.tema_select="0";
   }
 
   selectPregunta(){
-    let pregunta:Preguntas = new Preguntas(0,this.area_select,"",this.tema_select,"");
+    //let pregunta:Preguntas = new Preguntas(0,this.area_select,"",this.tema_select,"");
     const dialogRef = this.dialog.open(PreguntasExamenComponent, {
       panelClass: 'my-panel',
       width: '750px',
-      data: pregunta
+      data: {
+        id_area: this.area_select,
+        id_tema: this.tema_select
+      }
     });
       dialogRef.afterClosed().subscribe(result => {
 

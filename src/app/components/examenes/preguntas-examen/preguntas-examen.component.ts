@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Preguntas } from '../../../modelos/Preguntas';
 import { Temas } from '../../../modelos/Temas';
 import { TemasService } from '../../../services/temas.service';
+import { PreguntasService } from '../../../services/preguntas.service';
+
 
 
 @Component({
@@ -13,7 +15,7 @@ import { TemasService } from '../../../services/temas.service';
 })
 export class PreguntasExamenComponent implements OnInit {
 
-  formPreguntas:FormGroup;
+  //formPreguntas:FormGroup;
 
   tema_select:string;
   temas;
@@ -22,17 +24,22 @@ export class PreguntasExamenComponent implements OnInit {
   id_area:string;
   preguntas;
 
-  constructor(private _temasService:TemasService, public fb: FormBuilder,
+  constructor(private _temasService:TemasService, private _preguntasService:PreguntasService, public fb: FormBuilder,
     public dialogRef: MatDialogRef<PreguntasExamenComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Preguntas) { 
+    @Inject(MAT_DIALOG_DATA) public data: any) { 
 
       /*this.formPreguntas = fb.group({
-        'id_estudiante' : data.id_tema,
+        'idArea' : data.id_area,
       });*/
-      this.tema_select = data.id_tema;
+      this.id_area = data.id_area;
+      this.id_tema = data.id_tema;
     }
 
   ngOnInit() {
+    //this.id_area = this.formPreguntas.value.idArea;
+    this.cargarTemas();
+    this.tema_select = this.id_tema;
+    this.mostrarPreguntas();
   }
 
   cargarTemas(): void {
@@ -48,9 +55,9 @@ export class PreguntasExamenComponent implements OnInit {
 
   //TODO terminar de implementar este metodo
   mostrarPreguntas(): void {
-    this._temasService.getTemas()
+    this._preguntasService.getPreguntasPorTema(this.tema_select)
       .subscribe((res) => {
-        this.temas = res['datos'];
+        this.preguntas = res['datos'];
       },
       (err) => {
         this.error = err;

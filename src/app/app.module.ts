@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //SERVICES
 import { EstudiantesService } from './services/estudiantes.service';
+import { PreguntasService } from './services/preguntas.service';
 
 
 //RUTAS
@@ -28,8 +29,11 @@ import { EditarAreaComponent } from './components/areas/editararea/editar-area.c
 import { TemasComponent } from './components/temas/temas.component';
 import { EditarTemasComponent } from './components/temas/editartemas/editar-temas.component';
 import { RegistroComponent } from './components/login/registro/registro.component';
+import { EstudiantesSimulacroComponent } from './components/simulacros/estudiantes-simulacro/estudiantes-simulacro.component';
+import { NavbarEstudiantesComponent } from './components/shared/navbar-estudiantes/navbar-estudiantes.component';
 import { CrearexamenComponent } from './components/examenes/crearexamen/crearexamen.component';
 import { PreguntasExamenComponent } from './components/examenes/preguntas-examen/preguntas-examen.component';
+import { PreguntasSimulacroComponent } from './components/simulacros/preguntas-simulacro/preguntas-simulacro.component';
 
 
 
@@ -55,7 +59,12 @@ import { PreguntasExamenComponent } from './components/examenes/preguntas-examen
     EditarAreaComponent,
     TemasComponent,
     EditarTemasComponent,   
-    RegistroComponent, CrearexamenComponent, PreguntasExamenComponent   
+    RegistroComponent, 
+    EstudiantesSimulacroComponent, 
+    NavbarEstudiantesComponent   
+    ,CrearexamenComponent, 
+    PreguntasExamenComponent,
+    PreguntasSimulacroComponent   
   ],
   imports: [
     BrowserModule,
@@ -66,7 +75,7 @@ import { PreguntasExamenComponent } from './components/examenes/preguntas-examen
     BrowserAnimationsModule,
      MaterialModule
   ],
-  providers: [EstudiantesService],
+  providers: [EstudiantesService, PreguntasService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

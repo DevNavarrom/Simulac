@@ -115,6 +115,29 @@ class Preguntas {
 			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO");
 		}
 	}
+
+	public static function buscarPorIdTema($dato){// BUSCA preguntas POR id_tema
+		try{
+			$conexion = Conexion::getInstancia()->getConexion();
+
+			$query = "call spBuscarPreguntas('".$dato."%')";
+            $sentencia = $conexion->prepare($query);
+
+
+			if($sentencia->execute()){
+				http_response_code(200);
+				return
+					[
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+					];
+			}else{
+				throw new ExceptionApi(ESTADO_FALLIDO, "ERROR en la consulta");
+			}
+		}catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO".$e->getmessage());
+		}
+	}
 		
 	public static function eliminarPregunta($id){
 		try{
