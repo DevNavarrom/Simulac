@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { SimulacrosService } from '../../services/simulacros.service';
+import { SimulacrosService } from '../../../services/simulacros.service';
 import { Router } from '@angular/router';
-import { Simulacros } from '../../modelos/Simulacros';
+import { Simulacros } from '../../../modelos/Simulacros';
 
 @Component({
   selector: 'app-estudiantes-simulacro',
@@ -31,6 +31,11 @@ export class EstudiantesSimulacroComponent implements OnInit {
         console.log("error:::"+this.error['message']);
       }
     );
+  }
+
+  realizarSimulacro(simulacro: Simulacros)
+  {
+    this._router.navigate(['/estudiantes/simulacros/preguntas']);
   }
 
 }

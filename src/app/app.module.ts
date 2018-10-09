@@ -28,10 +28,11 @@ import { EditarAreaComponent } from './components/areas/editararea/editar-area.c
 import { TemasComponent } from './components/temas/temas.component';
 import { EditarTemasComponent } from './components/temas/editartemas/editar-temas.component';
 import { RegistroComponent } from './components/login/registro/registro.component';
-import { EstudiantesSimulacroComponent } from './components/estudiantes-simulacro/estudiantes-simulacro.component';
+import { EstudiantesSimulacroComponent } from './components/simulacros/estudiantes-simulacro/estudiantes-simulacro.component';
 import { NavbarEstudiantesComponent } from './components/shared/navbar-estudiantes/navbar-estudiantes.component';
 import { CrearexamenComponent } from './components/examenes/crearexamen/crearexamen.component';
 import { PreguntasExamenComponent } from './components/examenes/preguntas-examen/preguntas-examen.component';
+import { PreguntasSimulacroComponent } from './components/simulacros/preguntas-simulacro/preguntas-simulacro.component';
 
 
 
@@ -59,7 +60,9 @@ import { PreguntasExamenComponent } from './components/examenes/preguntas-examen
     RegistroComponent, 
     EstudiantesSimulacroComponent, 
     NavbarEstudiantesComponent   
-    ,CrearexamenComponent, PreguntasExamenComponent   
+    ,CrearexamenComponent, 
+    PreguntasExamenComponent,
+    PreguntasSimulacroComponent   
   ],
   imports: [
     BrowserModule,
