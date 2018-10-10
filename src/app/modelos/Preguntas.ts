@@ -18,3 +18,10 @@ export class Preguntas{
     }
 
 }
+
+export interface DialogDataPreguntas {
+    id_pregunta: string;
+    desc_pregunta: string;
+    id_area: string;
+    id_tema: string;
+  }

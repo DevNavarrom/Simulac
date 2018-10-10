@@ -3,7 +3,7 @@ import { AreasService } from '../../../services/areas.service';
 import { TemasService } from '../../../services/temas.service';
 import { MatDialog } from '@angular/material';
 import { PreguntasExamenComponent } from '../preguntas-examen/preguntas-examen.component';
-import { Preguntas } from '../../../modelos/Preguntas';
+import { Preguntas, DialogDataPreguntas } from '../../../modelos/Preguntas';
 
 @Component({
   selector: 'app-crearexamen',
@@ -18,6 +18,9 @@ export class CrearexamenComponent implements OnInit {
   area_select:string;
   tema_select:string;
   id_area:string;
+  pregunta:DialogDataPreguntas;
+  private preguntas:DialogDataPreguntas[] = [];
+
   constructor(private _areasService: AreasService, private _temasService:TemasService, public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -29,13 +32,20 @@ export class CrearexamenComponent implements OnInit {
 
   selectPregunta(){
     //let pregunta:Preguntas = new Preguntas(0,this.area_select,"",this.tema_select,"");
+    /*this.pregunta.id_area = this.area_select;
+    this.pregunta.id_tema = this.tema_select;*/
+    this.pregunta = {
+      id_pregunta: '0',
+      desc_pregunta: '',
+      id_area: this.area_select,
+      id_tema:this.tema_select
+    }
+    console.log(this.pregunta);
+
     const dialogRef = this.dialog.open(PreguntasExamenComponent, {
       panelClass: 'my-panel',
       width: '750px',
-      data: {
-        id_area: this.area_select,
-        id_tema: this.tema_select
-      }
+      data: this.pregunta
     });
       dialogRef.afterClosed().subscribe(result => {
 
@@ -43,23 +53,19 @@ export class CrearexamenComponent implements OnInit {
        
         return;
       }
-      /*let ar: Areas;
-      ar= new Areas(result.id_area,result.desc_area);
-           ar.desc_area=ar.desc_area.toUpperCase();
+      console.log(result);
+      this.preguntas.push(result);
+      console.log(this.preguntas.length);
+      //TODO: llenar tabla con array de preguntas
 
-      this._areasService.editarArea(ar).subscribe(datos => {
-        if (datos['estado'] == 1) {
-          alert(datos['mensaje']);
-          this.mostrarTodas();
-        } else {
-          alert('No editada');
-        }
-  
-      });*/
       
       });
   }
 
+  quitarPregunta(pre:DialogDataPreguntas){
+    var index = this.preguntas.indexOf(pre);
+    this.preguntas.splice(index, 1);
+  }
   cargarAreas(): void {
     this._areasService.getAreas()
       .subscribe((res) => {

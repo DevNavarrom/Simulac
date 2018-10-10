@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {  MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Preguntas } from '../../../modelos/Preguntas';
+import { Preguntas, DialogDataPreguntas } from '../../../modelos/Preguntas';
 import { Temas } from '../../../modelos/Temas';
 import { TemasService } from '../../../services/temas.service';
 import { PreguntasService } from '../../../services/preguntas.service';
@@ -26,7 +26,7 @@ export class PreguntasExamenComponent implements OnInit {
 
   constructor(private _temasService:TemasService, private _preguntasService:PreguntasService, public fb: FormBuilder,
     public dialogRef: MatDialogRef<PreguntasExamenComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { 
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataPreguntas) { 
 
       /*this.formPreguntas = fb.group({
         'idArea' : data.id_area,
@@ -63,6 +63,16 @@ export class PreguntasExamenComponent implements OnInit {
         this.error = err;
       }
     );
+  }
+
+  seleccionarPregunta(pre:any){
+    let _pre:any = {
+      id_pregunta : pre.id_pregunta,
+      desc_pregunta : pre.desc_pregunta,
+      id_area : this.id_area,
+      id_tema : this.id_tema
+    }
+    this.dialogRef.close(_pre);
   }
 
   onNoClick(): void {
