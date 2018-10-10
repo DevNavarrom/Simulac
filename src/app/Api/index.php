@@ -63,17 +63,12 @@ switch ($metodo) {
 				$vista->imprimir(PreguntasControlador::get($peticionArray));
 		  		break;
 			case 'simulacros':
-<<<<<<< HEAD
 			$vista->imprimir(SimulacroControlador::get($peticionArray));
 		  break;
 		  case 'preguntas':
 		  $vista->imprimir(PreguntasControlador::get($peticionArray));
 		break;
-=======
-				$vista->imprimir(SimulacroControlador::get($peticionArray));
-		  		break;
-            
->>>>>>> 8bd224590609203d82bf1039999db96097d2b2ce
+				
             default:
                 throw new ExceptionApi(100, "ERROR URL");
 		}
