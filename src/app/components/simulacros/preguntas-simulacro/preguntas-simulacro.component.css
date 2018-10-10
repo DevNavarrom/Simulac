@@ -1,0 +1,24 @@
+.example-input-label,
+.example-add-tab-button,
+.example-delete-tab-button {
+    margin: 8px;
+}
+
+.example-radio-group {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.example-radio-button {
+    margin: 5px;
+}
+
+.example-selected-value {
+    margin: 15px 0;
+    color: blue;
+}
+
+.mdc-card {
+    border-radius: 8px;
+    overflow: hidden;
+}

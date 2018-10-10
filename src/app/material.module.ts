@@ -6,16 +6,25 @@ import { CommonModule } from '@angular/common';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatCardModule} from '@angular/material/card';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   imports: [
     CommonModule, 
     MatDialogModule,
-    MatInputModule
+    MatInputModule,
+    MatTabsModule,
+    MatCardModule,
+    MatRadioModule
   ],
   exports: [
     MatDialogModule,
-    MatInputModule
+    MatInputModule,
+    MatTabsModule,
+    MatCardModule,
+    MatRadioModule
   ],
   declarations: []
 })

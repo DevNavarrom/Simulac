@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SimulacrosService } from '../../../services/simulacros.service';
 import { Router } from '@angular/router';
@@ -11,6 +11,9 @@ import { Simulacros } from '../../../modelos/Simulacros';
 })
 export class EstudiantesSimulacroComponent implements OnInit {
   
+  @Output() emitEvent:EventEmitter<string> = new EventEmitter<string>();
+  id_examen: string="";
+
   simulacros;
   error = '';
   success = '';
@@ -35,6 +38,8 @@ export class EstudiantesSimulacroComponent implements OnInit {
 
   realizarSimulacro(simulacro: Simulacros)
   {
+    this.id_examen=simulacro.id_examen;
+    console.log("id examen= "+this.id_examen);
     this._router.navigate(['/estudiantes/simulacros/preguntas']);
   }
 

@@ -8,6 +8,8 @@ require_once 'controladores/areasControlador.php';
 require_once 'controladores/usuariosControlador.php';
 require_once 'controladores/temasControlador.php';
 require_once 'controladores/simulacroControlador.php';
+require_once 'controladores/preguntasControlador.php';
+
 $vista = new vistaJSON();
 
 // definimos una funcion para manejar las excepciones
@@ -35,7 +37,7 @@ set_exception_handler(function($exception) use ($vista){
 // convertimos en array lo que redireccionamos con el archivo .htaccess
 $peticionArray = explode("/", $_GET["RUTA_INFORMACION"]);
 
-$recursosDisponibles  = array('estudiantes','areas','usuarios','temas','simulacros');
+$recursosDisponibles  = array('estudiantes','areas','usuarios','temas','simulacros','preguntas');
 
 $recurso = array_shift($peticionArray);
 
@@ -60,7 +62,9 @@ switch ($metodo) {
 			case 'simulacros':
 			$vista->imprimir(SimulacroControlador::get($peticionArray));
 		  break;
-            
+		  case 'preguntas':
+		  $vista->imprimir(PreguntasControlador::get($peticionArray));
+		break;
             default:
                 throw new ExceptionApi(100, "ERROR URL");
 		}

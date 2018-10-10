@@ -14,7 +14,12 @@ class 	PreguntasControlador{
 
 		}else
 		{
+			if($peticion[0]=='examen')
+			{
+				return Preguntas::getPreguntasExamen($peticion[1]);
+			}else{
 			return Preguntas::eliminarPregunta($peticion[1]);
+			}
 		}
 	
 	}
