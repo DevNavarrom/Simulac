@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //SERVICES
 import { EstudiantesService } from './services/estudiantes.service';
+import { PreguntasService } from './services/preguntas.service';
 
 
 //RUTAS
@@ -42,7 +43,8 @@ import { PreguntasSimulacroComponent } from './components/simulacros/preguntas-s
     EditarEstudianteComponent,
     EditarAreaComponent,
     EditarTemasComponent,
-    RegistroComponent
+    RegistroComponent,
+    PreguntasExamenComponent
   ],
   declarations: [
     AppComponent,
@@ -73,7 +75,7 @@ import { PreguntasSimulacroComponent } from './components/simulacros/preguntas-s
     BrowserAnimationsModule,
      MaterialModule
   ],
-  providers: [EstudiantesService],
+  providers: [EstudiantesService, PreguntasService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

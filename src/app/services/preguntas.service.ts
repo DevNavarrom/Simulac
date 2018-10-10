@@ -7,6 +7,7 @@ import { Http } from '@angular/http';
 import { map } from 'rxjs/operators';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,4 +23,10 @@ export class PreguntasService {
     return this.http.get(`${this.url}/examen/`+id_examen);
   }
 
- }
+ 
+
+
+  getPreguntasPorTema(id: string) {
+    return this.http.get(`${this.url}/tema/`+id);
+  }
+}
