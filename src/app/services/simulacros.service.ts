@@ -22,8 +22,8 @@ export class SimulacrosService {
     return this.http.get(`${this.url}`);
   }
 
-  getSimulacrosActivos() {
-    return this.http.get(this.url+'/activos/');
+  getSimulacrosActivos(id_estudiante: string) {
+    return this.http.get(this.url+'/activos/'+id_estudiante);
   }
 
   postSimulacro(simulacro: Simulacros) {
@@ -31,6 +31,22 @@ export class SimulacrosService {
     // console.log(JSON.stringify(estudiante)+{headers});
 
     return this.http.post(`${this.url}/registro`, JSON.stringify(simulacro))
+                    .pipe(
+                      map(res => {
+                        if (!res) {
+                          throw new Error('Value expected!');
+                        }
+                        return res;
+                      })
+                    );
+
+  }
+
+  postSimulacroRespuestas(respuestas) {
+    // let headers = new HttpHeaders({'Content-Type': 'application/json'});
+    // console.log(JSON.stringify(estudiante)+{headers});
+
+    return this.http.post(`${this.url}/respuestas`, JSON.stringify(respuestas))
                     .pipe(
                       map(res => {
                         if (!res) {

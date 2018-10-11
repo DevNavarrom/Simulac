@@ -98,7 +98,7 @@
     </div>
 
 </div>
-<app-navbar-estudiantes *ngIf="!login && !loginEstudent">
+<app-navbar-estudiantes *ngIf="!login && !loginEstudent" [estudiante]="estudiante">
 </app-navbar-estudiantes>
 <app-navbar *ngIf="!login && loginEstudent">
 </app-navbar>

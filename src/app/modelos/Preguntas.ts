@@ -8,10 +8,10 @@ export class Preguntas{
     public respuestas: Respuestas[];
 
   
-    constructor(id_area: number,desc_area: string,id:string, img: string,respuestas: Respuestas[]){
-        this.id_pregunta = id_area;
-        this.id_tema= id;
-        this.desc_pregunta = desc_area;
+    constructor(idpregunta: number,desc_pregunta: string,id_tema:string, img: string,respuestas: Respuestas[]){
+        this.id_pregunta = idpregunta;
+        this.id_tema= id_tema;
+        this.desc_pregunta = desc_pregunta;
         this.imagen = img;
         this.respuestas=respuestas;
 

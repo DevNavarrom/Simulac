@@ -12,8 +12,12 @@ class PreguntasControlador{
 		}else if (count($peticion) ==1){
 			return Preguntas::buscarPorId($peticion[0]);					
 
-		}else{
-			if($peticion[0]=='tema'){
+		}else
+		{
+			if($peticion[0]=='examen')
+			{
+				return Preguntas::getPreguntasExamen($peticion[1]);
+			}else if($peticion[0]=='tema'){
 				return Preguntas::buscarPorIdTema($peticion[1]);
 				echo $peticion[1];
 			}else{

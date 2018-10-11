@@ -1,3 +1,87 @@
-<p>
-  preguntas-simulacro works!
-</p>
+<div class="col-sm-8 col-md-11 contact-form" style="float: none;margin: 0 auto; ">
+    <mat-card class="mdc-card" [class.mat-elevation-z8]="true">
+        <div>
+            <div>
+                <span class="example-input-label"> Area: {{simulacro.desc_area}} </span>
+            </div>
+            <div>
+                <span class="example-input-label"> Tema: {{simulacro.desc_tema}} </span>
+            </div>
+            <div>
+                <span class="example-input-label"> Simulacro: {{simulacro.id_simulacro}} </span>
+            </div>
+            <div>
+                <span class="example-input-label"> Examen: {{simulacro.id_examen}} </span>
+            </div>
+            <div>
+                <span class="example-input-label"> Descripción: {{simulacro.desc_examen}} </span>
+
+            </div>
+            <div>
+                <span class="example-input-label"> Total preguntas: {{num_respuestas}}/{{num_preguntas}} </span>
+
+            </div>
+
+
+        </div>
+
+        <br/>
+        <mat-tab-group [selectedIndex]="selected.value" (selectedTabChange)="tabChanged($event)" (selectedIndexChange)="selected.setValue($event)">
+            <mat-tab *ngFor="let pregunta of preguntas; let index = index" [label]="index+1">
+                <br/>
+                <div>
+
+                    <h4>{{index+1}}. {{pregunta.desc_pregunta}}</h4>
+                </div>
+
+                <div *ngIf="pregunta.imagen!= ''" class="col-sm-8 col-md-10">
+
+                    <br/>
+                    <img class="img-responsive" mat-card-image src="http://localhost/websimulac/src/imagenes/{{pregunta.imagen}}">
+                </div>
+
+
+                <mat-radio-group class="example-radio-group">
+                    <mat-radio-button class="example-radio-button " *ngFor="let respuesta of pregunta.respuestas" [value]="respuesta.id_respuesta" (click)="radioSelected(respuesta.id_respuesta,index)">
+                        {{respuesta.desc_respuesta}}
+                    </mat-radio-button>
+                </mat-radio-group>
+
+
+
+
+
+
+            </mat-tab>
+        </mat-tab-group>
+
+
+        <mat-card-actions>
+            <div class="row  align-items-end" style="margin-left: 0%; margin-right: 0%; margin-left: 0%;margin-bottom: 0%; ">
+
+                <div class="col-xs-6 col-md-6 form-group align-self-end ">
+
+                    <div class="row ">
+                        <div class="col-xs-6 col-md-4 ">
+                            <button class="btn btn-outline-primary btn-block " (click)="previousTab()" type="submit ">Anterior</button>
+                        </div>
+                        <div class="col-xs-6 col-md-8 ">
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+                <div class="col-xs-6 col-md-6 form-group align-self-end ">
+
+                    <div class=" row ">
+                        <div class="col-xs-6 col-md-8 ">
+                        </div>
+                        <div class="col-xs-6 col-md-4 ">
+                            <button class="btn btn-primary float-right btn-block " (click)="nextTab()" type="submit ">{{btn_mensaje}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>

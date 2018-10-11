@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
+import { Estudiantes } from '../../../modelos/Estudiantes';
+import { NavbarEstudiantesService } from '../../../services/navbar-estudiantes.service';
 
 @Component({
   selector: 'app-navbar-estudiantes',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarEstudiantesComponent implements OnInit {
 
-  constructor() { }
+  @Input ('estudiante') estudiante: Estudiantes;
+  constructor(private _navbarService: NavbarEstudiantesService) { }
 
   ngOnInit() {
+    //console.log("id: "+this.estudiante.nombre);
+    this._navbarService.setEstudiante(this.estudiante);
   }
 
 }
