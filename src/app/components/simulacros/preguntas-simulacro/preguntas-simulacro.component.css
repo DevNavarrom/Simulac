@@ -5,6 +5,7 @@
 }
 
 .example-radio-group {
+    margin-left: 1em;
     display: inline-flex;
     flex-direction: column;
 }
@@ -16,9 +17,4 @@
 .example-selected-value {
     margin: 15px 0;
     color: blue;
-}
-
-.mdc-card {
-    border-radius: 8px;
-    overflow: hidden;
 }

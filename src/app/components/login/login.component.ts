@@ -74,9 +74,9 @@ ingresoEstudiante()
   
   if(this.estudiantesForm.value.idEstudiante != ''){
   this._estudiantesService.getEstudiante(this.estudiantesForm.value.idEstudiante).subscribe((res) => {
-    this.estudiante = res['datos'] ;
+    this.estudiante = res['datos'][0] ;
     
-    if(this.estudiante[0] !=null){
+    if(this.estudiante!=null){
       console.log("ingreso; "+this.estudiantesForm.value.idEstudiante);
         this.loginEstudent = false;
         this.login = false;
@@ -119,10 +119,12 @@ registrarNuevo(){
     estu.programa=estu.programa.toUpperCase();
     this._estudiantesService.postEstudiantes(estu).subscribe(datos => {
       if (datos['estado'] == 1) {
+        
         alert(datos['mensaje']);
+        this.estudiante=estu;
         this.loginEstudent = false;
         this.login = false;
-        this._router.navigate(['/estudiantes/simulacros']);
+        this._router.navigate(['/home']);
         
       } else {
         alert('No registrado');

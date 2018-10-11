@@ -65,9 +65,7 @@ switch ($metodo) {
 			case 'simulacros':
 			$vista->imprimir(SimulacroControlador::get($peticionArray));
 		  break;
-		  case 'preguntas':
-		  $vista->imprimir(PreguntasControlador::get($peticionArray));
-		break;
+		  
 				
             default:
                 throw new ExceptionApi(100, "ERROR URL");
@@ -86,6 +84,9 @@ switch ($metodo) {
 				break;
 				case 'temas':
 				$vista->imprimir(TemasControlador::post($peticionArray));
+				break;
+				case 'simulacros':
+				$vista->imprimir(SimulacroControlador::post($peticionArray));
 				break;
 				
             default:

@@ -2,23 +2,23 @@
     <mat-card class="mdc-card" [class.mat-elevation-z8]="true">
         <div>
             <div>
-                <span class="example-input-label"> Area: PROGRAMACIÓN </span>
+                <span class="example-input-label"> Area: {{simulacro.desc_area}} </span>
             </div>
             <div>
-                <span class="example-input-label"> Tema: VECTORES </span>
+                <span class="example-input-label"> Tema: {{simulacro.desc_tema}} </span>
             </div>
             <div>
-                <span class="example-input-label"> Simulacro: SM0023 </span>
+                <span class="example-input-label"> Simulacro: {{simulacro.id_simulacro}} </span>
             </div>
             <div>
-                <span class="example-input-label"> Examen: 00002 </span>
+                <span class="example-input-label"> Examen: {{simulacro.id_examen}} </span>
             </div>
             <div>
-                <span class="example-input-label"> Descripción: SIMULACRO PRIMER CORTE </span>
+                <span class="example-input-label"> Descripción: {{simulacro.desc_examen}} </span>
 
             </div>
             <div>
-                <span class="example-input-label"> Total preguntas: 0/{{num_preguntas}} </span>
+                <span class="example-input-label"> Total preguntas: {{num_respuestas}}/{{num_preguntas}} </span>
 
             </div>
 
@@ -40,8 +40,9 @@
                     <img class="img-responsive" mat-card-image src="http://localhost/websimulac/src/imagenes/{{pregunta.imagen}}">
                 </div>
 
+
                 <mat-radio-group class="example-radio-group">
-                    <mat-radio-button class="example-radio-button" *ngFor="let respuesta of pregunta.respuestas" [value]="respuesta.id_respuesta">
+                    <mat-radio-button class="example-radio-button " *ngFor="let respuesta of pregunta.respuestas" [value]="respuesta.id_respuesta" (click)="radioSelected(respuesta.id_respuesta,index)">
                         {{respuesta.desc_respuesta}}
                     </mat-radio-button>
                 </mat-radio-group>

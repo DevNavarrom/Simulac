@@ -26,7 +26,7 @@ const APP_ROUTES: Routes = [
     { path: 'preguntas', component: PreguntasComponent },
     { path: 'temas', component: TemasComponent },
     { path: 'estudiantes/simulacros', component: EstudiantesSimulacroComponent },
-    { path: 'estudiantes/simulacros/preguntas', component: PreguntasSimulacroComponent },    
+    { path: 'estudiantes/simulacros/:id', component: PreguntasSimulacroComponent },    
     { path: '**', pathMatch: 'full', redirectTo: 'login' }
 
     //{ path: 'inicio/:id', component: NavbarComponent },

@@ -43,6 +43,51 @@ class Simulacro {
 			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO ".$e->getMessage());
 		}
 	}
+
+	public static function insertarRespuestasSimulacro($infoRespuestas){
+        try{
+            $conexion = Conexion::getInstancia()->getConexion();
+			
+			$query = "INSERT INTO simulacro_respuestas (id_simulacro,id_estudiante,id_respuesta) VALUES (?, ?, ?);";
+
+			for($i=0;$i<count($infoRespuestas);++$i){
+			$sentencia = $conexion->prepare($query);
+			
+            $sentencia->bindParam(1, $infoRespuestas[$i]['id_simulacro']);
+			$sentencia->bindParam(2, $infoRespuestas[$i]['id_estudiante']);
+			$sentencia->bindParam(3, $infoRespuestas[$i]['id_respuesta']);
+			
+			if(($i==count($infoRespuestas)-1))
+			{
+				if($sentencia->execute()){
+					$q = "call spCalificarSimulacro(?,?);";
+					$sentencia = $conexion->prepare($q);
+					$sentencia->bindParam(1, $infoRespuestas[0]['id_simulacro']);
+					$sentencia->bindParam(2, $infoRespuestas[0]['id_estudiante']);
+					if($sentencia->execute()){
+					return 
+						[
+							
+							"estado" => CREACION_EXITOSA,
+							"mensaje" => "Simulacro guardado correctamente"
+						];
+					}else{
+						throw new ExceptionApi(CREACION_FALLIDA, "error en la sentencia");
+					}
+					
+				}else{
+					throw new ExceptionApi(CREACION_FALLIDA, "error en la sentencia");
+				}
+			}
+			else{
+				$sentencia->execute();
+			}
+		}
+		    
+        }catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO ".$e->getMessage());
+		}
+	}
 	public static function actualizarSimulacro($infoSimulacro){
         try{
             $conexion = Conexion::getInstancia()->getConexion();
@@ -75,8 +120,9 @@ class Simulacro {
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 
-			$sentencia = $conexion->prepare("SELECT ".self::ID.",  DATE_FORMAT(".self::FECHA.",'%d/%m/%Y') as fecha ,".self::RESPONSABLE.","
-			.self::GRUPO.", ".self::ESTADO." FROM ".self::TABLA);
+			$sentencia = $conexion->prepare("SELECT  ".self::ID.",  DATE_FORMAT(".self::FECHA.",'%d/%m/%Y') as fecha ,".self::RESPONSABLE.","
+			.self::GRUPO.", ".self::ESTADO." FROM ".self::TABLA." 
+			 ");
 		
 			if($sentencia->execute()){
 				http_response_code(200);
@@ -92,10 +138,11 @@ class Simulacro {
 			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO");
 		}
 	}
-	public static function getSimulacrosActivos(){
+	public static function getSimulacrosActivos($id){
         try{
             $conexion = Conexion::getInstancia()->getConexion();
-			$sentencia = $conexion->prepare("CALL `spSimulacrosActivos`();" );
+			$sentencia = $conexion->prepare("CALL `spSimulacrosActivos`(?);" );
+			$sentencia->bindParam(1, $id);
 		
 			if($sentencia->execute()){
 				http_response_code(200);
@@ -140,6 +187,7 @@ class Simulacro {
 			$conexion = Conexion::getInstancia()->getConexion();
 
 			$query = "DELETE FROM ".self::TABLA." WHERE ".self::ID." = ?;";
+		
 
 			$sentencia = $conexion->prepare($query);
 

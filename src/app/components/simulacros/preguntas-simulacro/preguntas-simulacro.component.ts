@@ -3,7 +3,14 @@ import { Preguntas } from '../../../modelos/Preguntas';
 import { Respuestas } from '../../../modelos/Respuestas';
 import {FormControl} from '@angular/forms';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { ActivatedRoute} from '@angular/router'
 import { PreguntasService } from '../../../services/preguntas.service';
+import { Simulacros } from '../../../modelos/Simulacros';
+import { SimulacrosService } from '../../../services/simulacros.service';
+import { Router } from '@angular/router';
+import { Estudiantes } from '../../../modelos/Estudiantes';
+import { NavbarEstudiantesService } from '../../../services/navbar-estudiantes.service';
+
 
 @Component({
   selector: 'app-preguntas-simulacro',
@@ -12,35 +19,93 @@ import { PreguntasService } from '../../../services/preguntas.service';
 })
 export class PreguntasSimulacroComponent implements OnInit {
 
-  @Input() dataShared:string;
-  
+  simulacro: any={};
   selected = new FormControl(0);
   preguntas: Preguntas[];
   respuestas:Respuestas[];
-  num_preguntas:number;
+  respuestas_selected: string[];
+  num_preguntas: number =0;
+  num_respuestas: number =0;
   index_tab:number=0;
   id_respuesta: string;//respuesta de una pregunta en expecifico
   btn_mensaje: string;
   error = '';
   success = '';
+  estudiante: Estudiantes;
  
- /* addTab() {
-    this.num_preguntas++;
-    this.tabs.push('New');
-   
-      this.selected.setValue(this.tabs.length - 1);
-    
-  }
-  */
+ 
   
-  constructor(private _preguntasService: PreguntasService) { }
+  constructor(private _preguntasService: PreguntasService,
+    private _activatedRouter: ActivatedRoute,
+    private _simulacroService: SimulacrosService,
+    private _router: Router,
+    private _navBarEstudiantesService: NavbarEstudiantesService) { 
 
+      this._activatedRouter.params.subscribe(params =>
+        {
+          this.cargarSimulacro(params['id']);
+        })
+    }
+
+    radioSelected(id: string,index: number){
+      if(this.respuestas_selected[index]== " "){this.num_respuestas++;}
+      this.respuestas_selected[index]=id;
+      
+
+    }
+  cargarSimulacro(id: string)
+  {
+    this._simulacroService.getBuscarSimulacro(id)
+    .subscribe((res) => {
+      this.simulacro = res['datos'][0];
+      this.cargarPreguntas(this.simulacro.id_examen);
+    },
+    (err) => {
+      this.error = err;
+      console.log("error:::"+this.error['message']);
+    }
+  );
+  }
+  
   nextTab()
   {
       if(this.preguntas.length >= (this.index_tab+1)) {
     this.selected.setValue(this.index_tab+1);
     }
+
+    if(this.btn_mensaje=="Finalizar")
+    {
+
+      if(this.validarRespuestas())
+      {
+        this.finalizarSimulacro();
+      }
+    }
   }
+
+  validarRespuestas(): boolean // valida que se hayan respondido todas las preguntas
+{
+  let j=-1;
+  for(let i=0; i<this.respuestas_selected.length;i++)
+  {
+    if(this.respuestas_selected[i]==" ")
+    {
+      j=i;
+      break;
+    }
+  }
+
+  if(j != -1){
+
+  alert("Faltan preguntas por responder");
+      this.selected.setValue(j);
+      return false;
+  }
+  else{
+    return true;
+  }
+
+}
   previousTab()
   {
       if(this.index_tab-1>=0) {
@@ -48,28 +113,14 @@ export class PreguntasSimulacroComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.estudiante= this._navBarEstudiantesService.getEstudiante();
+    // console.log("se o"+ this.estudiante.nombre);
 
-    console.log("data shared: "+this.dataShared);
-    this.mostrarPreguntas();
-    /*
-    this.btn_mensaje="Siguiente";
-    this.num_preguntas=0;
-    let re1 =new Respuestas("R12","21",false);
-    let re2 =new Respuestas("R13","4",true);
-    let re3 =new Respuestas("R14","0",false);
-    let re4 =new Respuestas("R15","5",false);
-    let res= [re1,re2,re3,re4];  
-    let pre= new Preguntas(23,"¿Cual es el valor de este array en la posición [3]?","2313","vector.png",res);
+    if(this.estudiante.id_estudiante == null){
 
-
-    let a =new Respuestas("0","Si",false);
-    let b =new Respuestas("2","No",true);
-  
-    let res2= [a,b];
-    let pre2= new Preguntas(23,"Un array es dimamico?","2313","",res2);
-    this.preguntas=[pre,pre2,pre2];
-   this.num_preguntas=this.preguntas.length;
-   */
+      alert("No se encontro el estudiante");
+    }
+    
     
   }
 
@@ -83,11 +134,59 @@ export class PreguntasSimulacroComponent implements OnInit {
     {
       this.btn_mensaje="Siguiente";
     }
+
+    
+  }
+  toJSON(id_simulacro: string,id_estu: string,respuestas: string []): any
+  {
+    let id_estudiante:number= parseInt( id_estu);
+    let datos: any []= new Array(respuestas.length);
+    for(let i=0;i< respuestas.length;i++)
+    {
+      datos[i]=
+      {
+        id_simulacro,
+        id_estudiante,
+        "id_respuesta":respuestas[i]
+      };
+
+    }
+    return datos;
   }
 
-  mostrarPreguntas(): void {
+  finalizarSimulacro()
+  {
+    if(confirm('¿Esta seguro que desea finalizar simulacro?')){
+
+      if(this.estudiante.id_estudiante != null){
+      let data=this.toJSON(this.simulacro.id_simulacro,this.estudiante.id_estudiante,this.respuestas_selected);
+      
+
+      this._simulacroService.postSimulacroRespuestas(data)
+        .subscribe((res) => {
+          alert(res['mensaje']);
+          this._router.navigate(['/estudiantes/simulacros']);
+
+          
+        },
+        (err) => {
+          this.error = err;
+        }
+      );
+      
+      }
+      else
+      {
+        alert("No se encontró el estudiante, por favor vuelva a ingresar")
+      }
+      }
+      
+
+  }
+
+  cargarPreguntas(id_examen: number): void {
     //console.log("mostrando...");
-    this._preguntasService.getPreguntas(1)
+    this._preguntasService.getPreguntas(id_examen)
       .subscribe((res) => {
        // this.estudiantes = res['datos'];
        this.procesarDatos(res['datos']);
@@ -97,12 +196,22 @@ export class PreguntasSimulacroComponent implements OnInit {
       }
     );
   }
+  inicializarRespuestas(lenght: number)
+  {
+    this.respuestas_selected= new Array(lenght);
+
+    for(let i=0; i<lenght;i++)
+    {
+       this.respuestas_selected[i]=" ";
+    }
+  }
   procesarDatos(data)
   {
 
     let id_pregunta=-1;
    
     this.num_preguntas=data[0].numero_preguntas;
+    this.inicializarRespuestas(this.num_preguntas);
     let preguntas: Preguntas[]= new Array(this.num_preguntas);
     
     let i=0;

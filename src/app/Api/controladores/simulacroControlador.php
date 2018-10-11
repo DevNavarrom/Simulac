@@ -17,7 +17,7 @@ class SimulacroControlador{
 			
 			if($peticion[0] == 'activos')
 			{
-				return Simulacro::getSimulacrosActivos();
+				return Simulacro::getSimulacrosActivos($peticion[1]);
 			}else{
 			return Simulacro::eliminarSimulacro($peticion[1]);
 			}
@@ -26,27 +26,22 @@ class SimulacroControlador{
 	}
 	
 	public static function post($peticion){
-		// obtenemos el fichero que viene con la peticion POST
-		$id=$_POST["txtIdSimulacro"];
-		$fecha=$_POST["txtFecha"];
-		$respon=$_POST["txtResponsable"];
-		$grupo=$_POST["txtGrupo"];
+	
+		$data = json_decode(file_get_contents('php://input'), true);
 
-		$datosArray = [
-			"id_simulacro" => $id,
-			"fecha" => $fecha,
-			"responsable" => $respon,
-			"grupo" => $grupo
-		];
+		
 
 		if(!empty($peticion[0])){
 			switch ($peticion[0]) {
 			
 				case 'registro':
-					return Simulacro::insertarSimulacro($datosArray);
-					break;
+				return Simulacro::insertarSimulacro($data);
+				break;
 				case 'editar':
-				return Simulacro::actualizarSimulacro($datosArray);
+				return Simulacro::actualizarSimulacro($data);
+				break;
+				case 'respuestas':
+				return Simulacro::insertarRespuestasSimulacro($data);				
 				break;
 				
 				default:
