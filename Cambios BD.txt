@@ -1,0 +1,14 @@
+Prcedimiento Almacenado: spBuscarPreguntas ##################
+11/10/18 - Jueves           ##################################
+#####################################################
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spBuscarPreguntas`(IN `idtema` VARCHAR(10))
+    NO SQL
+BEGIN
+
+select * from preguntas where id_tema LIKE idtema;
+
+END$$
+DELIMITER ;
+
+

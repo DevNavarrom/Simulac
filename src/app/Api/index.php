@@ -75,14 +75,17 @@ switch ($metodo) {
 			case 'estudiantes':
 				$vista->imprimir(EstudiantesControlador::post($peticionArray));
 				break;
-				case 'areas':
+			case 'areas':
 				$vista->imprimir(AreasControlador::post($peticionArray));
-                break;
-				case 'usuarios':
+				break;
+			case 'usuarios':
 				$vista->imprimir(UsuariosControlador::post($peticionArray));
 				break;
-				case 'temas':
+			case 'temas':
 				$vista->imprimir(TemasControlador::post($peticionArray));
+				break;
+			case 'preguntas':
+				$vista->imprimir(PreguntasControlador::post($peticionArray));
 				break;
 				
             default:

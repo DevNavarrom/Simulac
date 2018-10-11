@@ -3,7 +3,7 @@ require_once 'modelos/preguntas.php';
 require_once 'utils/constantes.php';
 require_once 'utils/ExceptionApi.php';
 
-class 	PreguntasControlador{
+class PreguntasControlador{
 
     public static function get($peticion){
 		if(count($peticion) == 0){
@@ -24,11 +24,13 @@ class 	PreguntasControlador{
 	}
 	
 	public static function post($peticion){
-        // obtenemos el fichero que viene con la peticion POST
-        $id=$_POST["txtIdPregunta"];
+		// obtenemos el fichero que viene con la peticion POST
+		$data = json_decode(file_get_contents('php://input'), true);
+
+        /*$id=$_POST["txtIdPregunta"];
 		$id_tema=$_POST["txtIdTema"];
         $desc=$_POST["txtDescripcion"];
-        //$imagen=$_POST["fileImagen"];
+        //$imagen=$_POST["fileImagen"];*/
 
 		//verifica si se ha subido una imagen
 	
@@ -55,21 +57,21 @@ class 	PreguntasControlador{
 		echo json_encode($cuerpo, JSON_PRETTY_PRINT);// imprimimos el JSON	
 
 	
-		$datosArray = [
+		/*$datosArray = [
             "id_pregunta" => $id,
 			"id_tema" => $id_tema,
             "desc_pregunta" => $desc,
             "imagen" => $_FILES['imagen']['name']
-		];
+		];*/
 
 		if(!empty($peticion[0])){
 			switch ($peticion[0]) {
-					case 'registro':
-					return Preguntas::insertarPregunta($datosArray);
+				case 'registro':
+					return Preguntas::insertarPregunta($data);
 					break;
 				case 'editar':
-				return Preguntas::actualizarPregunta($datosArray);
-				break;
+					return Preguntas::actualizarPregunta($datosArray);
+					break;
 				
 				default:
 					throw new ExceptionApi(PARAMETROS_INCORRECTOS, "parametros incorrectos");

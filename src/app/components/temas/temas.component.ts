@@ -59,32 +59,32 @@ export class TemasComponent implements OnInit {
 
   registrarTema(): void {
 
-this.tema.id_area=this.area_select;
+    this.tema.id_area = this.area_select;
 
-if (this.tema.id_tema != '' && this.tema.desc_tema != '' ) {
+    if (this.tema.id_tema != '' && this.tema.desc_tema != '') {
 
-  if(this.area_select != "0"){
+      if (this.area_select != "0") {
 
-  this.tema.desc_tema = this.tema.desc_tema.toUpperCase();
-  this.tema.id_tema=this.tema.id_tema.toUpperCase();
- this._temasService.postTema(this.tema).subscribe(datos => {
- if (datos['estado'] == 1) {
-   alert(datos['mensaje']);
-   this.mostrarTodas();
- } else if (datos['estado'] == 23000) {
-   alert('El tema ya se encuentra registrado');
- }       else {
-   alert('No guardado');
- }
+        this.tema.desc_tema = this.tema.desc_tema.toUpperCase();
+        this.tema.id_tema = this.tema.id_tema.toUpperCase();
+        this._temasService.postTema(this.tema).subscribe(datos => {
+          if (datos['estado'] == 1) {
+            alert(datos['mensaje']);
+            this.mostrarTodas();
+          } else if (datos['estado'] == 23000) {
+            alert('El tema ya se encuentra registrado');
+          } else {
+            alert('No guardado');
+          }
 
-});
-  }
-  else {
-    alert('Seleccione un area');
+        });
+      }
+      else {
+        alert('Seleccione un area');
+      }
+    } else {
+      alert('Faltan datos por llenar');
     }
-} else {
-alert('Faltan datos por llenar');
-}
 
   }
 

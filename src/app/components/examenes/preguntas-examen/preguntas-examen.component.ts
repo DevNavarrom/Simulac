@@ -70,7 +70,8 @@ export class PreguntasExamenComponent implements OnInit {
       id_pregunta : pre.id_pregunta,
       desc_pregunta : pre.desc_pregunta,
       id_area : this.id_area,
-      id_tema : this.id_tema
+      id_tema : this.id_tema,
+      imagen: ''
     }
     this.dialogRef.close(_pre);
   }

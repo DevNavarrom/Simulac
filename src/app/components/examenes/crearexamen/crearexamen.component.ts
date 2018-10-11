@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AreasService } from '../../../services/areas.service';
 import { TemasService } from '../../../services/temas.service';
+import { PreguntasService } from '../../../services/preguntas.service';
+
 import { MatDialog } from '@angular/material';
 import { PreguntasExamenComponent } from '../preguntas-examen/preguntas-examen.component';
 import { Preguntas, DialogDataPreguntas } from '../../../modelos/Preguntas';
@@ -17,11 +19,12 @@ export class CrearexamenComponent implements OnInit {
   error = '';
   area_select:string;
   tema_select:string;
+  descrip_pregunta:string;
   id_area:string;
   pregunta:DialogDataPreguntas;
   private preguntas:DialogDataPreguntas[] = [];
 
-  constructor(private _areasService: AreasService, private _temasService:TemasService, public dialog: MatDialog) { }
+  constructor(private _preguntasService:PreguntasService, private _areasService: AreasService, private _temasService:TemasService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.cargarAreas();
@@ -38,13 +41,14 @@ export class CrearexamenComponent implements OnInit {
       id_pregunta: '0',
       desc_pregunta: '',
       id_area: this.area_select,
-      id_tema:this.tema_select
+      id_tema:this.tema_select,
+      imagen: ''
     }
     console.log(this.pregunta);
 
     const dialogRef = this.dialog.open(PreguntasExamenComponent, {
       panelClass: 'my-panel',
-      width: '750px',
+      width: '850px',
       data: this.pregunta
     });
       dialogRef.afterClosed().subscribe(result => {
@@ -55,9 +59,6 @@ export class CrearexamenComponent implements OnInit {
       }
       console.log(result);
       this.preguntas.push(result);
-      console.log(this.preguntas.length);
-      //TODO: llenar tabla con array de preguntas
-
       
       });
   }
@@ -86,6 +87,21 @@ export class CrearexamenComponent implements OnInit {
         this.error = err;
       }
     );
+  }
+
+  registrarPregunta() {
+    this._preguntasService.postPreguntas(this.pregunta).subscribe(datos => {
+      if (datos['estado'] == 1) {
+        alert(datos['mensaje']);
+        //TODO cambiar campo id_pregunta, quitar auto_increment para poder relacionar respuestas
+        //TODO hacer procedimiento almacenado donde se haga select de la cantidad de preguntas y crear id el cual se retornara
+        //TODO invocar metodo para guardar respuestas
+      } else if (datos['estado'] == 23000) {
+        alert('El area ya se encuentra registrada');
+      }       else {
+        alert('No guardado');
+      }
+    });
   }
 
 }

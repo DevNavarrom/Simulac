@@ -18,14 +18,14 @@ class Preguntas {
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 			
-			$query = "INSERT INTO ".self::TABLA."( ".self::ID.", ".self::ID_TEMA.",".self::DESCRIPCION.",".self::IMAGEN.") VALUES (?, ?, ?, ?);";
+			$query = "INSERT INTO ".self::TABLA."( ".self::ID_TEMA.",".self::DESCRIPCION.",".self::IMAGEN.") VALUES (?, ?, ?);";
         
             $sentencia = $conexion->prepare($query);
 		
-			$sentencia->bindParam(1, $infoPregunta[self::ID]);			
-            $sentencia->bindParam(2, $infoPregunta[self::ID_TEMA]);
-            $sentencia->bindParam(3, $infoPregunta[self::DESCRIPCION]);
-            $sentencia->bindParam(4,$infoPregunta[self::IMAGEN]);
+			//$sentencia->bindParam(1, $infoPregunta[self::ID]);			
+            $sentencia->bindParam(1, $infoPregunta[self::ID_TEMA]);
+            $sentencia->bindParam(2, $infoPregunta[self::DESCRIPCION]);
+            $sentencia->bindParam(3,$infoPregunta[self::IMAGEN]);
 		
             if($sentencia->execute()){
 				return 
@@ -41,6 +41,8 @@ class Preguntas {
 			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO ".$e->getMessage());
 		}
 	}
+
+	
 	public static function actualizarPregunta($infoPregunta){
         try{
             $conexion = Conexion::getInstancia()->getConexion();

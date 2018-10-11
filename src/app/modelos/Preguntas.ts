@@ -24,4 +24,5 @@ export interface DialogDataPreguntas {
     desc_pregunta: string;
     id_area: string;
     id_tema: string;
+    imagen: string;
   }
