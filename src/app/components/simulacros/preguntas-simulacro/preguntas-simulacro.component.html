@@ -2,23 +2,23 @@
     <mat-card class="mdc-card" [class.mat-elevation-z8]="true">
         <div>
             <div>
-                <span class="example-input-label"> Area: {{simulacro.desc_area}} </span>
+                <h6> Area: {{simulacro.desc_area}} </h6>
             </div>
             <div>
-                <span class="example-input-label"> Tema: {{simulacro.desc_tema}} </span>
+                <h6> Tema: {{simulacro.desc_tema}} </h6>
             </div>
             <div>
-                <span class="example-input-label"> Simulacro: {{simulacro.id_simulacro}} </span>
+                <h6> Simulacro: {{simulacro.id_simulacro}} </h6>
             </div>
             <div>
-                <span class="example-input-label"> Examen: {{simulacro.id_examen}} </span>
+                <h6> Examen: {{simulacro.id_examen}} </h6>
             </div>
             <div>
-                <span class="example-input-label"> Descripción: {{simulacro.desc_examen}} </span>
+                <h6> Descripción: {{simulacro.desc_examen}} </h6>
 
             </div>
             <div>
-                <span class="example-input-label"> Total preguntas: {{num_respuestas}}/{{num_preguntas}} </span>
+                <h6>Total preguntas: {{num_respuestas}}/{{num_preguntas}} </h6>
 
             </div>
 
@@ -42,7 +42,7 @@
 
 
                 <mat-radio-group class="example-radio-group">
-                    <mat-radio-button class="example-radio-button " *ngFor="let respuesta of pregunta.respuestas" [value]="respuesta.id_respuesta" (click)="radioSelected(respuesta.id_respuesta,index)">
+                    <mat-radio-button class="example-radio-button " *ngFor="let respuesta of pregunta.respuestas" [value]="respuesta.id_respuesta" color="primary" (click)="radioSelected(respuesta.id_respuesta,index)">
                         {{respuesta.desc_respuesta}}
                     </mat-radio-button>
                 </mat-radio-group>

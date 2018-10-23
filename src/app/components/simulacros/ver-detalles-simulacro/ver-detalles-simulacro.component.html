@@ -1,0 +1,82 @@
+<div class="col-sm-8 col-md-12 contact-form" style="float: none;margin: 0 auto;">
+
+    <form style="margin-top: 1em;">
+        <div class="row">
+            <div class="col-md-3 form-group " style="margin-bottom:   0%;">
+                <h6>Simulacro ID: {{simulacro.id_simulacro}}</h6>
+            </div>
+            <div class="col-md-6 form-group " style="margin-bottom:  0%;">
+                <h6>Examen: {{simulacro.id_examen}}-{{simulacro.desc_examen}}</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 form-group " style="margin-bottom:   0%;">
+                <h6>Fecha: {{simulacro.fecha}}</h6>
+            </div>
+            <div class="col-md-6 form-group " style="margin-bottom:   0%;">
+                <h6>Promedio: {{simulacro.promedio/simulacro.participantes}}</h6>
+            </div>
+        </div>
+        <div class="row" style="padding-bottom:  0%;">
+            <div class="col-md-3 form-group " style="margin-bottom:   0%;">
+                <h6>Estado: <span class="badge badge-primary"> {{simulacro.estado}} </span></h6>
+
+            </div>
+            <div class=" col-md-6 form-group " style="margin-bottom:   0%;">
+                <h6>Participantes: {{simulacro.participantes}}</h6>
+            </div>
+        </div>
+
+        <div class="row " style="margin-bottom: 0.4em;margin-top: 0.5em">
+            <div class="col-xs-6 col-md-12 form-group ">
+                <input class="form-control " id="inputBuscar " name="txtBuscar " [(ngModel)]="datoBuscar" placeholder="Buscar estudiante" type="text " (ngModelChange)="cargarDetalles()" />
+            </div>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col ">Identificación</th>
+                    <th scope="col ">Nombres</th>
+                    <th scope="col ">F. Presentación</th>
+                    <th scope="col ">P. Correctas</th>
+                    <th scope="col ">T. Preguntas</th>
+                    <th scope="col ">Calificación</th>
+                    <th scope="col ">Respuestas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of resultados ">
+                    <td>{{item.id_estudiante}}</td>
+                    <td>{{item.nombre}}</td>
+                    <td align="center ">{{item.fecha}}</td>
+                    <td align="center ">{{item.preguntas_correctas}}</td>
+                    <td align="center ">{{item.preguntas_totales}}</td>
+                    <td align="center ">{{item.calificacion}}</td>
+
+                    <td align="center ">
+                        <button class="btn btn-sm btn-success " (click)="verRespuestas(item)">
+                  <img class="rounded float-left btn-borrar "  height="18 " src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCIgdmlld0JveD0iMCAwIDQ1Ni43OTUgNDU2Ljc5NSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDU2Ljc5NSA0NTYuNzk1OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTQ0OC45NDcsMjE4LjQ3NWMtMC45MjItMS4xNjgtMjMuMDU1LTI4LjkzMy02MS01Ni44MWMtNTAuNzA1LTM3LjI1My0xMDUuODc3LTU2Ljk0NC0xNTkuNTUxLTU2Ljk0NCAgICBjLTUzLjY3MiwwLTEwOC44NDQsMTkuNjkxLTE1OS41NTEsNTYuOTQ0Yy0zNy45NDQsMjcuODc2LTYwLjA3Nyw1NS42NDItNjEsNTYuODFMMCwyMjguMzk3bDcuODQ2LDkuOTIzICAgIGMwLjkyMywxLjE2OCwyMy4wNTYsMjguOTM0LDYxLDU2LjgxMWM1MC43MDcsMzcuMjUyLDEwNS44NzksNTYuOTQzLDE1OS41NTEsNTYuOTQzYzUzLjY3MywwLDEwOC44NDUtMTkuNjkxLDE1OS41NS01Ni45NDMgICAgYzM3Ljk0NS0yNy44NzcsNjAuMDc4LTU1LjY0Myw2MS01Ni44MTFsNy44NDgtOS45MjNMNDQ4Ljk0NywyMTguNDc1eiBNMjI4LjM5NiwzMTUuMDM5Yy00Ny43NzQsMC04Ni42NDItMzguODY3LTg2LjY0Mi04Ni42NDIgICAgYzAtNy40ODUsMC45NTQtMTQuNzUxLDIuNzQ3LTIxLjY4NGwtMTkuNzgxLTMuMzI5Yy0xLjkzOCw4LjAyNS0yLjk2NiwxNi40MDEtMi45NjYsMjUuMDEzYzAsMzAuODYsMTMuMTgyLDU4LjY5NiwzNC4yMDQsNzguMTg3ICAgIGMtMjcuMDYxLTkuOTk2LTUwLjA3Mi0yNC4wMjMtNjcuNDM5LTM2LjcwOWMtMjEuNTE2LTE1LjcxNS0zNy42NDEtMzEuNjA5LTQ2LjgzNC00MS40NzhjOS4xOTctOS44NzIsMjUuMzItMjUuNzY0LDQ2LjgzNC00MS40NzggICAgYzE3LjM2Ny0xMi42ODYsNDAuMzc5LTI2LjcxMyw2Ny40MzktMzYuNzFsMTMuMjcsMTQuOTU4YzE1LjQ5OC0xNC41MTIsMzYuMzEyLTIzLjQxMiw1OS4xNjgtMjMuNDEyICAgIGM0Ny43NzQsMCw4Ni42NDEsMzguODY3LDg2LjY0MSw4Ni42NDJDMzE1LjAzNywyNzYuMTcyLDI3Ni4xNywzMTUuMDM5LDIyOC4zOTYsMzE1LjAzOXogTTM2OC4yNzMsMjY5Ljg3NSAgICBjLTE3LjM2OSwxMi42ODYtNDAuMzc5LDI2LjcxMy02Ny40MzksMzYuNzA5YzIxLjAyMS0xOS40OSwzNC4yMDMtNDcuMzI2LDM0LjIwMy03OC4xODhzLTEzLjE4Mi01OC42OTctMzQuMjAzLTc4LjE4OCAgICBjMjcuMDYxLDkuOTk3LDUwLjA3LDI0LjAyNCw2Ny40MzksMzYuNzFjMjEuNTE2LDE1LjcxNSwzNy42NDEsMzEuNjA5LDQ2LjgzNCw0MS40NzcgICAgQzQwNS45MSwyMzguMjY5LDM4OS43ODcsMjU0LjE2MiwzNjguMjczLDI2OS44NzV6IiBmaWxsPSIjRkZGRkZGIi8+CgkJPHBhdGggZD0iTTE3My4yNjEsMjExLjU1NWMtMS42MjYsNS4zMjktMi41MDcsMTAuOTgyLTIuNTA3LDE2Ljg0M2MwLDMxLjgzNCwyNS44MDcsNTcuNjQyLDU3LjY0Miw1Ny42NDIgICAgYzMxLjgzNCwwLDU3LjY0MS0yNS44MDcsNTcuNjQxLTU3LjY0MnMtMjUuODA3LTU3LjY0Mi01Ny42NDEtNTcuNjQyYy0xNS41MDYsMC0yOS41NzEsNi4xMzQtMzkuOTMyLDE2LjA5NGwyOC40MzIsMzIuMDQ4ICAgIEwxNzMuMjYxLDIxMS41NTV6IiBmaWxsPSIjRkZGRkZGIi8+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==">
+                </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row" style="margin-left: 0%; margin-right: 0%;padding-right: 0%">
+
+            <div class="col-xs-6 col-md-10 form-group btn-block">
+            </div>
+
+
+            <br/>
+            <div class="col-xs-6 col-md-2 form-group  btn-block">
+                <button class="btn btn-primary float-right  btn-block" type="submit" (click)="onNoClick()">Aceptar</button>
+
+            </div>
+        </div>
+
+
+
+    </form>
+</div>

@@ -7,9 +7,16 @@ import { Estudiantes } from '../modelos/Estudiantes'
 export  class NavbarEstudiantesService {
 
   static estudiante: Estudiantes;
+  static datosSimulacroEstudiante: any;
 
   @Output() change: EventEmitter<Estudiantes> = new EventEmitter();
+  
 
+  getData()
+  {
+    //console.log(NavbarEstudiantesService.datosSimulacroEstudiante);
+    return NavbarEstudiantesService.datosSimulacroEstudiante;
+  }
   getEstudiante()
   {
    // this.change.emit(this.estudiante);
@@ -18,7 +25,11 @@ export  class NavbarEstudiantesService {
   setEstudiante(estudiante: Estudiantes)
   {
     NavbarEstudiantesService.estudiante= estudiante;
-   //console.log(NavbarEstudiantesService.estudiante);
+  }
+  setData(data: any)
+  {
+    //console.log(data);
+    NavbarEstudiantesService.datosSimulacroEstudiante=data;
   }
 
   constructor() { }

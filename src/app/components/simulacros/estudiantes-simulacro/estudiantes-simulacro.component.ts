@@ -43,7 +43,7 @@ export class EstudiantesSimulacroComponent implements OnInit {
     this._simulacroService.getSimulacrosActivos(this.estudiante.id_estudiante)
       .subscribe((res) => {
         this.simulacros = res['datos'];
-        console.log(res['datos'][0]);
+        //console.log(res['datos'][0]);
         if(res['datos'][0] == null)
         {
           alert("No tiene simulacros por realizar");

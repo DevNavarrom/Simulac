@@ -1,0 +1,113 @@
+<div class="col-sm-8 col-md-12 contact-form" style="float: none;margin: 0 auto; ">
+    <mat-card class="mdc-card" [class.mat-elevation-z8]="true">
+        <div>
+            <div>
+                <h6> Simulacro: {{data.id_simulacro}} </h6>
+            </div>
+            <div>
+                <h6> Examen: {{data.id_examen}} - {{data.desc_examen}} </h6>
+            </div>
+            <div>
+                <h6> Estudiante: {{data.id_estudiante}} - {{data.nombre}} </h6>
+            </div>
+            <div>
+                <h6> Fecha de presentación: {{data.fecha_presentacion}} </h6>
+            </div>
+            <div>
+                <h6> Preguntas correctas: {{data.preguntas_correctas}} </h6>
+            </div>
+            <div>
+                <h6>Total preguntas: {{data.preguntas_totales}} </h6>
+
+            </div>
+            <div>
+                <h6>Calificación: <span class="badge badge-primary"> {{data.calificacion}} </span> </h6>
+
+            </div>
+
+
+        </div>
+
+        <br/>
+
+        <mat-accordion *ngFor="let pregunta of preguntas; let index = index">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header class="right-aligned-header">
+                    <mat-panel-title>
+                        <h6>{{index+1}}. {{pregunta.desc_pregunta}}</h6>
+                    </mat-panel-title>
+                    <mat-panel-description>
+
+                        <ng-container *ngFor="let r of pregunta.respuestas">
+
+                            <ng-container *ngIf="r.correcta == '1'">
+                                <ng-container *ngIf="r.id_respuesta == estudiante_respuesta[index].id_respuesta">
+                                    <h6 style="color: green"> Correcta</h6>
+                                </ng-container>
+                                <ng-container *ngIf="r.id_respuesta != estudiante_respuesta[index].id_respuesta">
+                                    <h6 style="color: red"> Incorrecta</h6>
+                                </ng-container>
+
+                            </ng-container>
+
+                        </ng-container>
+
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div *ngIf="pregunta.imagen!= ''" class="col-sm-8 col-md-10">
+
+                    <br/>
+                    <img class="img-responsive" mat-card-image src="http://localhost/websimulac/src/imagenes/{{pregunta.imagen}}">
+                </div>
+
+
+
+                <mat-radio-group class="example-radio-group">
+
+                    <ng-container *ngFor="let respuesta of pregunta.respuestas">
+
+
+                        <ng-container *ngIf="respuesta.correcta == '0'">
+
+                            <ng-container *ngIf="respuesta.id_respuesta == estudiante_respuesta[index].id_respuesta">
+                                <mat-radio-button class="rdIncorrecta" color="primary" [checked]="true" [value]=" respuesta.id_respuesta" (change)="change($event,index)">
+                                    {{respuesta.desc_respuesta}}
+                                </mat-radio-button>
+                            </ng-container>
+
+                            <ng-container *ngIf="respuesta.id_respuesta != estudiante_respuesta[index].id_respuesta">
+                                <mat-radio-button class="rdOtra" color="primary" [value]=" respuesta.id_respuesta " (change)="change($event,index)" disableRipple="true">
+                                    {{respuesta.desc_respuesta}}
+                                </mat-radio-button>
+                            </ng-container>
+
+                        </ng-container>
+                        <ng-container *ngIf="respuesta.correcta == '1'">
+                            <mat-radio-button class="rdCorrecta" color="primary" [checked]="respuesta.id_respuesta == estudiante_respuesta[index].id_respuesta" [value]=" respuesta.id_respuesta " (change)="change($event,index)">
+                                {{respuesta.desc_respuesta}}
+                            </mat-radio-button>
+
+                        </ng-container>
+
+                    </ng-container>
+
+
+                </mat-radio-group>
+
+
+
+                <!-- <ng-container *ngFor="let respuesta of pregunta.respuestas">
+                    <ng-container [ngSwitch]="options">
+                        <ng-container *ngSwitchCase="options === 'a'">Code A</ng-container>
+                        <ng-container *ngSwitchCase="options === 'b'">Code B</ng-container>
+                        <ng-container *ngSwitchCase="options === 'c'">Code C</ng-container>
+                        <ng-container *ngSwitchCase="options === 'd' || options === 'e' || options === 'f'">Common Code</ng-container>
+                        <ng-container *ngSwitchDefault>Code Default</ng-container>
+                    </ng-container>
+                </ng-container>
+            -->
+            </mat-expansion-panel>
+
+        </mat-accordion>
+    </mat-card>
+</div>

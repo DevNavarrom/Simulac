@@ -85,13 +85,10 @@ switch ($metodo) {
 			case 'temas':
 				$vista->imprimir(TemasControlador::post($peticionArray));
 				break;
-<<<<<<< HEAD
 			case 'preguntas':
 				$vista->imprimir(PreguntasControlador::post($peticionArray));
-=======
 				case 'simulacros':
 				$vista->imprimir(SimulacroControlador::post($peticionArray));
->>>>>>> d51c35aa317df4678bfd5c4c665eab5c7dfd1e1b
 				break;
 				
             default:

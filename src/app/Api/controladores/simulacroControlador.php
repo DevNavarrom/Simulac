@@ -18,9 +18,15 @@ class SimulacroControlador{
 			if($peticion[0] == 'activos')
 			{
 				return Simulacro::getSimulacrosActivos($peticion[1]);
-			}else{
+			}else if($peticion[0] == 'eliminar'){
 			return Simulacro::eliminarSimulacro($peticion[1]);
 			}
+			else if($peticion[0] == 'detalles'){
+				return Simulacro::getSimulacroDetalles($peticion[1],$peticion[2]);
+				}
+				else if($peticion[0] == 'respuestas'){
+					return Simulacro::getRespuestaEstudiante($peticion[1],$peticion[2]);
+					}
 		}
 	
 	}
@@ -43,6 +49,10 @@ class SimulacroControlador{
 				case 'respuestas':
 				return Simulacro::insertarRespuestasSimulacro($data);				
 				break;
+				case 'buscar':
+				return Simulacro::getBuscarSimulacros($data);				
+				break;
+				
 				
 				default:
 					throw new ExceptionApi(PARAMETROS_INCORRECTOS, "parametros incorrectos");

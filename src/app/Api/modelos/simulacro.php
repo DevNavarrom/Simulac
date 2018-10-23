@@ -19,7 +19,7 @@ class Simulacro {
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 			
-			$query = "INSERT INTO ".self::TABLA."( ".self::ID.", ".self::FECHA.", ".self::RESPONSABLE.", ".self::GRUPO.") VALUES (?, ?, ?, ?);";
+			$query = "INSERT INTO ".self::TABLA."( ".self::ID.", ".self::FECHA.", ".self::RESPONSABLE.", ".self::GRUPO.", estado) VALUES (?, ?, ?, ?,?);";
 			
                 
 			$sentencia = $conexion->prepare($query);
@@ -28,6 +28,7 @@ class Simulacro {
 			$sentencia->bindParam(2, $infoSimulacro[self::FECHA]);
 			$sentencia->bindParam(3, $infoSimulacro[self::RESPONSABLE]);
 			$sentencia->bindParam(4, $infoSimulacro[self::GRUPO]);
+			$sentencia->bindParam(5, $infoSimulacro['estado']);
 		
             if($sentencia->execute()){
 				return 
@@ -138,6 +139,57 @@ class Simulacro {
 			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO");
 		}
 	}
+
+	public static function getSimulacroDetalles($id,$dato){
+        try{
+            $conexion = Conexion::getInstancia()->getConexion();
+
+			$sentencia = $conexion->prepare("call spVerDetalleSimulacro('$id','%$dato%');");
+		
+			if($sentencia->execute()){
+				http_response_code(200);
+				return
+					[
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+					];
+			}else{
+				throw new ExceptionApi(ESTADO_FALLIDO, "error en la consulta");
+			}
+        }catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "error,, en conexion PDO".$e->getMessage());
+		}
+	}
+
+
+	public static function getRespuestaEstudiante($id_simulacro,$id_estudiante){
+        try{
+            $conexion = Conexion::getInstancia()->getConexion();
+
+			$sentencia = $conexion->prepare("SELECT id_respuesta FROM simulacro_respuestas natural join respuestas 
+			natural join preguntas where id_simulacro= ? and id_estudiante = ? order by desc_pregunta;");
+			$sentencia->bindParam(1, $id_simulacro);
+            $sentencia->bindParam(2, $id_estudiante);
+			
+		
+
+			if($sentencia->execute()){
+				http_response_code(200);
+				return
+					[
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+					];
+			}else{
+				throw new ExceptionApi(ESTADO_FALLIDO, "error en la consulta");
+			}
+        }catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "error,, en conexion PDO".$e->getMessage());
+		}
+	}
+
+
+
 	public static function getSimulacrosActivos($id){
         try{
             $conexion = Conexion::getInstancia()->getConexion();
@@ -156,6 +208,29 @@ class Simulacro {
 			}
         }catch(PDOException $e){
 			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO");
+		}
+	}
+
+
+	public static function getBuscarSimulacros($datos){
+        try{
+            $conexion = Conexion::getInstancia()->getConexion();
+			$sentencia = $conexion->prepare("CALL `spBuscarSimulacros`('"
+			.$datos['data']."%','".$datos['estado']."%','". $datos['fecha']."%','%".$datos['idExamen']."%');" );
+
+		
+			if($sentencia->execute()){
+				http_response_code(200);
+				return
+					[
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+					];
+			}else{
+				throw new ExceptionApi(ESTADO_FALLIDO, "error en la consulta");
+			}
+        }catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO".$e->getMessage());
 		}
 	}
 	
@@ -186,8 +261,7 @@ class Simulacro {
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
-			$query = "DELETE FROM ".self::TABLA." WHERE ".self::ID." = ?;";
-		
+			$query = "call spEliminarSimulacro(?);";	
 
 			$sentencia = $conexion->prepare($query);
 

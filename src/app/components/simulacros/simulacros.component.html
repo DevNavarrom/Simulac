@@ -1,0 +1,88 @@
+<div class="col-sm-8 col-md-11 contact-form" style="float: none;margin: 0 auto; ">
+    <form>
+        <div class="row">
+            <div class="col-xs-4 col-md-7 " style="margin-top: 0.7em">
+                <select class="form-control " id="selEstado " name="selEstado" [(ngModel)]="estado" (ngModelChange)="buscarSimulacro()">
+                   
+                    <option value="" selected>Estado</option>
+                    <option value="ACTIVO">ACTIVO</option>
+                    <option value="FINALIZADO">FINALIZADO</option>
+                    <option value="SUSPENDIDO">SUSPENDIDO</option>
+                    <option value="APLAZADO">APLAZADO</option>
+                    <option value="">TODOS</option>
+
+
+                </select>
+            </div>
+            <div class="row  col-xs-6 col-md-5 " style="margin-top: 1em">
+                <div class=" col-xs-6 col-md-6 ">
+                    <mat-checkbox color="primary" name="check" cheked="checked" (change)="change($event)" [(ngModel)]="checked">
+                        Cualquier fecha
+                    </mat-checkbox>
+                </div>
+                <div class=" col-xs-6 col-md-6 " style="margin-top: 0em">
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="picker " (dateChange)="changeDate($event)" placeholder="Seleccione la fecha " name="dcFecha" [formControl]="fecha">
+                        <mat-datepicker-toggle matSuffix [for]="picker " name="dpToggle"></mat-datepicker-toggle>
+                        <mat-datepicker [(ngModel)]="fecha" #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row ">
+            <div class="col-xs-6 col-md-7 form-group ">
+                <input class="form-control " id="inputBuscar " name="txtBuscar " [(ngModel)]="data " placeholder="Buscar simulacro por ID, Responsable, Grupo " type="text " (ngModelChange)="buscarSimulacro() " />
+            </div>
+            <div class="col-xs-6 col-md-5 ">
+
+                <input class="form-control " id="inputExamen " name="txtExamen " [(ngModel)]="idExamen " placeholder="ID Examen " type="text " (ngModelChange)="buscarSimulacro() " />
+
+            </div>
+        </div>
+
+
+        <table class="table table-striped ">
+            <thead>
+                <tr>
+                    <th scope="col ">Id</th>
+                    <th scope="col ">Examen</th>
+                    <th scope="col ">Fecha</th>
+                    <th scope="col ">Responsable</th>
+                    <th scope="col ">Grupo</th>
+                    <th scope="col ">Estado</th>
+                    <th scope="col ">Editar</th>
+                    <th scope="col ">Eliminar</th>
+                    <th scope="col ">Resultados</th>
+
+                </tr>
+            </thead>
+            <tr *ngFor="let item of simulacros ">
+                <td>{{item.id_simulacro}}</td>
+                <td>{{item.id_examen}}-{{item.desc_examen}}</td>
+                <td>{{item.fecha}}</td>
+                <td>{{item.responsable}}</td>
+                <td>{{item.grupo}}</td>
+                <td>{{item.estado}}</td>
+                <td align="center ">
+                    <button class="btn btn-sm btn-success " (click)="editarSimulacro(item)">
+                    <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIC0xIDM4MS41MzQxNyAzODEiIHdpZHRoPSI1MTJweCI+PHBhdGggZD0ibTM3MC41ODk4NDQgMjMwLjk2NDg0NGMtNS41MjM0MzggMC0xMCA0LjQ3NjU2Mi0xMCAxMHY4OC43OTI5NjhjLS4wMTk1MzIgMTYuNTU4NTk0LTEzLjQzNzUgMjkuOTgwNDY5LTMwIDMwaC0yODAuNTg5ODQ0Yy0xNi41NjI1LS4wMTk1MzEtMjkuOTgwNDY5LTEzLjQ0MTQwNi0zMC0zMHYtMjYwLjU4OTg0M2MuMDE5NTMxLTE2LjU2MjUgMTMuNDM3NS0yOS45ODA0NjkgMzAtMzBoODguNzg5MDYyYzUuNTIzNDM4IDAgMTAtNC40NzY1NjMgMTAtMTAgMC01LjUyMzQzOC00LjQ3NjU2Mi0xMC0xMC0xMGgtODguNzg5MDYyYy0yNy42MDE1NjIuMDMxMjUtNDkuOTY4NzUgMjIuMzk4NDM3LTUwIDUwdjI2MC41ODk4NDNjLjAzMTI1IDI3LjYwMTU2MyAyMi4zOTg0MzggNDkuOTY4NzUgNTAgNTBoMjgwLjU4OTg0NGMyNy42MDE1NjItLjAzMTI1IDQ5Ljk2ODc1LTIyLjM5ODQzNyA1MC01MHYtODguNzg5MDYyYzAtNS41MjM0MzgtNC40NzY1NjMtMTAuMDAzOTA2LTEwLTEwLjAwMzkwNnptMCAwIiBmaWxsPSIjRkZGRkZGIi8+PHBhdGggZD0ibTE1Ni4zNjcxODggMTc4LjM0Mzc1IDE0Ni4wMTE3MTgtMTQ2LjAxNTYyNSA0Ny4wODk4NDQgNDcuMDg5ODQ0LTE0Ni4wMTE3MTkgMTQ2LjAxNTYyNXptMCAwIiBmaWxsPSIjRkZGRkZGIi8+PHBhdGggZD0ibTEzMi41NDI5NjkgMjQ5LjI1NzgxMiA1Mi4wMzkwNjItMTQuNDE0MDYyLTM3LjYyNS0zNy42MjV6bTAgMCIgZmlsbD0iI0ZGRkZGRiIvPjxwYXRoIGQ9Im0zNjIuNDg4MjgxIDcuNTc4MTI1Yy05Ljc2OTUzMS05Ljc0NjA5NC0yNS41ODU5MzctOS43NDYwOTQtMzUuMzU1NDY5IDBsLTEwLjYwNTQ2OCAxMC42MDU0NjkgNDcuMDg5ODQ0IDQ3LjA4OTg0NCAxMC42MDU0NjgtMTAuNjA1NDY5YzkuNzUtOS43Njk1MzEgOS43NS0yNS41ODU5MzggMC0zNS4zNTU0Njl6bTAgMCIgZmlsbD0iI0ZGRkZGRiIvPjwvc3ZnPgo="
+                      class=" rounded float-left " alt="x " height="18 ">
+                  </button>
+                </td>
+                <td align="center ">
+                    <button class="btn btn-sm btn-danger " (click)="eliminarSimulacro(item.id_simulacro)">
+                    <img class="rounded float-left btn-borrar " height="18 " src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTM5NC42NjcsNDIuNjY3aC01Ny40MDhsLTYuNjEzLTEzLjE4NEMzMjEuNTU3LDExLjI4NSwzMDMuMjc1LDAsMjgyLjk0NCwwaC01My45MDkgICAgYy0yMC4zMzEsMC0zOC41OTIsMTEuMjg1LTQ3LjcwMSwyOS40ODNsLTYuNTkyLDEzLjE4NGgtNTcuNDA4Qzg3LjkxNSw0Mi42NjcsNjQsNjYuNjAzLDY0LDk2djIxLjMzMyAgICBDNjQsMTIzLjIyMSw2OC43NzksMTI4LDc0LjY2NywxMjhoMzYyLjY2N2M1Ljg4OCwwLDEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3Vjk2QzQ0OCw2Ni42MDMsNDI0LjA4NSw0Mi42NjcsMzk0LjY2Nyw0Mi42Njd6ICAgICBNNDI2LjY2NywxMDYuNjY3SDg1LjMzM1Y5NmMwLTE3LjY0MywxNC4zNTctMzIsMzItMzJoNjRjNC4wMzIsMCw3LjcyMy0yLjI4Myw5LjUzNi01Ljg4OGw5LjU1Ny0xOS4wOTMgICAgYzUuNDQtMTAuOTAxLDE2LjQwNS0xNy42ODUsMjguNjI5LTE3LjY4NWg1My45MDljMTIuMjAzLDAsMjMuMTY4LDYuNzg0LDI4LjYyOSwxNy42ODVsOS41MzYsMTkuMDkzICAgIGMxLjgxMywzLjYwNSw1LjUwNCw1Ljg4OCw5LjUzNiw1Ljg4OGg2NGMxNy42NDMsMCwzMiwxNC4zNTcsMzIsMzJWMTA2LjY2N3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik00MTYsMTA2LjY2N0g5NmMtNS44ODgsMC0xMC42NjcsNC43NzktMTAuNjY3LDEwLjY2N3YzMjBDODUuMzMzLDQ3OC41MDcsMTE4LjgyNyw1MTIsMTYwLDUxMmgxOTIgICAgYzQxLjE3MywwLDc0LjY2Ny0zMy40OTMsNzQuNjY3LTc0LjY2N3YtMzIwQzQyNi42NjcsMTExLjQ0NSw0MjEuODg4LDEwNi42NjcsNDE2LDEwNi42Njd6IE00MDUuMzMzLDQzNy4zMzMgICAgYzAsMjkuMzk3LTIzLjkxNSw1My4zMzMtNTMuMzMzLDUzLjMzM0gxNjBjLTI5LjQxOSwwLTUzLjMzMy0yMy45MzYtNTMuMzMzLTUzLjMzM1YxMjhoMjk4LjY2N1Y0MzcuMzMzeiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTE2MCwxNzAuNjY3Yy01Ljg4OCwwLTEwLjY2Nyw0Ljc3OS0xMC42NjcsMTAuNjY3djI1NmMwLDUuODg4LDQuNzc5LDEwLjY2NywxMC42NjcsMTAuNjY3czEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3ICAgIHYtMjU2QzE3MC42NjcsMTc1LjQ0NSwxNjUuODg4LDE3MC42NjcsMTYwLDE3MC42Njd6IiBmaWxsPSIjRkZGRkZGIi8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjI0LDE3MC42NjdjLTUuODg4LDAtMTAuNjY3LDQuNzc5LTEwLjY2NywxMC42Njd2MjU2YzAsNS44ODgsNC43NzksMTAuNjY3LDEwLjY2NywxMC42NjdzMTAuNjY3LTQuNzc5LDEwLjY2Ny0xMC42NjcgICAgdi0yNTZDMjM0LjY2NywxNzUuNDQ1LDIyOS44ODgsMTcwLjY2NywyMjQsMTcwLjY2N3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik0yODgsMTcwLjY2N2MtNS44ODgsMC0xMC42NjcsNC43NzktMTAuNjY3LDEwLjY2N3YyNTZjMCw1Ljg4OCw0Ljc3OSwxMC42NjcsMTAuNjY3LDEwLjY2N3MxMC42NjctNC43NzksMTAuNjY3LTEwLjY2NyAgICB2LTI1NkMyOTguNjY3LDE3NS40NDUsMjkzLjg4OCwxNzAuNjY3LDI4OCwxNzAuNjY3eiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTM1MiwxNzAuNjY3Yy01Ljg4OCwwLTEwLjY2Nyw0Ljc3OS0xMC42NjcsMTAuNjY3djI1NmMwLDUuODg4LDQuNzc5LDEwLjY2NywxMC42NjcsMTAuNjY3ICAgIGM1Ljg4OCwwLDEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3di0yNTZDMzYyLjY2NywxNzUuNDQ1LDM1Ny44ODgsMTcwLjY2NywzNTIsMTcwLjY2N3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K ">
+                  </button>
+                </td>
+                <td align="center ">
+                    <button class="btn btn-sm btn-success " (click)="verResultados(item)">
+                    <img class="rounded float-left btn-borrar "  height="18 " src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCIgdmlld0JveD0iMCAwIDQ1Ni43OTUgNDU2Ljc5NSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDU2Ljc5NSA0NTYuNzk1OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTQ0OC45NDcsMjE4LjQ3NWMtMC45MjItMS4xNjgtMjMuMDU1LTI4LjkzMy02MS01Ni44MWMtNTAuNzA1LTM3LjI1My0xMDUuODc3LTU2Ljk0NC0xNTkuNTUxLTU2Ljk0NCAgICBjLTUzLjY3MiwwLTEwOC44NDQsMTkuNjkxLTE1OS41NTEsNTYuOTQ0Yy0zNy45NDQsMjcuODc2LTYwLjA3Nyw1NS42NDItNjEsNTYuODFMMCwyMjguMzk3bDcuODQ2LDkuOTIzICAgIGMwLjkyMywxLjE2OCwyMy4wNTYsMjguOTM0LDYxLDU2LjgxMWM1MC43MDcsMzcuMjUyLDEwNS44NzksNTYuOTQzLDE1OS41NTEsNTYuOTQzYzUzLjY3MywwLDEwOC44NDUtMTkuNjkxLDE1OS41NS01Ni45NDMgICAgYzM3Ljk0NS0yNy44NzcsNjAuMDc4LTU1LjY0Myw2MS01Ni44MTFsNy44NDgtOS45MjNMNDQ4Ljk0NywyMTguNDc1eiBNMjI4LjM5NiwzMTUuMDM5Yy00Ny43NzQsMC04Ni42NDItMzguODY3LTg2LjY0Mi04Ni42NDIgICAgYzAtNy40ODUsMC45NTQtMTQuNzUxLDIuNzQ3LTIxLjY4NGwtMTkuNzgxLTMuMzI5Yy0xLjkzOCw4LjAyNS0yLjk2NiwxNi40MDEtMi45NjYsMjUuMDEzYzAsMzAuODYsMTMuMTgyLDU4LjY5NiwzNC4yMDQsNzguMTg3ICAgIGMtMjcuMDYxLTkuOTk2LTUwLjA3Mi0yNC4wMjMtNjcuNDM5LTM2LjcwOWMtMjEuNTE2LTE1LjcxNS0zNy42NDEtMzEuNjA5LTQ2LjgzNC00MS40NzhjOS4xOTctOS44NzIsMjUuMzItMjUuNzY0LDQ2LjgzNC00MS40NzggICAgYzE3LjM2Ny0xMi42ODYsNDAuMzc5LTI2LjcxMyw2Ny40MzktMzYuNzFsMTMuMjcsMTQuOTU4YzE1LjQ5OC0xNC41MTIsMzYuMzEyLTIzLjQxMiw1OS4xNjgtMjMuNDEyICAgIGM0Ny43NzQsMCw4Ni42NDEsMzguODY3LDg2LjY0MSw4Ni42NDJDMzE1LjAzNywyNzYuMTcyLDI3Ni4xNywzMTUuMDM5LDIyOC4zOTYsMzE1LjAzOXogTTM2OC4yNzMsMjY5Ljg3NSAgICBjLTE3LjM2OSwxMi42ODYtNDAuMzc5LDI2LjcxMy02Ny40MzksMzYuNzA5YzIxLjAyMS0xOS40OSwzNC4yMDMtNDcuMzI2LDM0LjIwMy03OC4xODhzLTEzLjE4Mi01OC42OTctMzQuMjAzLTc4LjE4OCAgICBjMjcuMDYxLDkuOTk3LDUwLjA3LDI0LjAyNCw2Ny40MzksMzYuNzFjMjEuNTE2LDE1LjcxNSwzNy42NDEsMzEuNjA5LDQ2LjgzNCw0MS40NzcgICAgQzQwNS45MSwyMzguMjY5LDM4OS43ODcsMjU0LjE2MiwzNjguMjczLDI2OS44NzV6IiBmaWxsPSIjRkZGRkZGIi8+CgkJPHBhdGggZD0iTTE3My4yNjEsMjExLjU1NWMtMS42MjYsNS4zMjktMi41MDcsMTAuOTgyLTIuNTA3LDE2Ljg0M2MwLDMxLjgzNCwyNS44MDcsNTcuNjQyLDU3LjY0Miw1Ny42NDIgICAgYzMxLjgzNCwwLDU3LjY0MS0yNS44MDcsNTcuNjQxLTU3LjY0MnMtMjUuODA3LTU3LjY0Mi01Ny42NDEtNTcuNjQyYy0xNS41MDYsMC0yOS41NzEsNi4xMzQtMzkuOTMyLDE2LjA5NGwyOC40MzIsMzIuMDQ4ICAgIEwxNzMuMjYxLDIxMS41NTV6IiBmaWxsPSIjRkZGRkZGIi8+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==">
+                  </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

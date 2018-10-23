@@ -1,0 +1,35 @@
+<div class="col-sm-8 col-md-10 contact-form" style="float: none;margin: 0 auto; ">
+    <form>
+
+        <div class="col-xs-4 col-md-9 form-group">
+            <input class="form-control" name="id_estudiante" [(ngModel)]="estudiante.id_estudiante" placeholder="ID estudiante" type="text" readonly="true" />
+
+        </div>
+        <div class="col-xs-4 col-md-9 form-group">
+            <input class="form-control" name="nombre" id="nombre" placeholder="Nombres" type="text" [(ngModel)]="estudiante.nombre" />
+        </div>
+        <div class="col-xs-4 col-md-9 form-group">
+            <input class="form-control" name="programa" placeholder="Programa" type="text" [(ngModel)]="estudiante.programa" />
+        </div>
+        <div class="col-xs-4 col-md-9 form-group">
+            <select class="form-control" id="selSexo" name="selSexo" [(ngModel)]="estudiante.sexo">
+                    <option value="">Sexo</option>
+                    <option value="F">F</option>
+                    <option value="M">M</option>
+                </select>
+
+        </div>
+
+
+
+    </form>
+
+
+    <div class="col-xs-12 col-md-5 form-group">
+        <button class="btn btn-primary" (click)="editarEstudiante()" type="submit">Guardar Cambios</button>
+
+    </div>
+
+
+
+</div>

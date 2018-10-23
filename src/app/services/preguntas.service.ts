@@ -1,18 +1,12 @@
 import { Injectable } from '@angular/core';
-<<<<<<< HEAD
-import { HttpClient } from '@angular/common/http';
 import { Preguntas, DialogDataPreguntas } from '../modelos/Preguntas';
 import { map } from 'rxjs/operators';
-=======
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Preguntas } from '../modelos/Preguntas';
 import { Http } from '@angular/http';
 // import{map,catchError}from'rxjs/operators';
 // import 'rxjs/Rx';
-import { map } from 'rxjs/operators';
 
 
->>>>>>> d51c35aa317df4678bfd5c4c665eab5c7dfd1e1b
 
 @Injectable({
   providedIn: 'root'

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule ,LOCALE_ID} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,6 +34,13 @@ import { NavbarEstudiantesComponent } from './components/shared/navbar-estudiant
 import { CrearexamenComponent } from './components/examenes/crearexamen/crearexamen.component';
 import { PreguntasExamenComponent } from './components/examenes/preguntas-examen/preguntas-examen.component';
 import { PreguntasSimulacroComponent } from './components/simulacros/preguntas-simulacro/preguntas-simulacro.component';
+import { EstudiantesDatosComponent } from './components/estudiantes/estudiantes-datos/estudiantes-datos.component';
+import { ModalDialogComponent } from './components/modaldialog/modal-dialog.component';
+import { SimulacrosComponent } from './components/simulacros/simulacros.component';
+import { EditarSimulacroComponent } from './components/simulacros/editar-simulacro/editar-simulacro.component';
+import { VerDetallesSimulacroComponent } from './components/simulacros/ver-detalles-simulacro/ver-detalles-simulacro.component';
+import { VerRespuestasEstudiantesComponent } from './components/simulacros/ver-respuestas-estudiantes/ver-respuestas-estudiantes.component';
+
 
 
 
@@ -44,7 +51,11 @@ import { PreguntasSimulacroComponent } from './components/simulacros/preguntas-s
     EditarAreaComponent,
     EditarTemasComponent,
     RegistroComponent,
-    PreguntasExamenComponent
+    PreguntasExamenComponent,
+    ModalDialogComponent,
+    VerDetallesSimulacroComponent,
+    EditarSimulacroComponent
+
   ],
   declarations: [
     AppComponent,
@@ -64,7 +75,13 @@ import { PreguntasSimulacroComponent } from './components/simulacros/preguntas-s
     NavbarEstudiantesComponent   
     ,CrearexamenComponent, 
     PreguntasExamenComponent,
-    PreguntasSimulacroComponent   
+    PreguntasSimulacroComponent,
+    EstudiantesDatosComponent,
+    ModalDialogComponent,
+    SimulacrosComponent,
+    EditarSimulacroComponent,
+    VerDetallesSimulacroComponent,
+    VerRespuestasEstudiantesComponent   
   ],
   imports: [
     BrowserModule,
@@ -75,7 +92,8 @@ import { PreguntasSimulacroComponent } from './components/simulacros/preguntas-s
     BrowserAnimationsModule,
      MaterialModule
   ],
-  providers: [EstudiantesService, PreguntasService],
+  providers: [EstudiantesService, PreguntasService,  { provide: LOCALE_ID, useValue: "es" }],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
