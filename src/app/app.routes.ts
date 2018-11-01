@@ -12,7 +12,9 @@ import { LoginComponent } from './components/login/login.component';
 import { EstudiantesSimulacroComponent } from './components/simulacros/estudiantes-simulacro/estudiantes-simulacro.component';
 import { CrearexamenComponent } from './components/examenes/crearexamen/crearexamen.component';
 import { PreguntasSimulacroComponent } from './components/simulacros/preguntas-simulacro/preguntas-simulacro.component';
-
+import { EstudiantesDatosComponent } from './components/estudiantes/estudiantes-datos/estudiantes-datos.component';
+import { SimulacrosComponent } from './components/simulacros/simulacros.component';
+import { VerRespuestasEstudiantesComponent } from './components/simulacros/ver-respuestas-estudiantes/ver-respuestas-estudiantes.component';
 
 
 const APP_ROUTES: Routes = [
@@ -26,7 +28,11 @@ const APP_ROUTES: Routes = [
     { path: 'preguntas', component: PreguntasComponent },
     { path: 'temas', component: TemasComponent },
     { path: 'estudiantes/simulacros', component: EstudiantesSimulacroComponent },
-    { path: 'estudiantes/simulacros/:id', component: PreguntasSimulacroComponent },    
+    { path: 'estudiantes/simulacros/:id', component: PreguntasSimulacroComponent }, 
+    { path: 'estudiantes/datos', component: EstudiantesDatosComponent },
+    { path: 'simulacros', component: SimulacrosComponent },
+    { path: 'simulacros/respuestas/:id_simulacro/:id_estudiante', component: VerRespuestasEstudiantesComponent },    
+
     { path: '**', pathMatch: 'full', redirectTo: 'login' }
 
     //{ path: 'inicio/:id', component: NavbarComponent },

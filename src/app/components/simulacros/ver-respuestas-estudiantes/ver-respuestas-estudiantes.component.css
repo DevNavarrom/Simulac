@@ -1,0 +1,32 @@
+.example-input-label,
+.example-add-tab-button,
+.example-delete-tab-button {
+    margin: 8px;
+}
+
+.example-radio-group {
+    margin-left: 1em;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.rdCorrecta {
+    margin: 5px;
+    color: green;
+    font-weight: bold;
+}
+
+.rdIncorrecta {
+    margin: 5px;
+    color: red;
+    font-weight: bold;
+}
+
+.rdOtra {
+    margin: 5px;
+}
+
+.example-selected-value {
+    margin: 15px 0;
+    color: blue;
+}

@@ -21,6 +21,9 @@ export class SimulacrosService {
   getSimulacros() {
     return this.http.get(`${this.url}`);
   }
+  getSimulacroDetalles(id_simulacro: string, dato: string) {
+    return this.http.get(this.url+'/detalles/'+id_simulacro+'/'+dato);
+  }
 
   getSimulacrosActivos(id_estudiante: string) {
     return this.http.get(this.url+'/activos/'+id_estudiante);
@@ -42,6 +45,18 @@ export class SimulacrosService {
 
   }
 
+  buscarSimulacros(datos: any) {
+    return this.http.post(`${this.url}/buscar`, JSON.stringify(datos))
+                    .pipe(
+                      map(res => {
+                        if (!res) {
+                          throw new Error('Value expected!');
+                        }
+                        return res;
+                      })
+                    );
+
+  }
   postSimulacroRespuestas(respuestas) {
     // let headers = new HttpHeaders({'Content-Type': 'application/json'});
     // console.log(JSON.stringify(estudiante)+{headers});
@@ -57,7 +72,7 @@ export class SimulacrosService {
                     );
 
   }
-  editarSimulacro(simulacro: Simulacros) {
+  editarSimulacro(simulacro: any) {
    
 
     return this.http.post(`${this.url}/editar`, JSON.stringify(simulacro))
@@ -78,5 +93,8 @@ export class SimulacrosService {
 
   eliminarSimulacro(id: string) {
     return this.http.get(`${this.url}/eliminar/` + id);
+  }
+  getRespuestasEstudiante(id_simulacro: string, id_estudiante: string) {
+    return this.http.get(`${this.url}/respuestas/` + id_simulacro+ '/'+id_estudiante);
   }
  }

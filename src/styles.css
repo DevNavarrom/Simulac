@@ -1,26 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
-
-
-/*.form {
-    margin-left: 20px;
-    margin-right: 20px;
-}*/
-
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .image {
     height: 20px;
     width: 20px;
 }
 
-
-/*a{
-    color: #FFFFFF;
-}*/
-
 .my-panel .mat-dialog-container {
     overflow: hidden;
     border-radius: 7px;
-    padding: 5px;
+    padding: 0em;
+    margin-left: 3em;
+}
+
+.right-aligned-header>.mat-content {
+    justify-content: space-between;
+}
+
+.mat-content>mat-panel-title,
+.mat-content>mat-panel-description {
+    flex: 0 0 auto;
 }
 
 #contenedor-vistas {

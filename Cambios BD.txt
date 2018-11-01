@@ -11,6 +11,34 @@ select * from preguntas where id_tema LIKE idtema;
 END$$
 DELIMITER ;
 
+Prcedimiento Almacenado: spBuscarSimulacros ##################
+12/10/18 - VIERNES       ##################################
+#####################################################
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spBuscarSimulacros`(IN `dato` VARCHAR(45), IN `_estado` VARCHAR(15), IN `_fecha` VARCHAR(15), IN `_idExamen` VARCHAR(10))
+    NO SQL
+BEGIN
+SELECT id_simulacro,id_examen,desc_examen,DATE_FORMAT(fecha,'%d/%m/%Y') as fecha,responsable,grupo,estado,
+(select count(id_estudiante) from detalle_simulacro where detalle_simulacro.id_simulacro=sm.id_simulacro) as participantes FROM  simulacro as sm  NATURAL JOIN examen
+where (id_simulacro like dato or responsable like dato or grupo like dato) and (estado like _estado and fecha like _fecha and id_examen LIKE _idExamen )
+order by fecha DESC limit 30;
+END$$
+DELIMITER ;
+
+Prcedimiento Almacenado: spVerDetalleSimulacro ##################
+12/10/18 - VIERNES       ##################################
+#####################################################
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spVerDetalleSimulacro`(IN `id` VARCHAR(10))
+    NO SQL
+BEGIN
+SELECT id_estudiante,nombre,DATE_FORMAT(fecha_presentacion,'%d/%m/%Y') as fecha,preguntas_correctas,preguntas_totales,
+ ROUND(calificacion, 2) as calificacion FROM `detalle_simulacro` NATURAL JOIN estudiantes 
+where id_simulacro=id order by fecha ;
+END$$
+DELIMITER ;
 
 
 #########################################################################################################

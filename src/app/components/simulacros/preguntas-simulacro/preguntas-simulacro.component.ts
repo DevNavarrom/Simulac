@@ -5,7 +5,6 @@ import {FormControl} from '@angular/forms';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute} from '@angular/router'
 import { PreguntasService } from '../../../services/preguntas.service';
-import { Simulacros } from '../../../modelos/Simulacros';
 import { SimulacrosService } from '../../../services/simulacros.service';
 import { Router } from '@angular/router';
 import { Estudiantes } from '../../../modelos/Estudiantes';
@@ -39,7 +38,8 @@ export class PreguntasSimulacroComponent implements OnInit {
     private _activatedRouter: ActivatedRoute,
     private _simulacroService: SimulacrosService,
     private _router: Router,
-    private _navBarEstudiantesService: NavbarEstudiantesService) { 
+    private _navBarEstudiantesService: NavbarEstudiantesService,
+   ) { 
 
       this._activatedRouter.params.subscribe(params =>
         {
@@ -108,9 +108,11 @@ export class PreguntasSimulacroComponent implements OnInit {
 }
   previousTab()
   {
+
       if(this.index_tab-1>=0) {
-    this.selected.setValue(this.index_tab-1);
-    }
+        this.selected.setValue(this.index_tab-1);
+        }
+ 
   }
   ngOnInit() {
     this.estudiante= this._navBarEstudiantesService.getEstudiante();
@@ -156,29 +158,52 @@ export class PreguntasSimulacroComponent implements OnInit {
 
   finalizarSimulacro()
   {
+    
+   
     if(confirm('¿Esta seguro que desea finalizar simulacro?')){
+ 
 
-      if(this.estudiante.id_estudiante != null){
-      let data=this.toJSON(this.simulacro.id_simulacro,this.estudiante.id_estudiante,this.respuestas_selected);
-      
+      this._simulacroService.getBuscarSimulacro(this.simulacro.id_simulacro)
+      .subscribe((data)=>{
 
-      this._simulacroService.postSimulacroRespuestas(data)
-        .subscribe((res) => {
-          alert(res['mensaje']);
-          this._router.navigate(['/estudiantes/simulacros']);
+
+        if(data['datos'][0].estado=='ACTIVO')
+        {
 
           
-        },
-        (err) => {
-          this.error = err;
+            if(this.estudiante.id_estudiante != null){
+            let data=this.toJSON(this.simulacro.id_simulacro,this.estudiante.id_estudiante,this.respuestas_selected);
+        
+  
+            this._simulacroService.postSimulacroRespuestas(data)
+            .subscribe((res) => {
+            alert(res['mensaje']);
+            this._router.navigate(['/estudiantes/simulacros']);
+  
+            
+            },
+            (err) => {
+            this.error = err;
+            }
+            );
+        
+            }
+            else
+            {
+            alert("No se encontró el estudiante, por favor vuelva a ingresar")
+            }
         }
-      );
-      
-      }
-      else
-      {
-        alert("No se encontró el estudiante, por favor vuelva a ingresar")
-      }
+        else
+        {
+          alert("Tiempo excedido, el simulacro ya finalizó");
+        }
+
+      },
+      (err) => {
+        this.error = err;
+        alert(err);
+      });
+
       }
       
 

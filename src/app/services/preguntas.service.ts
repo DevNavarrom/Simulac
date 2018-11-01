@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Preguntas, DialogDataPreguntas } from '../modelos/Preguntas';
+import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Http } from '@angular/http';
 // import{map,catchError}from'rxjs/operators';
 // import 'rxjs/Rx';
-import { map } from 'rxjs/operators';
 
 
 
