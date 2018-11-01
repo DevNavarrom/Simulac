@@ -9,6 +9,8 @@ require_once 'controladores/usuariosControlador.php';
 require_once 'controladores/temasControlador.php';
 require_once 'controladores/simulacroControlador.php';
 require_once 'controladores/preguntasControlador.php';
+require_once 'controladores/respuestasControlador.php';
+require_once 'controladores/examenControlador.php';
 
 $vista = new vistaJSON();
 
@@ -37,7 +39,7 @@ set_exception_handler(function($exception) use ($vista){
 // convertimos en array lo que redireccionamos con el archivo .htaccess
 $peticionArray = explode("/", $_GET["RUTA_INFORMACION"]);
 
-$recursosDisponibles  = array('estudiantes','areas','usuarios','temas','simulacros','preguntas');
+$recursosDisponibles  = array('estudiantes','areas','usuarios','temas','simulacros','preguntas','respuestas','examen');
 
 $recurso = array_shift($peticionArray);
 
@@ -59,6 +61,9 @@ switch ($metodo) {
 			case 'temas':
 			  $vista->imprimir(TemasControlador::get($peticionArray));
 				break;
+			case 'examen':
+				$vista->imprimir(ExamenControlador::get($peticionArray));
+				  break;
 			case 'preguntas':
 				$vista->imprimir(PreguntasControlador::get($peticionArray));
 		  		break;
@@ -85,13 +90,17 @@ switch ($metodo) {
 			case 'temas':
 				$vista->imprimir(TemasControlador::post($peticionArray));
 				break;
-<<<<<<< HEAD
 			case 'preguntas':
 				$vista->imprimir(PreguntasControlador::post($peticionArray));
-=======
-				case 'simulacros':
+				break;
+			case 'respuestas':
+				$vista->imprimir(RespuestasControlador::post($peticionArray));
+				break;
+			case 'examen':
+				$vista->imprimir(ExamenControlador::post($peticionArray));
+				break;
+			case 'simulacros':
 				$vista->imprimir(SimulacroControlador::post($peticionArray));
->>>>>>> d51c35aa317df4678bfd5c4c665eab5c7dfd1e1b
 				break;
 				
             default:

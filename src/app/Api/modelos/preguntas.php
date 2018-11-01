@@ -18,20 +18,22 @@ class Preguntas {
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 			
-			$query = "INSERT INTO ".self::TABLA."( ".self::ID_TEMA.",".self::DESCRIPCION.",".self::IMAGEN.") VALUES (?, ?, ?);";
-        
+			//$query = "INSERT INTO ".self::TABLA."( ".self::ID_TEMA.",".self::DESCRIPCION.",".self::IMAGEN.") VALUES (?, ?, ?);";
+			//echo 'id tema = '.$infoPregunta["id_tema"];
+			$query = "call spGuardarPregunta('".$infoPregunta["id_tema"]."','".$infoPregunta["desc_pregunta"]."','".$infoPregunta["imagen"]."')";
             $sentencia = $conexion->prepare($query);
 		
 			//$sentencia->bindParam(1, $infoPregunta[self::ID]);			
-            $sentencia->bindParam(1, $infoPregunta[self::ID_TEMA]);
+            /*$sentencia->bindParam(1, $infoPregunta[self::ID_TEMA]);
             $sentencia->bindParam(2, $infoPregunta[self::DESCRIPCION]);
-            $sentencia->bindParam(3,$infoPregunta[self::IMAGEN]);
+            $sentencia->bindParam(3,$infoPregunta[self::IMAGEN]);*/
 		
             if($sentencia->execute()){
+				http_response_code(200);
 				return 
 					[
 						"estado" => CREACION_EXITOSA,
-						"mensaje" => "Examen guardado satisfactoriamente."
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
 					];
 				
 			}else{
@@ -97,6 +99,27 @@ class Preguntas {
             $conexion = Conexion::getInstancia()->getConexion();
 
 			$sentencia = $conexion->prepare("call spPreguntasExamen($id_examen)");
+			
+		
+			if($sentencia->execute()){
+				http_response_code(200);
+				return
+					[
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+					];
+			}else{
+				throw new ExceptionApi(ESTADO_FALLIDO, "error en la consulta");
+			}
+        }catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO");
+		}
+	}
+	public static function getPreguntasPorExamen($id_examen){
+        try{
+            $conexion = Conexion::getInstancia()->getConexion();
+
+			$sentencia = $conexion->prepare("call spMostrarPreguntas($id_examen)");
 			
 		
 			if($sentencia->execute()){

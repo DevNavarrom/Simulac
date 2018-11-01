@@ -18,8 +18,9 @@ class 	RespuestasControlador{
 	}
 	
 	public static function post($peticion){
-        // obtenemos el fichero que viene con la peticion POST
-        $id=$_POST["txtIdPregunta"];
+		// obtenemos el fichero que viene con la peticion POST
+		$data = json_decode(file_get_contents('php://input'), true);
+        /*$id=$_POST["txtIdPregunta"];
 		$id_respuesta=$_POST["txtIdRespuesta"];
         $desc=$_POST["txtDescripcion"];
         $verdadera=$_POST["txtVerdadera"];
@@ -29,16 +30,16 @@ class 	RespuestasControlador{
 			"id_respuesta" => $id_respuesta,
             "desc_respuesta" => $desc,
             "correcta" => $verdadera
-		];
+		];*/
 
 		if(!empty($peticion[0])){
 			switch ($peticion[0]) {
-					case 'registro':
-					return Respuestas::insertarRespuesta($datosArray);
+				case 'registro':
+					return Respuestas::insertarRespuesta($data);
 					break;
 				case 'editar':
-				return Respuestas::actualizarRespuesta($datosArray);
-				break;
+					return Respuestas::actualizarRespuesta($datosArray);
+					break;
 				
 				default:
 					throw new ExceptionApi(PARAMETROS_INCORRECTOS, "parametros incorrectos");

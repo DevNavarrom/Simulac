@@ -2,7 +2,7 @@
   
   <div class="row">
     <div class="col-xs-12 col-md-12 form-group">
-      <button class="btn btn-primary pull-right btn-outline-success" type="button" (click)="editarExamen()">Crear Nuevo</button>
+      <button class="btn btn-primary pull-right btn-outline-success" type="button" (click)="editarExamen(0)">Crear Nuevo</button>
     </div>
   </div>
 
@@ -16,93 +16,39 @@
         <th scope="col">Preguntas</th>
         <th scope="col">Editar</th>
         <th scope="col">Borrar</th>
-        <th scope="col">Activo</th>
+        <!--<th scope="col">Activo</th>-->
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>asdfg qwerty</td>
-        <td>qwerty</td>
-        <td>asdfg</td>
-        <td>20</td>
+      <tr *ngFor="let exam of examenes">
+        <th scope="row">{{ exam.id }}</th>
+        <td>{{ exam.desc_examen }}</td>
+        <td>{{ exam.desc_area }}</td>
+        <td>{{ exam.desc_tema }}</td>
+        <td>{{ exam.cantidad }}</td>
         <!--<td><button class="btn btn-sm btn-success">Editar</button></td>
         <td><button class="btn btn-sm btn-danger">Borrar</button></td>-->
-        <td><button class="btn btn-sm btn-success">
+        <td><button class="btn btn-sm btn-success" (click)="editarExamen(exam.id)">
             <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIC0xIDM4MS41MzQxNyAzODEiIHdpZHRoPSI1MTJweCI+PHBhdGggZD0ibTM3MC41ODk4NDQgMjMwLjk2NDg0NGMtNS41MjM0MzggMC0xMCA0LjQ3NjU2Mi0xMCAxMHY4OC43OTI5NjhjLS4wMTk1MzIgMTYuNTU4NTk0LTEzLjQzNzUgMjkuOTgwNDY5LTMwIDMwaC0yODAuNTg5ODQ0Yy0xNi41NjI1LS4wMTk1MzEtMjkuOTgwNDY5LTEzLjQ0MTQwNi0zMC0zMHYtMjYwLjU4OTg0M2MuMDE5NTMxLTE2LjU2MjUgMTMuNDM3NS0yOS45ODA0NjkgMzAtMzBoODguNzg5MDYyYzUuNTIzNDM4IDAgMTAtNC40NzY1NjMgMTAtMTAgMC01LjUyMzQzOC00LjQ3NjU2Mi0xMC0xMC0xMGgtODguNzg5MDYyYy0yNy42MDE1NjIuMDMxMjUtNDkuOTY4NzUgMjIuMzk4NDM3LTUwIDUwdjI2MC41ODk4NDNjLjAzMTI1IDI3LjYwMTU2MyAyMi4zOTg0MzggNDkuOTY4NzUgNTAgNTBoMjgwLjU4OTg0NGMyNy42MDE1NjItLjAzMTI1IDQ5Ljk2ODc1LTIyLjM5ODQzNyA1MC01MHYtODguNzg5MDYyYzAtNS41MjM0MzgtNC40NzY1NjMtMTAuMDAzOTA2LTEwLTEwLjAwMzkwNnptMCAwIiBmaWxsPSIjRkZGRkZGIi8+PHBhdGggZD0ibTE1Ni4zNjcxODggMTc4LjM0Mzc1IDE0Ni4wMTE3MTgtMTQ2LjAxNTYyNSA0Ny4wODk4NDQgNDcuMDg5ODQ0LTE0Ni4wMTE3MTkgMTQ2LjAxNTYyNXptMCAwIiBmaWxsPSIjRkZGRkZGIi8+PHBhdGggZD0ibTEzMi41NDI5NjkgMjQ5LjI1NzgxMiA1Mi4wMzkwNjItMTQuNDE0MDYyLTM3LjYyNS0zNy42MjV6bTAgMCIgZmlsbD0iI0ZGRkZGRiIvPjxwYXRoIGQ9Im0zNjIuNDg4MjgxIDcuNTc4MTI1Yy05Ljc2OTUzMS05Ljc0NjA5NC0yNS41ODU5MzctOS43NDYwOTQtMzUuMzU1NDY5IDBsLTEwLjYwNTQ2OCAxMC42MDU0NjkgNDcuMDg5ODQ0IDQ3LjA4OTg0NCAxMC42MDU0NjgtMTAuNjA1NDY5YzkuNzUtOS43Njk1MzEgOS43NS0yNS41ODU5MzggMC0zNS4zNTU0Njl6bTAgMCIgZmlsbD0iI0ZGRkZGRiIvPjwvc3ZnPgo="
               class="rounded float-left" alt="x" height="18">
       
           </button>
         </td>
         <td>
-          <button class="btn btn-sm btn-danger">
+          <button class="btn btn-sm btn-danger" (click)="eliminarExamen(exam)">
             <img class="rounded float-left btn-borrar" height="18" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTM5NC42NjcsNDIuNjY3aC01Ny40MDhsLTYuNjEzLTEzLjE4NEMzMjEuNTU3LDExLjI4NSwzMDMuMjc1LDAsMjgyLjk0NCwwaC01My45MDkgICAgYy0yMC4zMzEsMC0zOC41OTIsMTEuMjg1LTQ3LjcwMSwyOS40ODNsLTYuNTkyLDEzLjE4NGgtNTcuNDA4Qzg3LjkxNSw0Mi42NjcsNjQsNjYuNjAzLDY0LDk2djIxLjMzMyAgICBDNjQsMTIzLjIyMSw2OC43NzksMTI4LDc0LjY2NywxMjhoMzYyLjY2N2M1Ljg4OCwwLDEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3Vjk2QzQ0OCw2Ni42MDMsNDI0LjA4NSw0Mi42NjcsMzk0LjY2Nyw0Mi42Njd6ICAgICBNNDI2LjY2NywxMDYuNjY3SDg1LjMzM1Y5NmMwLTE3LjY0MywxNC4zNTctMzIsMzItMzJoNjRjNC4wMzIsMCw3LjcyMy0yLjI4Myw5LjUzNi01Ljg4OGw5LjU1Ny0xOS4wOTMgICAgYzUuNDQtMTAuOTAxLDE2LjQwNS0xNy42ODUsMjguNjI5LTE3LjY4NWg1My45MDljMTIuMjAzLDAsMjMuMTY4LDYuNzg0LDI4LjYyOSwxNy42ODVsOS41MzYsMTkuMDkzICAgIGMxLjgxMywzLjYwNSw1LjUwNCw1Ljg4OCw5LjUzNiw1Ljg4OGg2NGMxNy42NDMsMCwzMiwxNC4zNTcsMzIsMzJWMTA2LjY2N3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik00MTYsMTA2LjY2N0g5NmMtNS44ODgsMC0xMC42NjcsNC43NzktMTAuNjY3LDEwLjY2N3YzMjBDODUuMzMzLDQ3OC41MDcsMTE4LjgyNyw1MTIsMTYwLDUxMmgxOTIgICAgYzQxLjE3MywwLDc0LjY2Ny0zMy40OTMsNzQuNjY3LTc0LjY2N3YtMzIwQzQyNi42NjcsMTExLjQ0NSw0MjEuODg4LDEwNi42NjcsNDE2LDEwNi42Njd6IE00MDUuMzMzLDQzNy4zMzMgICAgYzAsMjkuMzk3LTIzLjkxNSw1My4zMzMtNTMuMzMzLDUzLjMzM0gxNjBjLTI5LjQxOSwwLTUzLjMzMy0yMy45MzYtNTMuMzMzLTUzLjMzM1YxMjhoMjk4LjY2N1Y0MzcuMzMzeiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTE2MCwxNzAuNjY3Yy01Ljg4OCwwLTEwLjY2Nyw0Ljc3OS0xMC42NjcsMTAuNjY3djI1NmMwLDUuODg4LDQuNzc5LDEwLjY2NywxMC42NjcsMTAuNjY3czEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3ICAgIHYtMjU2QzE3MC42NjcsMTc1LjQ0NSwxNjUuODg4LDE3MC42NjcsMTYwLDE3MC42Njd6IiBmaWxsPSIjRkZGRkZGIi8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjI0LDE3MC42NjdjLTUuODg4LDAtMTAuNjY3LDQuNzc5LTEwLjY2NywxMC42Njd2MjU2YzAsNS44ODgsNC43NzksMTAuNjY3LDEwLjY2NywxMC42NjdzMTAuNjY3LTQuNzc5LDEwLjY2Ny0xMC42NjcgICAgdi0yNTZDMjM0LjY2NywxNzUuNDQ1LDIyOS44ODgsMTcwLjY2NywyMjQsMTcwLjY2N3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik0yODgsMTcwLjY2N2MtNS44ODgsMC0xMC42NjcsNC43NzktMTAuNjY3LDEwLjY2N3YyNTZjMCw1Ljg4OCw0Ljc3OSwxMC42NjcsMTAuNjY3LDEwLjY2N3MxMC42NjctNC43NzksMTAuNjY3LTEwLjY2NyAgICB2LTI1NkMyOTguNjY3LDE3NS40NDUsMjkzLjg4OCwxNzAuNjY3LDI4OCwxNzAuNjY3eiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTM1MiwxNzAuNjY3Yy01Ljg4OCwwLTEwLjY2Nyw0Ljc3OS0xMC42NjcsMTAuNjY3djI1NmMwLDUuODg4LDQuNzc5LDEwLjY2NywxMC42NjcsMTAuNjY3ICAgIGM1Ljg4OCwwLDEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3di0yNTZDMzYyLjY2NywxNzUuNDQ1LDM1Ny44ODgsMTcwLjY2NywzNTIsMTcwLjY2N3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K">
       
           </button>
         </td>
-        <td>
-          <!--<div class="form-check">
+        <!--<td>
+          <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-          </div>-->
+          </div>
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="customCheck1">
             <label class="custom-control-label" for="customCheck1">Activar</label>
           </div>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>asdfg qwerty</td>
-        <td>qwerty</td>
-        <td>asdfg</td>
-        <td>15</td>
-        <!--<td><button class="btn btn-sm btn-success">Editar</button></td>
-        <td><button class="btn btn-sm btn-danger">Borrar</button></td>-->
-        <td><button class="btn btn-sm btn-success">
-            <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIC0xIDM4MS41MzQxNyAzODEiIHdpZHRoPSI1MTJweCI+PHBhdGggZD0ibTM3MC41ODk4NDQgMjMwLjk2NDg0NGMtNS41MjM0MzggMC0xMCA0LjQ3NjU2Mi0xMCAxMHY4OC43OTI5NjhjLS4wMTk1MzIgMTYuNTU4NTk0LTEzLjQzNzUgMjkuOTgwNDY5LTMwIDMwaC0yODAuNTg5ODQ0Yy0xNi41NjI1LS4wMTk1MzEtMjkuOTgwNDY5LTEzLjQ0MTQwNi0zMC0zMHYtMjYwLjU4OTg0M2MuMDE5NTMxLTE2LjU2MjUgMTMuNDM3NS0yOS45ODA0NjkgMzAtMzBoODguNzg5MDYyYzUuNTIzNDM4IDAgMTAtNC40NzY1NjMgMTAtMTAgMC01LjUyMzQzOC00LjQ3NjU2Mi0xMC0xMC0xMGgtODguNzg5MDYyYy0yNy42MDE1NjIuMDMxMjUtNDkuOTY4NzUgMjIuMzk4NDM3LTUwIDUwdjI2MC41ODk4NDNjLjAzMTI1IDI3LjYwMTU2MyAyMi4zOTg0MzggNDkuOTY4NzUgNTAgNTBoMjgwLjU4OTg0NGMyNy42MDE1NjItLjAzMTI1IDQ5Ljk2ODc1LTIyLjM5ODQzNyA1MC01MHYtODguNzg5MDYyYzAtNS41MjM0MzgtNC40NzY1NjMtMTAuMDAzOTA2LTEwLTEwLjAwMzkwNnptMCAwIiBmaWxsPSIjRkZGRkZGIi8+PHBhdGggZD0ibTE1Ni4zNjcxODggMTc4LjM0Mzc1IDE0Ni4wMTE3MTgtMTQ2LjAxNTYyNSA0Ny4wODk4NDQgNDcuMDg5ODQ0LTE0Ni4wMTE3MTkgMTQ2LjAxNTYyNXptMCAwIiBmaWxsPSIjRkZGRkZGIi8+PHBhdGggZD0ibTEzMi41NDI5NjkgMjQ5LjI1NzgxMiA1Mi4wMzkwNjItMTQuNDE0MDYyLTM3LjYyNS0zNy42MjV6bTAgMCIgZmlsbD0iI0ZGRkZGRiIvPjxwYXRoIGQ9Im0zNjIuNDg4MjgxIDcuNTc4MTI1Yy05Ljc2OTUzMS05Ljc0NjA5NC0yNS41ODU5MzctOS43NDYwOTQtMzUuMzU1NDY5IDBsLTEwLjYwNTQ2OCAxMC42MDU0NjkgNDcuMDg5ODQ0IDQ3LjA4OTg0NCAxMC42MDU0NjgtMTAuNjA1NDY5YzkuNzUtOS43Njk1MzEgOS43NS0yNS41ODU5MzggMC0zNS4zNTU0Njl6bTAgMCIgZmlsbD0iI0ZGRkZGRiIvPjwvc3ZnPgo="
-              class="rounded float-left" alt="x" height="18">
-      
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-sm btn-danger">
-            <img class="rounded float-left btn-borrar" height="18" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTM5NC42NjcsNDIuNjY3aC01Ny40MDhsLTYuNjEzLTEzLjE4NEMzMjEuNTU3LDExLjI4NSwzMDMuMjc1LDAsMjgyLjk0NCwwaC01My45MDkgICAgYy0yMC4zMzEsMC0zOC41OTIsMTEuMjg1LTQ3LjcwMSwyOS40ODNsLTYuNTkyLDEzLjE4NGgtNTcuNDA4Qzg3LjkxNSw0Mi42NjcsNjQsNjYuNjAzLDY0LDk2djIxLjMzMyAgICBDNjQsMTIzLjIyMSw2OC43NzksMTI4LDc0LjY2NywxMjhoMzYyLjY2N2M1Ljg4OCwwLDEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3Vjk2QzQ0OCw2Ni42MDMsNDI0LjA4NSw0Mi42NjcsMzk0LjY2Nyw0Mi42Njd6ICAgICBNNDI2LjY2NywxMDYuNjY3SDg1LjMzM1Y5NmMwLTE3LjY0MywxNC4zNTctMzIsMzItMzJoNjRjNC4wMzIsMCw3LjcyMy0yLjI4Myw5LjUzNi01Ljg4OGw5LjU1Ny0xOS4wOTMgICAgYzUuNDQtMTAuOTAxLDE2LjQwNS0xNy42ODUsMjguNjI5LTE3LjY4NWg1My45MDljMTIuMjAzLDAsMjMuMTY4LDYuNzg0LDI4LjYyOSwxNy42ODVsOS41MzYsMTkuMDkzICAgIGMxLjgxMywzLjYwNSw1LjUwNCw1Ljg4OCw5LjUzNiw1Ljg4OGg2NGMxNy42NDMsMCwzMiwxNC4zNTcsMzIsMzJWMTA2LjY2N3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik00MTYsMTA2LjY2N0g5NmMtNS44ODgsMC0xMC42NjcsNC43NzktMTAuNjY3LDEwLjY2N3YzMjBDODUuMzMzLDQ3OC41MDcsMTE4LjgyNyw1MTIsMTYwLDUxMmgxOTIgICAgYzQxLjE3MywwLDc0LjY2Ny0zMy40OTMsNzQuNjY3LTc0LjY2N3YtMzIwQzQyNi42NjcsMTExLjQ0NSw0MjEuODg4LDEwNi42NjcsNDE2LDEwNi42Njd6IE00MDUuMzMzLDQzNy4zMzMgICAgYzAsMjkuMzk3LTIzLjkxNSw1My4zMzMtNTMuMzMzLDUzLjMzM0gxNjBjLTI5LjQxOSwwLTUzLjMzMy0yMy45MzYtNTMuMzMzLTUzLjMzM1YxMjhoMjk4LjY2N1Y0MzcuMzMzeiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTE2MCwxNzAuNjY3Yy01Ljg4OCwwLTEwLjY2Nyw0Ljc3OS0xMC42NjcsMTAuNjY3djI1NmMwLDUuODg4LDQuNzc5LDEwLjY2NywxMC42NjcsMTAuNjY3czEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3ICAgIHYtMjU2QzE3MC42NjcsMTc1LjQ0NSwxNjUuODg4LDE3MC42NjcsMTYwLDE3MC42Njd6IiBmaWxsPSIjRkZGRkZGIi8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjI0LDE3MC42NjdjLTUuODg4LDAtMTAuNjY3LDQuNzc5LTEwLjY2NywxMC42Njd2MjU2YzAsNS44ODgsNC43NzksMTAuNjY3LDEwLjY2NywxMC42NjdzMTAuNjY3LTQuNzc5LDEwLjY2Ny0xMC42NjcgICAgdi0yNTZDMjM0LjY2NywxNzUuNDQ1LDIyOS44ODgsMTcwLjY2NywyMjQsMTcwLjY2N3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik0yODgsMTcwLjY2N2MtNS44ODgsMC0xMC42NjcsNC43NzktMTAuNjY3LDEwLjY2N3YyNTZjMCw1Ljg4OCw0Ljc3OSwxMC42NjcsMTAuNjY3LDEwLjY2N3MxMC42NjctNC43NzksMTAuNjY3LTEwLjY2NyAgICB2LTI1NkMyOTguNjY3LDE3NS40NDUsMjkzLjg4OCwxNzAuNjY3LDI4OCwxNzAuNjY3eiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTM1MiwxNzAuNjY3Yy01Ljg4OCwwLTEwLjY2Nyw0Ljc3OS0xMC42NjcsMTAuNjY3djI1NmMwLDUuODg4LDQuNzc5LDEwLjY2NywxMC42NjcsMTAuNjY3ICAgIGM1Ljg4OCwwLDEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3di0yNTZDMzYyLjY2NywxNzUuNDQ1LDM1Ny44ODgsMTcwLjY2NywzNTIsMTcwLjY2N3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K">
-      
-          </button>
-        </td>
-        <td>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="customCheck2">
-              <label class="custom-control-label" for="customCheck2">Activar</label>
-            </div>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>asdfg qwerty</td>
-        <td>qwerty</td>
-        <td>asdfg</td>
-        <td>20</td>
-      <!--<td><button class="btn btn-sm btn-success">Editar</button></td>
-        <td><button class="btn btn-sm btn-danger">Borrar</button></td>-->
-        <td><button class="btn btn-sm btn-success">
-            <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIC0xIDM4MS41MzQxNyAzODEiIHdpZHRoPSI1MTJweCI+PHBhdGggZD0ibTM3MC41ODk4NDQgMjMwLjk2NDg0NGMtNS41MjM0MzggMC0xMCA0LjQ3NjU2Mi0xMCAxMHY4OC43OTI5NjhjLS4wMTk1MzIgMTYuNTU4NTk0LTEzLjQzNzUgMjkuOTgwNDY5LTMwIDMwaC0yODAuNTg5ODQ0Yy0xNi41NjI1LS4wMTk1MzEtMjkuOTgwNDY5LTEzLjQ0MTQwNi0zMC0zMHYtMjYwLjU4OTg0M2MuMDE5NTMxLTE2LjU2MjUgMTMuNDM3NS0yOS45ODA0NjkgMzAtMzBoODguNzg5MDYyYzUuNTIzNDM4IDAgMTAtNC40NzY1NjMgMTAtMTAgMC01LjUyMzQzOC00LjQ3NjU2Mi0xMC0xMC0xMGgtODguNzg5MDYyYy0yNy42MDE1NjIuMDMxMjUtNDkuOTY4NzUgMjIuMzk4NDM3LTUwIDUwdjI2MC41ODk4NDNjLjAzMTI1IDI3LjYwMTU2MyAyMi4zOTg0MzggNDkuOTY4NzUgNTAgNTBoMjgwLjU4OTg0NGMyNy42MDE1NjItLjAzMTI1IDQ5Ljk2ODc1LTIyLjM5ODQzNyA1MC01MHYtODguNzg5MDYyYzAtNS41MjM0MzgtNC40NzY1NjMtMTAuMDAzOTA2LTEwLTEwLjAwMzkwNnptMCAwIiBmaWxsPSIjRkZGRkZGIi8+PHBhdGggZD0ibTE1Ni4zNjcxODggMTc4LjM0Mzc1IDE0Ni4wMTE3MTgtMTQ2LjAxNTYyNSA0Ny4wODk4NDQgNDcuMDg5ODQ0LTE0Ni4wMTE3MTkgMTQ2LjAxNTYyNXptMCAwIiBmaWxsPSIjRkZGRkZGIi8+PHBhdGggZD0ibTEzMi41NDI5NjkgMjQ5LjI1NzgxMiA1Mi4wMzkwNjItMTQuNDE0MDYyLTM3LjYyNS0zNy42MjV6bTAgMCIgZmlsbD0iI0ZGRkZGRiIvPjxwYXRoIGQ9Im0zNjIuNDg4MjgxIDcuNTc4MTI1Yy05Ljc2OTUzMS05Ljc0NjA5NC0yNS41ODU5MzctOS43NDYwOTQtMzUuMzU1NDY5IDBsLTEwLjYwNTQ2OCAxMC42MDU0NjkgNDcuMDg5ODQ0IDQ3LjA4OTg0NCAxMC42MDU0NjgtMTAuNjA1NDY5YzkuNzUtOS43Njk1MzEgOS43NS0yNS41ODU5MzggMC0zNS4zNTU0Njl6bTAgMCIgZmlsbD0iI0ZGRkZGRiIvPjwvc3ZnPgo="
-              class="rounded float-left" alt="x" height="18">
-      
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-sm btn-danger">
-            <img class="rounded float-left btn-borrar" height="18" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTM5NC42NjcsNDIuNjY3aC01Ny40MDhsLTYuNjEzLTEzLjE4NEMzMjEuNTU3LDExLjI4NSwzMDMuMjc1LDAsMjgyLjk0NCwwaC01My45MDkgICAgYy0yMC4zMzEsMC0zOC41OTIsMTEuMjg1LTQ3LjcwMSwyOS40ODNsLTYuNTkyLDEzLjE4NGgtNTcuNDA4Qzg3LjkxNSw0Mi42NjcsNjQsNjYuNjAzLDY0LDk2djIxLjMzMyAgICBDNjQsMTIzLjIyMSw2OC43NzksMTI4LDc0LjY2NywxMjhoMzYyLjY2N2M1Ljg4OCwwLDEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3Vjk2QzQ0OCw2Ni42MDMsNDI0LjA4NSw0Mi42NjcsMzk0LjY2Nyw0Mi42Njd6ICAgICBNNDI2LjY2NywxMDYuNjY3SDg1LjMzM1Y5NmMwLTE3LjY0MywxNC4zNTctMzIsMzItMzJoNjRjNC4wMzIsMCw3LjcyMy0yLjI4Myw5LjUzNi01Ljg4OGw5LjU1Ny0xOS4wOTMgICAgYzUuNDQtMTAuOTAxLDE2LjQwNS0xNy42ODUsMjguNjI5LTE3LjY4NWg1My45MDljMTIuMjAzLDAsMjMuMTY4LDYuNzg0LDI4LjYyOSwxNy42ODVsOS41MzYsMTkuMDkzICAgIGMxLjgxMywzLjYwNSw1LjUwNCw1Ljg4OCw5LjUzNiw1Ljg4OGg2NGMxNy42NDMsMCwzMiwxNC4zNTcsMzIsMzJWMTA2LjY2N3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik00MTYsMTA2LjY2N0g5NmMtNS44ODgsMC0xMC42NjcsNC43NzktMTAuNjY3LDEwLjY2N3YzMjBDODUuMzMzLDQ3OC41MDcsMTE4LjgyNyw1MTIsMTYwLDUxMmgxOTIgICAgYzQxLjE3MywwLDc0LjY2Ny0zMy40OTMsNzQuNjY3LTc0LjY2N3YtMzIwQzQyNi42NjcsMTExLjQ0NSw0MjEuODg4LDEwNi42NjcsNDE2LDEwNi42Njd6IE00MDUuMzMzLDQzNy4zMzMgICAgYzAsMjkuMzk3LTIzLjkxNSw1My4zMzMtNTMuMzMzLDUzLjMzM0gxNjBjLTI5LjQxOSwwLTUzLjMzMy0yMy45MzYtNTMuMzMzLTUzLjMzM1YxMjhoMjk4LjY2N1Y0MzcuMzMzeiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTE2MCwxNzAuNjY3Yy01Ljg4OCwwLTEwLjY2Nyw0Ljc3OS0xMC42NjcsMTAuNjY3djI1NmMwLDUuODg4LDQuNzc5LDEwLjY2NywxMC42NjcsMTAuNjY3czEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3ICAgIHYtMjU2QzE3MC42NjcsMTc1LjQ0NSwxNjUuODg4LDE3MC42NjcsMTYwLDE3MC42Njd6IiBmaWxsPSIjRkZGRkZGIi8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjI0LDE3MC42NjdjLTUuODg4LDAtMTAuNjY3LDQuNzc5LTEwLjY2NywxMC42Njd2MjU2YzAsNS44ODgsNC43NzksMTAuNjY3LDEwLjY2NywxMC42NjdzMTAuNjY3LTQuNzc5LDEwLjY2Ny0xMC42NjcgICAgdi0yNTZDMjM0LjY2NywxNzUuNDQ1LDIyOS44ODgsMTcwLjY2NywyMjQsMTcwLjY2N3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik0yODgsMTcwLjY2N2MtNS44ODgsMC0xMC42NjcsNC43NzktMTAuNjY3LDEwLjY2N3YyNTZjMCw1Ljg4OCw0Ljc3OSwxMC42NjcsMTAuNjY3LDEwLjY2N3MxMC42NjctNC43NzksMTAuNjY3LTEwLjY2NyAgICB2LTI1NkMyOTguNjY3LDE3NS40NDUsMjkzLjg4OCwxNzAuNjY3LDI4OCwxNzAuNjY3eiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTM1MiwxNzAuNjY3Yy01Ljg4OCwwLTEwLjY2Nyw0Ljc3OS0xMC42NjcsMTAuNjY3djI1NmMwLDUuODg4LDQuNzc5LDEwLjY2NywxMC42NjcsMTAuNjY3ICAgIGM1Ljg4OCwwLDEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3di0yNTZDMzYyLjY2NywxNzUuNDQ1LDM1Ny44ODgsMTcwLjY2NywzNTIsMTcwLjY2N3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K">
-      
-          </button>
-        </td>
-        <td>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="customCheck3">
-              <label class="custom-control-label" for="customCheck3">Activar</label>
-            </div>
-        </td>
+        </td>-->
       </tr>
     </tbody>
   </table>

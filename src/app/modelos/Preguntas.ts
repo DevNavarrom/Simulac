@@ -20,7 +20,7 @@ export class Preguntas{
 }
 
 export interface DialogDataPreguntas {
-    id_pregunta: string;
+    id_pregunta: number;
     desc_pregunta: string;
     id_area: string;
     id_tema: string;

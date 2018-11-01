@@ -18,14 +18,14 @@ class Respuestas {
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 			
-			$query = "INSERT INTO ".self::TABLA."( ".self::ID.", ".self::ID_RESPUESTA.",".self::DESCRIPCION.",".self::CORRECTA.") VALUES (?, ?, ?, ?);";
-        
+			//$query = "INSERT INTO ".self::TABLA."( ".self::ID.", ".self::ID_RESPUESTA.",".self::DESCRIPCION.",".self::CORRECTA.") VALUES (?, ?, ?, ?);";
+			$query = "call spGuardarRespuesta('".$infoRespuesta["id_pregunta"]."','".$infoRespuesta["id_respuesta"]."','".$infoRespuesta["desc_respuesta"]."','".$infoRespuesta["correcta"]."')";
             $sentencia = $conexion->prepare($query);
 		
-			$sentencia->bindParam(1, $infoRespuesta[self::ID]);			
+			/*$sentencia->bindParam(1, $infoRespuesta[self::ID]);			
             $sentencia->bindParam(2, $infoRespuesta[self::ID_RESPUESTA]);
             $sentencia->bindParam(3, $infoRespuesta[self::DESCRIPCION]);
-            $sentencia->bindParam(4,$infoRespuesta[self::CORRECTA]);
+            $sentencia->bindParam(4,$infoRespuesta[self::CORRECTA]);*/
 		
             if($sentencia->execute()){
 				return 

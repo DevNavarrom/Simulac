@@ -7,7 +7,7 @@ class ExamenControlador{
 
     public static function get($peticion){
 		if(count($peticion) == 0){
-			return Examen::getExamen();
+			return Examen::getExamenes();
 
 		}else if (count($peticion) ==1){
 			return Examen::buscarPorId($peticion[0]);					
@@ -21,7 +21,7 @@ class ExamenControlador{
 	
 	public static function post($peticion){
         // obtenemos el fichero que viene con la peticion POST
-        $id=$_POST["txtIdExamen"];
+        /*$id=$_POST["txtIdExamen"];
 		$id_tema=$_POST["txtIdTema"];
         $desc=$_POST["txtDescripcion"];
         $estado=$_POST["txtEstado"];
@@ -31,16 +31,24 @@ class ExamenControlador{
 			"id_tema" => $id_tema,
             "desc_examen" => $desc,
             "estado" => $estado	
-		];
+		];*/
+
+		$data = json_decode(file_get_contents('php://input'), true);
 
 		if(!empty($peticion[0])){
 			switch ($peticion[0]) {
-					case 'registro':
-					return Examen::insertarExamen($datosArray);
+				case 'registro':
+					return Examen::insertarExamen($data);
+					break;
+				case 'registroDetalle':
+					return Examen::insertarDetalleExamen($data);
+					break;
+				case 'cargarImagen':
+					return Examen::postImagen();
 					break;
 				case 'editar':
-				return Examen::actualizarExamen($datosArray);
-				break;
+					return Examen::actualizarExamen($datosArray);
+					break;
 				
 				default:
 					throw new ExceptionApi(PARAMETROS_INCORRECTOS, "parametros incorrectos");

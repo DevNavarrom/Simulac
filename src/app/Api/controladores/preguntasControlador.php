@@ -17,7 +17,10 @@ class PreguntasControlador{
 			if($peticion[0]=='examen')
 			{
 				return Preguntas::getPreguntasExamen($peticion[1]);
-			}else if($peticion[0]=='tema'){
+			}else if($peticion[0]=='idexamen'){
+				return Preguntas::getPreguntasPorExamen($peticion[1]);
+			}
+			else if($peticion[0]=='tema'){
 				return Preguntas::buscarPorIdTema($peticion[1]);
 				echo $peticion[1];
 			}else{
@@ -29,7 +32,6 @@ class PreguntasControlador{
 	
 	public static function post($peticion){
 		// obtenemos el fichero que viene con la peticion POST
-		$data = json_decode(file_get_contents('php://input'), true);
 
         /*$id=$_POST["txtIdPregunta"];
 		$id_tema=$_POST["txtIdTema"];
@@ -38,7 +40,7 @@ class PreguntasControlador{
 
 		//verifica si se ha subido una imagen
 	
-		
+		/*
 		$file_path = "imagenes/";
 
 		// pedimos el nombre del archivo subido y lo concatenamos con la ruta
@@ -55,12 +57,12 @@ class PreguntasControlador{
 						"estado" => 200,
 						"mensaje" => utf8_encode("guardado fallido")
 					  ];
-		}
-		
+		}*/
+		/*
 		header('Content-Type: application/json; charset=utf8');// indicamos que vamos a escribir JSON
 		echo json_encode($cuerpo, JSON_PRETTY_PRINT);// imprimimos el JSON	
-
-	
+		*/
+		$data = json_decode(file_get_contents('php://input'), true);
 		/*$datosArray = [
             "id_pregunta" => $id,
 			"id_tema" => $id_tema,
