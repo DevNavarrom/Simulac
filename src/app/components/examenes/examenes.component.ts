@@ -29,9 +29,9 @@ export class ExamenesComponent implements OnInit {
     });
   }
 
-  eliminarExamen(exam: IExamen): void {
-    if(confirm('¿Desea eliminar este examen: '+exam.id_examen+' ?')){
-    this._examenesService.deleteExamen(exam.id_examen)
+  eliminarExamen(exam: IExamenes): void {
+    if(confirm('¿Desea eliminar este examen: '+exam.id+' ?')){
+    this._examenesService.deleteExamen(parseInt(exam.id))
       .subscribe((res) => {
         alert(res['mensaje']);
         this.mostrarExamenes();
