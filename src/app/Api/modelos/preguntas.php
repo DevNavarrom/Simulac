@@ -20,7 +20,7 @@ class Preguntas {
 			
 			//$query = "INSERT INTO ".self::TABLA."( ".self::ID_TEMA.",".self::DESCRIPCION.",".self::IMAGEN.") VALUES (?, ?, ?);";
 			//echo 'id tema = '.$infoPregunta["id_tema"];
-			$query = "call spGuardarPregunta('".$infoPregunta["id_tema"]."','".$infoPregunta["desc_pregunta"]."','".$infoPregunta["imagen"]."')";
+			$query = "call spGuardarPregunta('".$infoPregunta["id_tema"]."','".$infoPregunta["desc_pregunta"]."','".$infoPregunta["imagen"]."','".$infoPregunta["id_pregunta"]."')";
             $sentencia = $conexion->prepare($query);
 		
 			//$sentencia->bindParam(1, $infoPregunta[self::ID]);			

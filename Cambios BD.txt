@@ -1,3 +1,52 @@
+# Viernes 02-NOVIEMBRE-2018 #############################################################################
+##########################CAMBIOS DEIMER NAVARRO#########################################################
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spExtraerRespuestas`(IN `idpreg` INT)
+    NO SQL
+BEGIN
+
+SELECT id_respuesta, desc_respuesta, correcta FROM respuestas WHERE id_pregunta = idpreg;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spGuardarPregunta`(IN `idtema` VARCHAR(10), IN `desc_pre` VARCHAR(400), IN `imag` VARCHAR(100), IN `idpreg` INT(6))
+    NO SQL
+BEGIN
+
+IF(idpreg = 0) THEN
+    INSERT INTO preguntas(id_tema, desc_pregunta, imagen) VALUES(idtema,desc_pre,imag);
+ELSE
+	UPDATE preguntas SET id_tema = idtema, desc_pregunta = desc_pre, imagen = imag WHERE id_pregunta = idpreg;
+end IF;
+
+SELECT id_pregunta FROM preguntas WHERE desc_pregunta = desc_pre;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spGuardarRespuesta`(IN `idpre` INT(6), IN `idres` VARCHAR(10), IN `descres` VARCHAR(400), IN `corr` INT(1))
+    NO SQL
+BEGIN
+
+IF NOT EXISTS(SELECT id_respuesta from respuestas WHERE id_pregunta = idpre) THEN
+	INSERT INTO respuestas(id_pregunta, id_respuesta, desc_respuesta, correcta) VALUES(idpre,idres,descres, corr);
+ELSE
+	UPDATE respuestas SET id_pregunta=idpre, desc_respuesta=descres, correcta=corr WHERE id_pregunta=idpre AND id_respuesta=idres;
+END IF;
+
+END$$
+DELIMITER ;
+
+
+
+
+
+
+
 Prcedimiento Almacenado: spBuscarPreguntas ##################
 11/10/18 - Jueves           ##################################
 #####################################################

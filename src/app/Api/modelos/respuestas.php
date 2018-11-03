@@ -75,11 +75,11 @@ class Respuestas {
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();
 
-			$query = "SELECT * FROM ".self::TABLA." NATURAL JOIN tema NATURAL JOIN area WHERE ".self::ID." = ?;";
-
+			//$query = "SELECT * FROM ".self::TABLA." NATURAL JOIN tema NATURAL JOIN area WHERE ".self::ID." = ?;";
+			$query = "call spExtraerRespuestas('".$id."')";
 			$sentencia = $conexion->prepare($query);
 
-			$sentencia->bindParam(1, $id);
+			//$sentencia->bindParam(1, $id);
 
 			if($sentencia->execute()){
 				http_response_code(200);

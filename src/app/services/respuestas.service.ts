@@ -24,5 +24,9 @@ export class RespuestasService {
         )
       );
   }
+
+  getRespuestas( id_pregunta:number ) {
+    return this.http.get(`${this.url}/` + id_pregunta);
+  }
   
 }
