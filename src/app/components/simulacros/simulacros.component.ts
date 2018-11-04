@@ -7,6 +7,7 @@ import { Simulacros } from 'src/app/modelos/Simulacros';
 import { EditarSimulacroComponent } from './editar-simulacro/editar-simulacro.component';
 import { FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
+import { CrearSimulacroComponent } from './crear-simulacro/crear-simulacro.component';
 
 
 @Component({
@@ -32,6 +33,27 @@ export class SimulacrosComponent implements OnInit {
   ngOnInit() {
    
     this.buscarSimulacro();
+  }
+
+  crearNuevo()
+  {
+
+    const dialogRef = this.dialog.open(CrearSimulacroComponent, {
+      panelClass: 'my-panel',
+      width: '450px',
+      data: null
+    });
+      dialogRef.afterClosed().subscribe(result => {
+
+      if ( !result ) {
+       
+        return;
+      }
+  
+     this.buscarSimulacro();          
+       
+      });
+
   }
 
   change(event: MatCheckboxChange)

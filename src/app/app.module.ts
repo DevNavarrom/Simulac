@@ -40,6 +40,8 @@ import { SimulacrosComponent } from './components/simulacros/simulacros.componen
 import { EditarSimulacroComponent } from './components/simulacros/editar-simulacro/editar-simulacro.component';
 import { VerDetallesSimulacroComponent } from './components/simulacros/ver-detalles-simulacro/ver-detalles-simulacro.component';
 import { VerRespuestasEstudiantesComponent } from './components/simulacros/ver-respuestas-estudiantes/ver-respuestas-estudiantes.component';
+import { CrearSimulacroComponent } from './components/simulacros/crear-simulacro/crear-simulacro.component';
+import { ListarExamenesComponent } from './components/examenes/listar-examenes/listar-examenes.component';
 
 
 
@@ -54,7 +56,9 @@ import { VerRespuestasEstudiantesComponent } from './components/simulacros/ver-r
     PreguntasExamenComponent,
     ModalDialogComponent,
     VerDetallesSimulacroComponent,
-    EditarSimulacroComponent
+    EditarSimulacroComponent,
+    CrearSimulacroComponent,
+    ListarExamenesComponent
 
   ],
   declarations: [
@@ -81,7 +85,9 @@ import { VerRespuestasEstudiantesComponent } from './components/simulacros/ver-r
     SimulacrosComponent,
     EditarSimulacroComponent,
     VerDetallesSimulacroComponent,
-    VerRespuestasEstudiantesComponent   
+    VerRespuestasEstudiantesComponent,
+    CrearSimulacroComponent,
+    ListarExamenesComponent   
   ],
   imports: [
     BrowserModule,

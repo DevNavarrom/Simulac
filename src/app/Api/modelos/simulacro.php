@@ -9,7 +9,8 @@ require_once 'vistas/vistaJSON.php';
 class Simulacro {
 
 	const TABLA = "simulacro";
-    const ID = "id_simulacro";
+	const ID = "id_simulacro";
+	const ID_EXAMEN = "id_examen";
     const FECHA = "fecha";
     const RESPONSABLE = "responsable";
 	const GRUPO = "grupo";
@@ -19,7 +20,7 @@ class Simulacro {
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 			
-			$query = "INSERT INTO ".self::TABLA."( ".self::ID.", ".self::FECHA.", ".self::RESPONSABLE.", ".self::GRUPO.", estado) VALUES (?, ?, ?, ?,?);";
+			$query = "INSERT INTO ".self::TABLA."( ".self::ID.", ".self::FECHA.", ".self::RESPONSABLE.", ".self::GRUPO.", estado,id_examen) VALUES (?, ?, ?, ?,?);";
 			
                 
 			$sentencia = $conexion->prepare($query);
@@ -29,6 +30,7 @@ class Simulacro {
 			$sentencia->bindParam(3, $infoSimulacro[self::RESPONSABLE]);
 			$sentencia->bindParam(4, $infoSimulacro[self::GRUPO]);
 			$sentencia->bindParam(5, $infoSimulacro['estado']);
+			$sentencia->bindParam(6, $infoSimulacro['id_examen']);
 		
             if($sentencia->execute()){
 				return 
@@ -93,14 +95,15 @@ class Simulacro {
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 			
-			$query = "UPDATE ".self::TABLA." SET  ".self::FECHA."=?, ".self::RESPONSABLE."=?, ".self::GRUPO."=? WHERE ".self::ID."=?;";
+			$query = "UPDATE ".self::TABLA." SET  ".self::FECHA."=?, ".self::RESPONSABLE."=?, ".self::GRUPO."=?, ".self::ESTADO."=? WHERE ".self::ID."=?;";
 	
 			$sentencia = $conexion->prepare($query);
 			
-            $sentencia->bindParam(4, $infoSimulacro[Self::ID]);
+            $sentencia->bindParam(5, $infoSimulacro[Self::ID]);
 			$sentencia->bindParam(1, $infoSimulacro[self::FECHA]);
 			$sentencia->bindParam(2, $infoSimulacro[self::RESPONSABLE]);
 			$sentencia->bindParam(3, $infoSimulacro[self::GRUPO]);
+			$sentencia->bindParam(4, $infoSimulacro[self::ESTADO]);
 
             if($sentencia->execute()){
 				return 
