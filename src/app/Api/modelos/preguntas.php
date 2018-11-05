@@ -136,6 +136,27 @@ class Preguntas {
 			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO");
 		}
 	}
+	public static function getPreguntasAreaTema($parametro){
+        try{
+            $conexion = Conexion::getInstancia()->getConexion();
+
+			$sentencia = $conexion->prepare("call spExtraerPreguntas('".$parametro."%')");
+			
+		
+			if($sentencia->execute()){
+				http_response_code(200);
+				return
+					[
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+					];
+			}else{
+				throw new ExceptionApi(ESTADO_FALLIDO, "error en la consulta");
+			}
+        }catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO");
+		}
+	}
 	public static function buscarPorId($id){
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();

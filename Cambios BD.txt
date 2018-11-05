@@ -1,3 +1,18 @@
+# Domingo 04-NOVIEMBRE-2018 #############################################################################
+##########################CAMBIOS DEIMER NAVARRO#########################################################
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spExtraerPreguntas`(IN `param` VARCHAR(10))
+    NO SQL
+BEGIN
+
+SELECT id_pregunta, desc_pregunta FROM preguntas AS preg NATURAL JOIN tema as tem WHERE tem.id_tema LIKE param OR tem.id_area LIKE param;
+
+END$$
+DELIMITER ;
+
+
+
 # Viernes 02-NOVIEMBRE-2018 #############################################################################
 ##########################CAMBIOS DEIMER NAVARRO#########################################################
 
