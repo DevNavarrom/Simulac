@@ -49,7 +49,7 @@ export class SimulacrosComponent implements OnInit {
        
         return;
       }
-  
+  if(result=="1")
      this.buscarSimulacro();          
        
       });

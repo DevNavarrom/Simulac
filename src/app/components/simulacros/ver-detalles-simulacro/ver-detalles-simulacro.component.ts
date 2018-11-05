@@ -4,7 +4,7 @@ import {  MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SimulacrosService } from '../../../services/simulacros.service';
 import { Router } from '@angular/router';
-import { NavbarEstudiantesService } from '../../../services/navbar-estudiantes.service';
+import { NavbarEstudiantesService } from 'src/app/services/navbar-estudiantes.service';
 
 
 @Component({

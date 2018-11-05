@@ -144,6 +144,31 @@ class Examen {
 		}
 	}
 	
+	public static function buscarExamen($dato)
+	{
+	
+		try{
+			$conexion = Conexion::getInstancia()->getConexion();
+
+			$query = "call spBuscarExamen('%$dato%')";
+
+			$sentencia = $conexion->prepare($query);
+
+
+			if($sentencia->execute()){
+				http_response_code(200);
+				return
+					[
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+					];
+			}else{
+				throw new ExceptionApi(ESTADO_FALLIDO, "ERROR en la consulta");
+			}
+		}catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO");
+		}
+	}
 	public static function buscarPorId($id){
 		try{
 			$conexion = Conexion::getInstancia()->getConexion();

@@ -20,7 +20,7 @@ class Simulacro {
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 			
-			$query = "INSERT INTO ".self::TABLA."( ".self::ID.", ".self::FECHA.", ".self::RESPONSABLE.", ".self::GRUPO.", estado,id_examen) VALUES (?, ?, ?, ?,?);";
+			$query = "INSERT INTO ".self::TABLA."( ".self::ID.", ".self::FECHA.", ".self::RESPONSABLE.", ".self::GRUPO.", estado,id_examen) VALUES (?, ?, ?, ?,?,?);";
 			
                 
 			$sentencia = $conexion->prepare($query);
@@ -43,7 +43,7 @@ class Simulacro {
 				throw new ExceptionApi(CREACION_FALLIDA, "error en la sentencia");
 			}
         }catch(PDOException $e){
-			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO ".$e->getMessage());
+			throw new ExceptionApi($e->getCode(), "ERROR en conexion PDO ");
 		}
 	}
 

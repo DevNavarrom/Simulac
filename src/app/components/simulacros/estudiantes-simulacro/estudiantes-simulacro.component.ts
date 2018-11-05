@@ -4,7 +4,7 @@ import { SimulacrosService } from '../../../services/simulacros.service';
 import { Router } from '@angular/router';
 import { Simulacros } from '../../../modelos/Simulacros';
 import {Estudiantes} from '../../../modelos/Estudiantes';
-import { NavbarEstudiantesService } from '../../../services/navbar-estudiantes.service';
+import { StorageServiceE } from 'src/app/services/storageE.service';
 
 @Component({
   selector: 'app-estudiantes-simulacro',
@@ -22,12 +22,12 @@ export class EstudiantesSimulacroComponent implements OnInit {
   success = '';
 
   constructor(private _simulacroService: SimulacrosService, 
-    private _router: Router,
-    private _navBarEstudiantesService: NavbarEstudiantesService) { }
+    private _router: Router,private storageService: StorageServiceE
+    ) { }
 
   ngOnInit() {
     //console.log("stu "+this.estudiante.nombre);
-   this.estudiante= this._navBarEstudiantesService.getEstudiante();
+   this.estudiante= this.storageService.getCurrentUser();
      // console.log("se o"+ this.estudiante.nombre);
  
      if(this.estudiante.id_estudiante != null){

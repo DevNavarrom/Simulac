@@ -15,7 +15,7 @@ import { APP_ROUTING } from './app.routes';
 
 //COMPONENTES
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/shared/navbar/navbar.component';
+import { NavbarComponent } from './components/login/shared/navbar/navbar.component';
 import { EstudiantesComponent } from './components/estudiantes/estudiantes.component';
 import { HomeComponent } from './components/home/home.component';
 import { AreasComponent } from './components/areas/areas.component';
@@ -30,7 +30,7 @@ import { TemasComponent } from './components/temas/temas.component';
 import { EditarTemasComponent } from './components/temas/editartemas/editar-temas.component';
 import { RegistroComponent } from './components/login/registro/registro.component';
 import { EstudiantesSimulacroComponent } from './components/simulacros/estudiantes-simulacro/estudiantes-simulacro.component';
-import { NavbarEstudiantesComponent } from './components/shared/navbar-estudiantes/navbar-estudiantes.component';
+import { NavbarEstudiantesComponent } from './components/login/shared/navbar-estudiantes/navbar-estudiantes.component';
 import { CrearexamenComponent } from './components/examenes/crearexamen/crearexamen.component';
 import { PreguntasExamenComponent } from './components/examenes/preguntas-examen/preguntas-examen.component';
 import { PreguntasSimulacroComponent } from './components/simulacros/preguntas-simulacro/preguntas-simulacro.component';
@@ -42,6 +42,12 @@ import { VerDetallesSimulacroComponent } from './components/simulacros/ver-detal
 import { VerRespuestasEstudiantesComponent } from './components/simulacros/ver-respuestas-estudiantes/ver-respuestas-estudiantes.component';
 import { CrearSimulacroComponent } from './components/simulacros/crear-simulacro/crear-simulacro.component';
 import { ListarExamenesComponent } from './components/examenes/listar-examenes/listar-examenes.component';
+import { StorageService } from './services/storage.service';
+import { AuthorizatedGuard } from './components/guards/authorizathed.guard';
+import { InicioDocComponent } from './components/inicio/inicio-doc/inicio-doc.component';
+import { InicioEstComponent } from './components/inicio/inicio-est/inicio-est.component';
+import { StorageServiceE } from './services/storageE.service';
+import { AuthorizatedGuardE } from './components/guards/authorizathedE.guard';
 
 
 
@@ -87,18 +93,20 @@ import { ListarExamenesComponent } from './components/examenes/listar-examenes/l
     VerDetallesSimulacroComponent,
     VerRespuestasEstudiantesComponent,
     CrearSimulacroComponent,
-    ListarExamenesComponent   
+    ListarExamenesComponent,
+    InicioDocComponent,
+    InicioEstComponent   
   ],
   imports: [
     BrowserModule,
     APP_ROUTING,
     HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
+   FormsModule,
+   ReactiveFormsModule,
+   BrowserAnimationsModule,
      MaterialModule
   ],
-  providers: [EstudiantesService, PreguntasService,  { provide: LOCALE_ID, useValue: "es" }],
+  providers: [  AuthorizatedGuard,AuthorizatedGuardE,StorageService,StorageServiceE,EstudiantesService, PreguntasService,  { provide: LOCALE_ID, useValue: "es" }],
 
   bootstrap: [AppComponent]
 })

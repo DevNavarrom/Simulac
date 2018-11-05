@@ -10,15 +10,16 @@ import { ExamenesService } from 'src/app/services/examenes.service';
 })
 export class ListarExamenesComponent implements OnInit {
   examenes:IExamenes[] = [];
+   datoBuscar:String="";
   constructor(public dialogRef: MatDialogRef<ListarExamenesComponent>,
     private _examenesService:ExamenesService
     ) { }
 
   ngOnInit() {
-    this.mostrarExamenes();
+    this.buscarExamen();
   }
-  mostrarExamenes() {
-    this._examenesService.getExamenes().subscribe(res => {
+  buscarExamen() {
+    this._examenesService.buscarExamen(this.datoBuscar).subscribe(res => {
       this.examenes = res['datos'];
     });
   }
@@ -29,6 +30,8 @@ export class ListarExamenesComponent implements OnInit {
     this.dialogRef.close(id_examen);
 
   }
+
+ 
 
   onNoClick(): void {
     this.dialogRef.close();

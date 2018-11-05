@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Estudiantes } from '../../../modelos/Estudiantes';
-import { NavbarEstudiantesService } from '../../../services/navbar-estudiantes.service';
 import { EstudiantesService } from '../../../services/estudiantes.service';
+import { StorageServiceE } from 'src/app/services/storageE.service';
 
 @Component({
   selector: 'app-estudiantes-datos',
@@ -11,12 +11,12 @@ import { EstudiantesService } from '../../../services/estudiantes.service';
 export class EstudiantesDatosComponent implements OnInit {
 
   estudiante: Estudiantes;
-  constructor(private _navBarEstudiantesService: NavbarEstudiantesService,
+  constructor(private storageService: StorageServiceE,
     private _estudiantesService: EstudiantesService) { }
 
   ngOnInit() {
     this.estudiante=new Estudiantes("","","","");
-    this.estudiante= this._navBarEstudiantesService.getEstudiante();
+    this.estudiante= this.storageService.getCurrentUser();
 
     if(this.estudiante.id_estudiante == null){
 

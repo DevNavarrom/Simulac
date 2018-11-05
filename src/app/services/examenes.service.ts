@@ -16,6 +16,10 @@ export class ExamenesService {
   getExamenes() {
     return this.http.get(`${this.url}`);
   }
+  buscarExamen(dato:String)
+  {
+    return this.http.get(`${this.url}`+'/buscar/'+dato);
+  }
 
   getExamen (id:any) {
     return this.http.get(`${this.url}`+'/'+id);

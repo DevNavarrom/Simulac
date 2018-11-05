@@ -1,5 +1,5 @@
 <!--<app-navbar></app-navbar>-->
 
-<app-login></app-login>
-
-<!--<router-outlet></router-outlet>-->
+<app-inicio-doc *ngIf="docIsLogin()"></app-inicio-doc>
+<app-inicio-est *ngIf="estIsLogin()"></app-inicio-est>
+<app-login *ngIf="!docIsLogin() && !estIsLogin()"></app-login>

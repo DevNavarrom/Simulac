@@ -1,117 +1,12 @@
-Prcedimiento Almacenado: spBuscarPreguntas ##################
-11/10/18 - Jueves           ##################################
+Prcedimiento Almacenado: spBuscarExamen ##################
+4/11/18 - DOMINGO           ##################################
 #####################################################
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spBuscarPreguntas`(IN `idtema` VARCHAR(10))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spBuscarExamen`(IN `dato` VARCHAR(45))
     NO SQL
 BEGIN
-
-select * from preguntas where id_tema LIKE idtema;
-
-END$$
-DELIMITER ;
-
-Prcedimiento Almacenado: spBuscarSimulacros ##################
-12/10/18 - VIERNES       ##################################
-#####################################################
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spBuscarSimulacros`(IN `dato` VARCHAR(45), IN `_estado` VARCHAR(15), IN `_fecha` VARCHAR(15), IN `_idExamen` VARCHAR(10))
-    NO SQL
-BEGIN
-SELECT id_simulacro,id_examen,desc_examen,DATE_FORMAT(fecha,'%d/%m/%Y') as fecha,responsable,grupo,estado,
-(select count(id_estudiante) from detalle_simulacro where detalle_simulacro.id_simulacro=sm.id_simulacro) as participantes FROM  simulacro as sm  NATURAL JOIN examen
-where (id_simulacro like dato or responsable like dato or grupo like dato) and (estado like _estado and fecha like _fecha and id_examen LIKE _idExamen )
-order by fecha DESC limit 30;
-END$$
-DELIMITER ;
-
-Prcedimiento Almacenado: spVerDetalleSimulacro ##################
-12/10/18 - VIERNES       ##################################
-#####################################################
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spVerDetalleSimulacro`(IN `id` VARCHAR(10))
-    NO SQL
-BEGIN
-SELECT id_estudiante,nombre,DATE_FORMAT(fecha_presentacion,'%d/%m/%Y') as fecha,preguntas_correctas,preguntas_totales,
- ROUND(calificacion, 2) as calificacion FROM `detalle_simulacro` NATURAL JOIN estudiantes 
-where id_simulacro=id order by fecha ;
-END$$
-DELIMITER ;
-
-
-#########################################################################################################
-##########################CAMBIOS DEIMER NAVARRO#########################################################
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spGuardarDetalleExamen`(IN `idexa` INT(5), IN `idpre` INT(6))
-    NO SQL
-BEGIN
-
-INSERT INTO detalle_examen(id_examen, id_pregunta) VALUES(idexa,idpre);
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spGuardarExamen`(IN `idtema` VARCHAR(10), IN `descexa` VARCHAR(100), IN `idexa` INT(5))
-    NO SQL
-BEGIN
-
-IF NOT EXISTS(SELECT desc_examen from examen WHERE id_examen = idexa) THEN
-INSERT INTO examen(id_tema, desc_examen) VALUES(idtema,descexa);
-
-SELECT id_examen FROM examen WHERE id_tema = idtema AND desc_examen = descexa;
-
-ELSE
-
-	UPDATE examen SET id_tema=idtema, desc_examen=descexa WHERE id_examen = idexa;
-
-END IF;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spGuardarPregunta`(IN `idtema` VARCHAR(10), IN `desc_pre` VARCHAR(400), IN `imag` VARCHAR(100))
-    NO SQL
-BEGIN
-
-INSERT INTO preguntas(id_tema, desc_pregunta, imagen) VALUES(idtema,desc_pre,imag);
-
-SELECT id_pregunta FROM preguntas WHERE desc_pregunta = desc_pre;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spMostrarPreguntas`(IN `idexa` INT(5))
-    NO SQL
-BEGIN
-
-SELECT id_pregunta, desc_pregunta FROM preguntas AS preg NATURAL JOIN detalle_examen as detalle WHERE detalle.id_examen = idexa;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spGuardarRespuesta`(IN `idpre` INT(6), IN `idres` VARCHAR(10), IN `descres` VARCHAR(400), IN `corr` INT(1))
-    NO SQL
-BEGIN
-
-INSERT INTO respuestas(id_pregunta, id_respuesta, desc_respuesta, correcta) VALUES(idpre,idres,descres, corr);
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spMostrarExamenes`()
-    NO SQL
-BEGIN
-
-SELECT id_examen AS id, desc_examen, tem.desc_tema, are.desc_area, (SELECT COUNT(id_pregunta) FROM detalle_examen WHERE id_examen = id) AS cantidad FROM examen AS exa INNER JOIN tema AS tem ON tem.id_tema = exa.id_tema INNER JOIN area AS are ON are.id_area = tem.id_area;
-
+SELECT id_examen AS id, desc_examen, tem.desc_tema, are.desc_area, (SELECT COUNT(id_pregunta) FROM detalle_examen WHERE id_examen = id) AS cantidad FROM examen AS exa INNER JOIN tema AS tem ON tem.id_tema = exa.id_tema INNER JOIN area AS are ON are.id_area = tem.id_area
+where id_examen like dato or desc_examen like dato or tem.desc_tema like dato or are.desc_area like dato ORDER by id_examen DESC limit 6;
 
 END$$
 DELIMITER ;

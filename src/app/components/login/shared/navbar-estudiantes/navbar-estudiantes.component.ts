@@ -1,7 +1,7 @@
 import { Component, OnInit,Input } from '@angular/core';
-import { Estudiantes } from '../../../modelos/Estudiantes';
-import { NavbarEstudiantesService } from '../../../services/navbar-estudiantes.service';
+import { Estudiantes } from '../../../../modelos/Estudiantes';
 import { Router } from '@angular/router';
+import { StorageServiceE } from 'src/app/services/storageE.service';
 
 @Component({
   selector: 'app-navbar-estudiantes',
@@ -11,15 +11,20 @@ import { Router } from '@angular/router';
 export class NavbarEstudiantesComponent implements OnInit {
 
   ruta: string="Estudiantes";
-  @Input ('estudiante') estudiante: Estudiantes;
-  constructor(private _navbarService: NavbarEstudiantesService,
+
+   nombres:String="";
+  constructor(private storageService: StorageServiceE,
     private _router:Router) { }
 
   ngOnInit() {
     //console.log("id: "+this.estudiante.nombre);
-    this._navbarService.setEstudiante(this.estudiante);
-  }
+    this.nombres=this.storageService.getCurrentUser().nombre;
+    this._router.navigate(['/estudiantes/simulacros']);
 
+  }
+  public isLoggedIn() {
+    return this.storageService.isAuthenticated();
+  }
   mostrarDatosEstudiante()
   {
     this._router.navigate(['/estudiantes/datos']);
@@ -28,6 +33,11 @@ export class NavbarEstudiantesComponent implements OnInit {
   {
 this.ruta="Estudiantes"+ruta;
   }
-
+  public logout(): void{
+    console.log("logout");
+   this.storageService.logout();
+  // this.ngOnInit();
+    
+  }
 
 }

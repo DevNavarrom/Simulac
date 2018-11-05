@@ -29,7 +29,7 @@ export class SimulacrosService {
     return this.http.get(this.url+'/activos/'+id_estudiante);
   }
 
-  postSimulacro(simulacro: Simulacros) {
+  postSimulacro(simulacro: any) {
     // let headers = new HttpHeaders({'Content-Type': 'application/json'});
     // console.log(JSON.stringify(estudiante)+{headers});
 
@@ -88,6 +88,7 @@ export class SimulacrosService {
   }
 
   getBuscarSimulacro(dato: string) {
+    
     return this.http.get(`${this.url}/` + dato);
   }
 

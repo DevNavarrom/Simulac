@@ -8,7 +8,7 @@ import { PreguntasService } from '../../../services/preguntas.service';
 import { SimulacrosService } from '../../../services/simulacros.service';
 import { Router } from '@angular/router';
 import { Estudiantes } from '../../../modelos/Estudiantes';
-import { NavbarEstudiantesService } from '../../../services/navbar-estudiantes.service';
+import { StorageServiceE } from 'src/app/services/storageE.service';
 
 
 @Component({
@@ -38,8 +38,7 @@ export class PreguntasSimulacroComponent implements OnInit {
     private _activatedRouter: ActivatedRoute,
     private _simulacroService: SimulacrosService,
     private _router: Router,
-    private _navBarEstudiantesService: NavbarEstudiantesService,
-   ) { 
+    private storageService: StorageServiceE   ) { 
 
       this._activatedRouter.params.subscribe(params =>
         {
@@ -115,7 +114,7 @@ export class PreguntasSimulacroComponent implements OnInit {
  
   }
   ngOnInit() {
-    this.estudiante= this._navBarEstudiantesService.getEstudiante();
+    this.estudiante= this.storageService.getCurrentUser();
     // console.log("se o"+ this.estudiante.nombre);
 
     if(this.estudiante.id_estudiante == null){

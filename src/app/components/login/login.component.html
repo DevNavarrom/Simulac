@@ -1,4 +1,4 @@
-<div class="div-content container col-md-12" *ngIf="login">
+<div class="div-content container col-md-12">
 
 
     <div class="tabs justify-content-center align-self-center card">
@@ -98,7 +98,3 @@
     </div>
 
 </div>
-<app-navbar-estudiantes *ngIf="!login && !loginEstudent" [estudiante]="estudiante">
-</app-navbar-estudiantes>
-<app-navbar *ngIf="!login && loginEstudent">
-</app-navbar>

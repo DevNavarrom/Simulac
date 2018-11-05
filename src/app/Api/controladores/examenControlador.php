@@ -14,7 +14,15 @@ class ExamenControlador{
 
 		}else
 		{
-			return Examen::eliminarExamen($peticion[1]);
+			if($peticion[0]== 'buscar')
+			{
+				return Examen::buscarExamen($peticion[1]);
+
+			}else
+			{
+				return Examen::eliminarExamen($peticion[1]);
+
+			}
 		}
 	
 	}

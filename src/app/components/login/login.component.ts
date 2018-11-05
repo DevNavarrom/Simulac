@@ -8,6 +8,10 @@ import {MatDialog, MatDialogRef} from '@angular/material';
 import { RegistroComponent } from '../login/registro/registro.component';
 import { Estudiantes } from '../../modelos/Estudiantes';
 import { EstudiantesService } from '../../services/estudiantes.service';
+import { Session } from 'src/app/modelos/Session';
+import { StorageService } from 'src/app/services/storage.service';
+import { StorageServiceE } from 'src/app/services/storageE.service';
+import { SessionE } from 'src/app/modelos/SessionE';
 
 @Component({
   selector: 'app-login',
@@ -18,17 +22,17 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   estudiantesForm: FormGroup;
-  login:boolean = true;
-  loginEstudent:boolean = true;
   _usuario:Usuarios = null;
   usuarioLogueado:Usuarios;
   estudiante:Estudiantes;
 
   constructor( private fb: FormBuilder, title: Title, private _router:Router, 
     private _usuariosService:UsuariosService,private _estudiantesService:EstudiantesService,
+    private storageService: StorageService,private storageServiceE: StorageServiceE,
      public dialog: MatDialog ) { 
-    title.setTitle('Login Angular 5');
+    title.setTitle('Login Web Simulac');
     this.buildForm();
+   
   }
 
   ngOnInit() {
@@ -57,7 +61,11 @@ export class LoginComponent implements OnInit {
     this._usuariosService.login(this._usuario).subscribe((res) => {
       this.usuarioLogueado = res['datos'] ;
         if (this.usuarioLogueado[0] != null && this.usuarioLogueado[0].user == this._usuario.user && this.usuarioLogueado[0].password == this._usuario.password) {
-          this.login = false;
+
+          let data: Session=new Session();
+          data.token=this.generarTocken();
+          data.user=this.usuarioLogueado[0].user;
+          this.storageService.setCurrentSession(data);
           this._router.navigate(['/home']);
           
         } else {
@@ -68,6 +76,17 @@ export class LoginComponent implements OnInit {
     );
     
 }
+ generarTocken() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < 5; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+
+
 
 ingresoEstudiante()
 {
@@ -75,12 +94,13 @@ ingresoEstudiante()
   if(this.estudiantesForm.value.idEstudiante != ''){
   this._estudiantesService.getEstudiante(this.estudiantesForm.value.idEstudiante).subscribe((res) => {
     this.estudiante = res['datos'][0] ;
-    
+    console.log(res['datos'][0]);
     if(this.estudiante!=null){
-      console.log("ingreso; "+this.estudiantesForm.value.idEstudiante);
-        this.loginEstudent = false;
-        this.login = false;
-        this._router.navigate(['/home']);
+      let data: SessionE=new SessionE();
+      data.token=this.generarTocken();
+      data.user=this.estudiante;
+      this.storageServiceE.setCurrentSession(data);
+      this._router.navigate(['/home']);
     }
     else{
       alert("El estudiante no se encuentra registrado, por favor registrese");
@@ -122,8 +142,7 @@ registrarNuevo(){
         
         alert(datos['mensaje']);
         this.estudiante=estu;
-        this.loginEstudent = false;
-        this.login = false;
+   
         this._router.navigate(['/home']);
         
       } else {

@@ -1,0 +1,24 @@
+tr {
+    width: 100%;
+    display: inline-table;
+    table-layout: fixed;
+}
+
+td {
+    align: "center"
+}
+
+thead {
+    width: 100%;
+}
+
+table {
+    height: 330px;
+    display: -moz-groupbox;
+}
+
+tbody {
+    overflow-y: scroll;
+    height: 290px;
+    position: absolute;
+}
