@@ -23,9 +23,15 @@ export class EditarSimulacroComponent implements OnInit {
         'grupo':data.grupo,
         'estado':data.estado
       });
-      console.log(data.fecha);
+      let i= data.fecha.split('/');
+
+      let date :Date;
+      date = new Date();
+      date.setDate(i[0]);
+      date.setMonth(i[1]-1);
+      date.setFullYear(i[2]);
       
-      this.fecha.setValue(new Date(data.fecha));
+      this.fecha.setValue(date);
      }
 
   ngOnInit() {
@@ -35,6 +41,7 @@ export class EditarSimulacroComponent implements OnInit {
   
     if (this.forma.value.responsable != '' && this.forma.value.grupo != '') {
       if (this.forma.value.estado !== '') {
+        
         this.forma.value.fecha=formatDate(this.fecha.value,'yyyy-MM-dd','en-US');
     this.dialogRef.close(this.forma.value);
 

@@ -15,5 +15,5 @@ export class Simulacros extends Examen{
         this.grupo = grupo;
         this.estado=estado;
     }
-
+  
 }
