@@ -155,18 +155,21 @@ export class CrearexamenComponent implements OnInit {
   }
 
   registrarPregunta() {
+    if (this.id_pregunta != 0) {//Fue ediada, entonces la borro de la tabla
+      this.quitarPregunta(this.pregunta);
+    }
     this.pregunta = null;
     this.pregunta = {
-      id_pregunta: 0,
+      id_pregunta: this.id_pregunta,
       desc_pregunta: this.descrip_pregunta,
       id_area: this.area_select,
       id_tema:this.tema_select,
-      imagen: 'img.jpg'
+      imagen: this.nombreImagen
     }
     //let idPregunta:any[] = [];
     this._preguntasService.postPreguntas(this.pregunta).subscribe(datos => {
       if (datos['estado'] == 1) {
-        alert(datos['datos'][0].id_pregunta);
+        //alert(datos['datos'][0].id_pregunta);
         //idPregunta = datos['datos'];
         //this.id_pregunta = idPregunta[0].id_pregunta;
         this.id_pregunta = parseInt(datos['datos'][0].id_pregunta);
@@ -175,11 +178,11 @@ export class CrearexamenComponent implements OnInit {
           desc_pregunta: this.descrip_pregunta,
           id_area: this.area_select,
           id_tema:this.tema_select,
-          imagen: 'img.jpg'
+          imagen: this.nombreImagen
         }
+        
         this.preguntas.push(this.pregunta);
         
-        //TODO invocar metodo para guardar respuestas
         this.guardarRespuestas();
       } else if (datos['estado'] == 23000) {
         alert('El area ya se encuentra registrada');
@@ -190,7 +193,7 @@ export class CrearexamenComponent implements OnInit {
   }
 
   guardarRespuestas() {
-    var mensaje:string = "No Guardado.";
+    this.mensaje = "No Guardado.";
     for (let i = 0; i < this.respuestas.length; i++) {
       this.respuestas[i].id_respuesta = this.id_pregunta+"R"+(i+1);
       this.respuestas[i].id_pregunta = this.id_pregunta;
@@ -205,16 +208,18 @@ export class CrearexamenComponent implements OnInit {
       console.log(this.respuesta);
       this._respuService.postRespuestas(this.respuesta).subscribe(res => {
         if (res['estado'] == 1) {
-          mensaje = res['mensaje'];
+          this.mensaje = res['mensaje'];
         }
       });
     }
+    this.descrip_pregunta = "";
+    this.respuestas = null;
     //console.log(this.respuestas);
-    alert(mensaje);
+    alert(this.mensaje);
   }
 
   //Para cuando edito el input de preguntas agrego una respuesta vacia en el array
-  editarPregunta(value:string) {
+  agregarRespuestaVacia(value:string) {
     if (this.respuestas.length==0 && value.length > 0) {
       let resp:IRespuestas={
         id_pregunta : 0,
@@ -259,7 +264,7 @@ export class CrearexamenComponent implements OnInit {
   }
 
   guardarExamen() {
-    if (this.preguntas.length > 0 && this.respuestas.length > 0 && this.descrip_pregunta.length > 0) {
+    if (this.preguntas.length > 0 && this.descrip_examen.length > 0) {
       this.examen = {
         id_tema: this.tema_select,
         desc_examen: this.descrip_examen,
@@ -346,6 +351,18 @@ export class CrearexamenComponent implements OnInit {
         this.error = err;
       }
     );
+  }
+
+  editarPregunta(id_preg:number, desc_preg:string) {
+    this._respuService.getRespuestas(id_preg)
+        .subscribe(res => {
+          if (res['estado']==111) {
+            this.respuestas = null;
+            this.respuestas = res['datos'];
+            this.descrip_pregunta = desc_preg;
+            this.id_pregunta = id_preg;
+          }
+    });
   }
 
 }

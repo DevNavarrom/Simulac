@@ -27,6 +27,10 @@ export class PreguntasService {
     return this.http.get(`${this.url}/idexamen/` + id_examen);
   }
 
+  getPreguntasAreaTema(area_tema: string) {
+    return this.http.get(`${this.url}/areatema/` + area_tema);
+  }
+
 
   postPreguntas(pregunta: DialogDataPreguntas) {
 

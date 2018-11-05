@@ -66,7 +66,10 @@ switch ($metodo) {
 				  break;
 			case 'preguntas':
 				$vista->imprimir(PreguntasControlador::get($peticionArray));
-		  		break;
+				break;
+			case 'respuestas':
+				$vista->imprimir(RespuestasControlador::get($peticionArray));
+				break;
 			case 'simulacros':
 			$vista->imprimir(SimulacroControlador::get($peticionArray));
 		  break;

@@ -37,7 +37,7 @@ export class PreguntasComponent implements OnInit {
     this.cargarAreas();
       //this.area_select="0";
       this.cargarTemas();
-      this.tema_select="0";
+      //this.tema_select="0";
   }
 
   quitarPregunta(pre:DialogDataPreguntas){
@@ -48,6 +48,7 @@ export class PreguntasComponent implements OnInit {
     this._areasService.getAreas()
       .subscribe((res) => {
         this.areas = res['datos'];
+        this.mostrarPreguntas();
       },
       (err) => {
         this.error = err;
@@ -67,7 +68,7 @@ export class PreguntasComponent implements OnInit {
   }
 
   //Para cuando edito el input de preguntas agrego una respuesta vacia en el array
-  editarPregunta(value:string) {
+  agregarRespuestaVacia(value:string) {
     if (this.respuestas.length==0 && value.length > 0) {
       let resp:IRespuestas={
         id_pregunta : 0,
@@ -201,6 +202,36 @@ export class PreguntasComponent implements OnInit {
     }
     //console.log(this.respuestas);
     //alert(mensaje);
+  }
+
+  editarPregunta(id_preg:number, desc_preg:string) {
+    this._respuService.getRespuestas(id_preg)
+        .subscribe(res => {
+          if (res['estado']==111) {
+            this.respuestas = null;
+            this.respuestas = res['datos'];
+            this.descrip_pregunta = desc_preg;
+            this.id_pregunta = id_preg;
+          }
+    });
+  }
+
+  mostrarPreguntas(): void {
+    var parametro:string = "";
+    if (this.area_select!="0" && this.tema_select=="0") {
+      parametro = this.area_select;
+    } else if (this.area_select!="0" && this.tema_select!="0") {
+      parametro = this.tema_select;
+    }
+    this._preguntasService.getPreguntasAreaTema(parametro)
+      .subscribe((res) => {
+        this.preguntas = res['datos'];
+        console.log('Area: '+this.area_select+' -- '+'Tema: '+this.tema_select+' -- '+'Parametro: '+parametro);
+      },
+      (err) => {
+        this.error = err;
+      }
+    );
   }
 
 }

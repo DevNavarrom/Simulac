@@ -20,7 +20,7 @@ class Preguntas {
 			
 			//$query = "INSERT INTO ".self::TABLA."( ".self::ID_TEMA.",".self::DESCRIPCION.",".self::IMAGEN.") VALUES (?, ?, ?);";
 			//echo 'id tema = '.$infoPregunta["id_tema"];
-			$query = "call spGuardarPregunta('".$infoPregunta["id_tema"]."','".$infoPregunta["desc_pregunta"]."','".$infoPregunta["imagen"]."')";
+			$query = "call spGuardarPregunta('".$infoPregunta["id_tema"]."','".$infoPregunta["desc_pregunta"]."','".$infoPregunta["imagen"]."','".$infoPregunta["id_pregunta"]."')";
             $sentencia = $conexion->prepare($query);
 		
 			//$sentencia->bindParam(1, $infoPregunta[self::ID]);			
@@ -120,6 +120,27 @@ class Preguntas {
             $conexion = Conexion::getInstancia()->getConexion();
 
 			$sentencia = $conexion->prepare("call spMostrarPreguntas($id_examen)");
+			
+		
+			if($sentencia->execute()){
+				http_response_code(200);
+				return
+					[
+						"estado" => ESTADO_EXITOSO,
+						"datos" => $sentencia->fetchAll(PDO::FETCH_ASSOC)
+					];
+			}else{
+				throw new ExceptionApi(ESTADO_FALLIDO, "error en la consulta");
+			}
+        }catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO");
+		}
+	}
+	public static function getPreguntasAreaTema($parametro){
+        try{
+            $conexion = Conexion::getInstancia()->getConexion();
+
+			$sentencia = $conexion->prepare("call spExtraerPreguntas('".$parametro."%')");
 			
 		
 			if($sentencia->execute()){
