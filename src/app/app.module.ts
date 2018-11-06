@@ -48,6 +48,7 @@ import { InicioDocComponent } from './components/inicio/inicio-doc/inicio-doc.co
 import { InicioEstComponent } from './components/inicio/inicio-est/inicio-est.component';
 import { StorageServiceE } from './services/storageE.service';
 import { AuthorizatedGuardE } from './components/guards/authorizathedE.guard';
+import { PreguntasModalComponent } from './components/preguntas-modal/preguntas-modal.component';
 
 
 
@@ -64,7 +65,8 @@ import { AuthorizatedGuardE } from './components/guards/authorizathedE.guard';
     VerDetallesSimulacroComponent,
     EditarSimulacroComponent,
     CrearSimulacroComponent,
-    ListarExamenesComponent
+    ListarExamenesComponent,
+    PreguntasModalComponent
 
   ],
   declarations: [
@@ -95,7 +97,8 @@ import { AuthorizatedGuardE } from './components/guards/authorizathedE.guard';
     CrearSimulacroComponent,
     ListarExamenesComponent,
     InicioDocComponent,
-    InicioEstComponent   
+    InicioEstComponent,
+    PreguntasModalComponent   
   ],
   imports: [
     BrowserModule,

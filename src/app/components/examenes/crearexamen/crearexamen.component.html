@@ -35,14 +35,14 @@
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Crear pregunta">
-          <a class="nav-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <a class="nav-link" (click)="crearNueva()">
             <img width="22px" height="22px" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCIgdmlld0JveD0iMCAwIDI2LjM3NyAyNi4zNzciIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDI2LjM3NyAyNi4zNzc7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjMuOTYzLDIuNTYxQzIzLjk2MywxLjE0NiwyMi44MTQsMCwyMS40LDBINC45NzZDMy41NiwwLDIuNDE0LDEuMTQ2LDIuNDE0LDIuNTYxdjIuNDI2YzAsMS40MTUsMS4xNDYsMi41NjIsMi41NjIsMi41NjIgICAgSDIxLjRjMS40MTYsMCwyLjU2Mi0xLjE0NiwyLjU2Mi0yLjU2MlYyLjU2MUwyMy45NjMsMi41NjF6IE0yMS44MzQsNS4wNTZMMjEuODM0LDUuMDU2Yy0wLjAwMSwwLjIzNi0wLjE5MSwwLjQyOC0wLjQzLDAuNDI4ICAgIEg0Ljk3MWMtMC4yMzYsMC0wLjQyOS0wLjE5MS0wLjQyOS0wLjQyOFYyLjYyMWMwLTAuMjM2LDAuMTkyLTAuNDI4LDAuNDI5LTAuNDI4aDE2LjQzNGMwLjIzNSwwLDAuNDI5LDAuMTkxLDAuNDI5LDAuNDI4VjUuMDU2eiIgZmlsbD0iIzAwNzliMiIvPgoJCTxwYXRoIGQ9Ik0yMS40LDE4LjgyN0g0Ljk3NmMtMS40MTYsMC0yLjU2MiwxLjE0Ni0yLjU2MiwyLjU2djIuNDNjMCwxLjQxNCwxLjE0NiwyLjU2MSwyLjU2MiwyLjU2MUgyMS40ICAgIGMxLjQxNiwwLDIuNTYyLTEuMTQ2LDIuNTYyLTIuNTYxdi0yLjQzaC0wLjAwMUMyMy45NjMsMTkuOTczLDIyLjgxNiwxOC44MjcsMjEuNCwxOC44Mjd6IE0yMS44MzQsMjMuODE2TDIxLjgzNCwyMy44MTYgICAgYy0wLjAwMSwwLjIzOC0wLjE5MSwwLjQzLTAuNDMsMC40M0g0Ljk3MWMtMC4yMzYsMC0wLjQyOS0wLjE5MS0wLjQyOS0wLjQzdi0yLjQzNGMwLTAuMjM0LDAuMTkyLTAuNDI5LDAuNDI5LTAuNDI5aDE2LjQzNCAgICBjMC4yMzUsMCwwLjQyOSwwLjE5LDAuNDI5LDAuNDI5VjIzLjgxNnoiIGZpbGw9IiMwMDc5YjIiLz4KCQk8cGF0aCBkPSJNMjEuNCw5LjYzMkg0Ljk3NmMtMS40MTYsMC4wMDEtMi41NjIsMS4xNDctMi41NjIsMi41NjJ2Mi40MjZjMCwxLjQxNSwxLjE0NiwyLjU2MiwyLjU2MiwyLjU2MkgyMS40ICAgIGMxLjQxNiwwLDIuNTYyLTEuMTQ2LDIuNTYyLTIuNTYydi0yLjQyNmgtMC4wMDFDMjMuOTYzLDEwLjc3OSwyMi44MTYsOS42MzIsMjEuNCw5LjYzMnogTTIxLjgzNCwxNC42MjNMMjEuODM0LDE0LjYyMyAgICBjLTAuMDAxLDAuMjM2LTAuMTkxLDAuNDMtMC40MywwLjQzSDQuOTcxYy0wLjIzNiwwLTAuNDI5LTAuMTkxLTAuNDI5LTAuNDN2LTIuNDMyYzAtMC4yMzcsMC4xOTItMC40MywwLjQyOS0wLjQzaDE2LjQzNCAgICBjMC4yMzUsMCwwLjQyOSwwLjE5MiwwLjQyOSwwLjQzVjE0LjYyM3oiIGZpbGw9IiMwMDc5YjIiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K">
           </a>
         </li>
       </ul>
     </nav>
 
-    <div id="collapseOne" class="collapse  " aria-labelledby="headingOne" data-parent="#accordion">
+    <!--<div id="collapseOne" class="collapse  " aria-labelledby="headingOne" data-parent="#accordion">
       <br>
       <div class="form-row">
         <div class="col-xs-12 col-md-12 form-group">
@@ -70,8 +70,13 @@
                     <input type="radio" name="radioRespuesta" (click)="actionIsSelected(i)" [checked]="respu.correcta" aria-label="Radio button for following text input">
                   </div>
                 </div>
-                <input type="text" class="form-control" [(ngModel)]="respu.desc_respuesta" #txtRespu (keyup.enter)="agregarItemRespuesta(respu)"
+                <input type="text" class="form-control" [(ngModel)]="respu.desc_respuesta" #txtRespu
                   placeholder="Respuesta {{i+1}}" aria-label="Text input with radio button" [ngModelOptions]="{standalone: true}">
+                  <div class="col-xs-6 input-group-prepend">
+                    <div class="input-group-text">
+                      <img src="./../../../assets/images/agregar-notas.png" height="22px" width="22px" (click)="agregarItemRespuesta(i)">
+                    </div>
+                  </div>
               </div>
 
 
@@ -80,7 +85,7 @@
           </li>
         </ul>
 
-        <!--IMAGEN DE LA PREGUNTA-->
+        
         <div class="col-xs-12 col-md-4 form-group" style="background : #acbbc2">
           <img height="150px" src="{{ rutaImagen }}">
           <div class="custom-file">
@@ -89,20 +94,18 @@
               {{nombreImagen}}
             </label>
           </div>
-          <!--<input type="file" height="50px" class="custom-file-input col-md-12" (change)="cargandoImagen($event.target.files)">-->
         </div>
 
       </div>
 
-      <!--<br>-->
-      <!--BOTON DE AGREGAR PREGUNTAS-->
+      
       <div class="form-row">
         <div class="col-xs-12 col-md-12 form-group">
           <button class="btn btn-primary pull-right btn-outline-success" (click)="registrarPregunta()" type="button">Guardar Pregunta</button>
         </div>
       </div>
 
-    </div>
+    </div>  -->
 
   </div>
 
@@ -133,7 +136,7 @@
       <th scope="row">{{pregs.id_pregunta}}</th>
       <td>{{pregs.desc_pregunta}}</td>
       <td>
-        <button class="btn btn-sm btn-success" (click)="editarPregunta(pregs.id_pregunta, pregs.desc_pregunta)">
+        <button class="btn btn-sm btn-success" (click)="editarPregunta(pregs)">
           <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIC0xIDM4MS41MzQxNyAzODEiIHdpZHRoPSI1MTJweCI+PHBhdGggZD0ibTM3MC41ODk4NDQgMjMwLjk2NDg0NGMtNS41MjM0MzggMC0xMCA0LjQ3NjU2Mi0xMCAxMHY4OC43OTI5NjhjLS4wMTk1MzIgMTYuNTU4NTk0LTEzLjQzNzUgMjkuOTgwNDY5LTMwIDMwaC0yODAuNTg5ODQ0Yy0xNi41NjI1LS4wMTk1MzEtMjkuOTgwNDY5LTEzLjQ0MTQwNi0zMC0zMHYtMjYwLjU4OTg0M2MuMDE5NTMxLTE2LjU2MjUgMTMuNDM3NS0yOS45ODA0NjkgMzAtMzBoODguNzg5MDYyYzUuNTIzNDM4IDAgMTAtNC40NzY1NjMgMTAtMTAgMC01LjUyMzQzOC00LjQ3NjU2Mi0xMC0xMC0xMGgtODguNzg5MDYyYy0yNy42MDE1NjIuMDMxMjUtNDkuOTY4NzUgMjIuMzk4NDM3LTUwIDUwdjI2MC41ODk4NDNjLjAzMTI1IDI3LjYwMTU2MyAyMi4zOTg0MzggNDkuOTY4NzUgNTAgNTBoMjgwLjU4OTg0NGMyNy42MDE1NjItLjAzMTI1IDQ5Ljk2ODc1LTIyLjM5ODQzNyA1MC01MHYtODguNzg5MDYyYzAtNS41MjM0MzgtNC40NzY1NjMtMTAuMDAzOTA2LTEwLTEwLjAwMzkwNnptMCAwIiBmaWxsPSIjRkZGRkZGIi8+PHBhdGggZD0ibTE1Ni4zNjcxODggMTc4LjM0Mzc1IDE0Ni4wMTE3MTgtMTQ2LjAxNTYyNSA0Ny4wODk4NDQgNDcuMDg5ODQ0LTE0Ni4wMTE3MTkgMTQ2LjAxNTYyNXptMCAwIiBmaWxsPSIjRkZGRkZGIi8+PHBhdGggZD0ibTEzMi41NDI5NjkgMjQ5LjI1NzgxMiA1Mi4wMzkwNjItMTQuNDE0MDYyLTM3LjYyNS0zNy42MjV6bTAgMCIgZmlsbD0iI0ZGRkZGRiIvPjxwYXRoIGQ9Im0zNjIuNDg4MjgxIDcuNTc4MTI1Yy05Ljc2OTUzMS05Ljc0NjA5NC0yNS41ODU5MzctOS43NDYwOTQtMzUuMzU1NDY5IDBsLTEwLjYwNTQ2OCAxMC42MDU0NjkgNDcuMDg5ODQ0IDQ3LjA4OTg0NCAxMC42MDU0NjgtMTAuNjA1NDY5YzkuNzUtOS43Njk1MzEgOS43NS0yNS41ODU5MzggMC0zNS4zNTU0Njl6bTAgMCIgZmlsbD0iI0ZGRkZGRiIvPjwvc3ZnPgo="
           class="rounded float-left" alt="x" height="18">
         </button>

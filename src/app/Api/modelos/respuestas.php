@@ -19,24 +19,27 @@ class Respuestas {
             $conexion = Conexion::getInstancia()->getConexion();
 			
 			//$query = "INSERT INTO ".self::TABLA."( ".self::ID.", ".self::ID_RESPUESTA.",".self::DESCRIPCION.",".self::CORRECTA.") VALUES (?, ?, ?, ?);";
-			$query = "call spGuardarRespuesta('".$infoRespuesta["id_pregunta"]."','".$infoRespuesta["id_respuesta"]."','".$infoRespuesta["desc_respuesta"]."','".$infoRespuesta["correcta"]."')";
-            $sentencia = $conexion->prepare($query);
-		
-			/*$sentencia->bindParam(1, $infoRespuesta[self::ID]);			
-            $sentencia->bindParam(2, $infoRespuesta[self::ID_RESPUESTA]);
-            $sentencia->bindParam(3, $infoRespuesta[self::DESCRIPCION]);
-            $sentencia->bindParam(4,$infoRespuesta[self::CORRECTA]);*/
-		
-            if($sentencia->execute()){
-				return 
-					[
-						"estado" => CREACION_EXITOSA,
-						"mensaje" => "Respuesta guardada satisfactoriamente."
-					];
+			
+			for($i=0; $i<count($infoRespuesta); $i++){
+				$query = "call spGuardarRespuesta('".$infoRespuesta[$i]["id_pregunta"]."','".$infoRespuesta[$i]["id_respuesta"]."','".$infoRespuesta[$i]["desc_respuesta"]."','".$infoRespuesta[$i]["correcta"]."')";
+				$sentencia = $conexion->prepare($query);
 				
-			}else{
-				throw new ExceptionApi(CREACION_FALLIDA, "error en la sentencia");
+					if($sentencia->execute()){
+						if(($i==count($infoRespuesta)-1)){
+						return 
+							[
+								"estado" => CREACION_EXITOSA,
+								"mensaje" => "Respuesta guardada satisfactoriamente.".$i
+							];
+							}
+						
+					}else{
+						throw new ExceptionApi(CREACION_FALLIDA, "error en la sentencia");
+					}
+				
 			}
+			
+		
         }catch(PDOException $e){
 			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO ".$e->getMessage());
 		}

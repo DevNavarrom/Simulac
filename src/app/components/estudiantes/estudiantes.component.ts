@@ -42,7 +42,7 @@ export class EstudiantesComponent implements OnInit {
     );
   }
 
-  registrar(formest: NgForm) {
+  registrar() {
 
 
     if (this.estudiante.id_estudiante != '' && this.estudiante.nombre != '' && this.estudiante.programa !='') {
@@ -115,7 +115,7 @@ export class EstudiantesComponent implements OnInit {
   }
   
 
-  buscarEstudiante(formest: NgForm) {
+  buscarEstudiante() {
     this._estudiantesService.getBuscarEstudiantes(this.datoBuscar).subscribe((res)=> {
       this.estudiantes = res['datos'];
     },

@@ -30,7 +30,7 @@ export class NavbarComponent implements OnInit {
     console.log("logout");
    this.storageService.logout();
   // this.ngOnInit();
-    
+    window.location.reload();
   }
   public estudiantes()
   {
