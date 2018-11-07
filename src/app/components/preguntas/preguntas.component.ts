@@ -6,7 +6,7 @@ import { Preguntas, DialogDataPreguntas } from '../../modelos/Preguntas';
 import { IRespuestas } from '../../modelos/Respuestas';
 import { RespuestasService } from '../../services/respuestas.service';
 import { ExamenesService } from '../../services/examenes.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { PreguntasModalComponent } from '../preguntas-modal/preguntas-modal.component';
 
 @Component({
@@ -19,8 +19,9 @@ export class PreguntasComponent implements OnInit {
   areas;
   temas;
   error = '';
-  area_select:string = "0";
-  tema_select:string = "0";
+  area_select:string = "";
+  tema_select:string = "";
+  data:string="";
   descrip_pregunta:string;
   preguntas:DialogDataPreguntas[] = [];
   public respuestaImagenEnviada;
@@ -32,7 +33,10 @@ export class PreguntasComponent implements OnInit {
 
   constructor( private _areasService: AreasService, private _temasService:TemasService, 
     private _examenServie:ExamenesService, private _preguntasService:PreguntasService, 
-    private _respuService:RespuestasService, public dialog: MatDialog ) { }
+    public snackBar: MatSnackBar,
+    private _respuService:RespuestasService, public dialog: MatDialog ) {
+      this.mostrarPreguntas();
+     }
 
   ngOnInit() {
     this.cargarAreas();
@@ -40,7 +44,11 @@ export class PreguntasComponent implements OnInit {
       this.cargarTemas();
       //this.tema_select="0";
   }
-
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
   mostrarDialogPregunta() {
     const dialogRef = this.dialog.open(PreguntasModalComponent, {
       panelClass: 'my-panel',
@@ -60,8 +68,24 @@ export class PreguntasComponent implements OnInit {
   }
 
   quitarPregunta(pre:DialogDataPreguntas){
-    var index = this.preguntas.indexOf(pre);
-    this.preguntas.splice(index, 1);
+    
+    if(confirm('¿Desea eliminar esta pregunta?')){
+
+    this._preguntasService.eliminarPregunta(pre.id_pregunta)
+    .subscribe((res) => {
+      console.log(res)
+      if(res['estado']==111)
+      {
+        this.openSnackBar('Pregunta  correctamente','Aceptar');
+        this.mostrarPreguntas();
+
+      }
+    },
+    (err) => {
+      this.error = err;
+    }
+  );
+  }
   }
 
   cargarAreas(): void {
@@ -80,11 +104,13 @@ export class PreguntasComponent implements OnInit {
     this._temasService.getBuscarTema(this.area_select)
       .subscribe((res) => {
         this.temas = res['datos'];
+        this.mostrarPreguntas();
       },
       (err) => {
         this.error = err;
       }
     );
+    
   }
 
   
@@ -117,16 +143,15 @@ export class PreguntasComponent implements OnInit {
   }
 
   mostrarPreguntas(): void {
-    var parametro:string = "";
-    if (this.area_select!="0" && this.tema_select=="0") {
-      parametro = this.area_select;
-    } else if (this.area_select!="0" && this.tema_select!="0") {
-      parametro = this.tema_select;
-    }
-    this._preguntasService.getPreguntasAreaTema(parametro)
+
+    let datos: any=
+    {
+      "area_select":this.area_select,
+      "tema_select":this.tema_select,
+      "data":this.data    }
+    this._preguntasService.getPreguntasAreaTema(datos)
       .subscribe((res) => {
         this.preguntas = res['datos'];
-        console.log('Area: '+this.area_select+' -- '+'Tema: '+this.tema_select+' -- '+'Parametro: '+parametro);
       },
       (err) => {
         this.error = err;

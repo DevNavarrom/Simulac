@@ -218,6 +218,7 @@ export class PreguntasModalComponent implements OnInit {
       this._respuService.getRespuestas(id_preg)
         .subscribe(res => {
           if (res['estado']==111) {
+            
             this.respuestas = null;
             this.respuestas = res['datos'];
             this.descrip_pregunta = desc_preg;

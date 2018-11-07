@@ -7,10 +7,19 @@ import { Estudiantes } from '../modelos/Estudiantes'
 export  class NavbarEstudiantesService {
 
   static datosSimulacroEstudiante: any;
+  public static ruta:String="";
 
   @Output() change: EventEmitter<Estudiantes> = new EventEmitter();
   
 
+  getRuta()
+  {
+    return NavbarEstudiantesService.ruta;
+  }
+  setRuta(ruta: String)
+  {
+    NavbarEstudiantesService.ruta=ruta;
+  }
   getData()
   {
     //console.log(NavbarEstudiantesService.datosSimulacroEstudiante);

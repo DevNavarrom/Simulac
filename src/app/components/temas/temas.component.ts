@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Temas } from '../../modelos/Temas';
 import { Areas } from '../../modelos/Areas';
 import { Router } from '@angular/router';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import { TemasService } from '../../services/temas.service';
 import { AreasService } from '../../services/areas.service';
 import { EditarTemasComponent } from './editartemas/editar-temas.component';
@@ -23,7 +23,7 @@ export class TemasComponent implements OnInit {
   error = '';
   success = '';
   constructor(private _temasService: TemasService,private _areasService: AreasService, private _router: Router,
-    public dialog: MatDialog) { }
+    public snackBar: MatSnackBar,public dialog: MatDialog) { }
 
   ngOnInit() {
     this.mostrarTodas();
@@ -45,7 +45,11 @@ export class TemasComponent implements OnInit {
       }
     );
   }
-
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Aceptar', {
+      duration: 2000,
+    });
+  }
   mostrarTodas(): void {
     this._temasService.getTemas()
       .subscribe((res) => {
@@ -69,21 +73,24 @@ export class TemasComponent implements OnInit {
         this.tema.id_tema = this.tema.id_tema.toUpperCase();
         this._temasService.postTema(this.tema).subscribe(datos => {
           if (datos['estado'] == 1) {
-            alert(datos['mensaje']);
+            this.openSnackBar(datos['mensaje']);
             this.mostrarTodas();
           } else if (datos['estado'] == 23000) {
-            alert('El tema ya se encuentra registrado');
+            this.openSnackBar('El tema ya se encuentra registrado');
+
           } else {
-            alert('No guardado');
+            this.openSnackBar('No guardado');
+
           }
 
         });
       }
       else {
-        alert('Seleccione un area');
+        this.openSnackBar('Seleccione un area')
       }
     } else {
-      alert('Faltan datos por llenar');
+      this.openSnackBar('Faltan datos por llenar');
+
     }
 
   }
@@ -104,7 +111,7 @@ export class TemasComponent implements OnInit {
     if(confirm('¿Desea eliminar este tema: '+tema.desc_tema+' ?')){
     this._temasService.eliminarTema(tema)
       .subscribe((res) => {
-        alert(res['mensaje']);
+        this.openSnackBar(res['mensaje']);
         this.mostrarTodas();
       },
       (err) => {
@@ -138,10 +145,10 @@ export class TemasComponent implements OnInit {
 
       this._temasService.editarTema(tem).subscribe(datos => {
         if (datos['estado'] == 1) {
-          alert(datos['mensaje']);
+          this.openSnackBar(datos['mensaje']);
           this.mostrarTodas();
         } else {
-          alert('No editada');
+          this.openSnackBar('No editada');
         }
   
       });

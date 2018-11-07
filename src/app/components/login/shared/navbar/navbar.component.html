@@ -14,32 +14,32 @@
         </ul>
 
         <ul class="sidebar-nav navbar-nav mr-auto mt-2 mt-lg-0" id="sidebar">
-            <li class="nav-item" routerLinkActive="active">
+            <li class="nav-item" routerLinkActive="active" (click)="cambiarRuta('Estudiantes')">
                 <a [routerLink]="[ 'estudiantes' ]">
                     <img class="image" src="./assets/images/reading.png"> Estudiantes
                 </a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
+            <li class="nav-item" routerLinkActive="active" (click)="cambiarRuta('Areas')">
                 <a [routerLink]="[ 'areas' ]">
                     <img class="image" src="./assets/images/books-stack.png"> Areas
                 </a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
+            <li class="nav-item" routerLinkActive="active" (click)="cambiarRuta('Temas')">
                 <a [routerLink]="[ 'temas' ]">
                     <img class="image" src="./assets/images/temas.png"> Temas
                 </a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
+            <li class="nav-item" routerLinkActive="active" (click)="cambiarRuta('Examenes')">
                 <a [routerLink]="[ 'examenes' ]">
                     <img class="image" src="./assets/images/pencil.png"> Examenes
                 </a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
+            <li class="nav-item" routerLinkActive="active" (click)="cambiarRuta('Preguntas')">
                 <a [routerLink]="[ 'preguntas' ]">
                     <img class="image" src="./assets/images/reading.png"> Preguntas
                 </a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
+            <li class="nav-item" routerLinkActive="active" (click)="cambiarRuta('Simulacros')">
                 <a [routerLink]="[ 'simulacros' ]">
                     <img class="image" src="./assets/images/presentation.png"> Simulacros
                 </a>
@@ -58,8 +58,8 @@
         </a>
     </div>-->
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-        EXAMENES > NUEVO
+            <a class="navbar-brand">
+       {{ruta}}
       </a>
             <ul class="nav navbar-nav navbar-right">
                 <li>

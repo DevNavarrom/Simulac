@@ -3,7 +3,7 @@ import { EstudiantesService } from '../../services/estudiantes.service';
 import { Router } from '@angular/router';
 import { Estudiantes } from '../../modelos/Estudiantes';
 import { NgForm } from '@angular/forms';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import { EditarEstudianteComponent } from './editarestudiante/editar-estudiante.component';
 
 
@@ -22,6 +22,7 @@ export class EstudiantesComponent implements OnInit {
   success = '';
 
   constructor(private _estudiantesService: EstudiantesService, private _router: Router,
+    public snackBar: MatSnackBar,
               public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -29,7 +30,11 @@ export class EstudiantesComponent implements OnInit {
     this.estudiante = new Estudiantes( '' ,  '' , '' , 'Sexo' );
     this.datoBuscar='';
   }
-
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
  
   mostrarTodos(): void {
     this._estudiantesService.getEstudiantes()
@@ -51,20 +56,24 @@ export class EstudiantesComponent implements OnInit {
       this.estudiante.programa = this.estudiante.programa.toUpperCase();
     this._estudiantesService.postEstudiantes(this.estudiante).subscribe(datos => {
       if (datos['estado'] == 1) {
-        alert(datos['mensaje']);
+        this.openSnackBar(datos['mensaje'],'Aceptar');
         this.mostrarTodos();
       } else if (datos['estado'] == 23000) {
-        alert('El estudiante ya se encuentra registrado');
+        this.openSnackBar('El estudiante ya se encuentra registrado','Aceptar');
+
       }       else {
-        alert('No guardado');
+        this.openSnackBar('No guardado','Aceptar');
+
       }
 
     });
   }  else {
-    alert('Seleccione el sexo');
+    this.openSnackBar('Seleccione el sexo','Aceptar');
+
+    
   }
   } else {
-    alert('Faltan datos por llenar');
+    this.openSnackBar('Faltan datos por llenar','Aceptar');
   }
   }
 
@@ -73,7 +82,8 @@ export class EstudiantesComponent implements OnInit {
     if(confirm('¿Desea eliminar este estudiante: '+estudiante.nombre+' ?')){
     this._estudiantesService.eliminarEstudiante(estudiante.id_estudiante)
       .subscribe((res) => {
-        alert(res['mensaje']);
+    this.openSnackBar(res['mensaje'],'Aceptar');
+
         this.mostrarTodos();
       },
       (err) => {
@@ -103,10 +113,11 @@ export class EstudiantesComponent implements OnInit {
 
       this._estudiantesService.editarEstudiantes(est).subscribe(datos => {
         if (datos['estado'] == 1) {
-          alert(datos['mensaje']);
+          this.openSnackBar(datos['mensaje'],'Aceptar');
           this.mostrarTodos();
         } else {
-          alert('No guardado');
+          this.openSnackBar('No guardado','Aceptar');
+
         }
   
       });

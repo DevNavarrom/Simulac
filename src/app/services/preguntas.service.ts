@@ -27,8 +27,18 @@ export class PreguntasService {
     return this.http.get(`${this.url}/idexamen/` + id_examen);
   }
 
-  getPreguntasAreaTema(area_tema: string) {
-    return this.http.get(`${this.url}/areatema/` + area_tema);
+  getPreguntasAreaTema(datos: any) {
+
+    return this.http.post(`${this.url}/buscar`, JSON.stringify(datos))
+    .pipe(
+      map(res => {
+        if (!res) {
+          throw new Error('Value expected!');
+        }
+        return res;
+      })
+    );
+
   }
 
 
@@ -49,5 +59,9 @@ export class PreguntasService {
 
   getPreguntasPorTema(id: string) {
     return this.http.get(`${this.url}/tema/` + id);
+  }
+
+  eliminarPregunta(id: number) {
+    return this.http.get(`${this.url}/eliminar/` + id);
   }
 }
