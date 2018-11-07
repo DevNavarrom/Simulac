@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Usuarios, ILogin } from '../../modelos/Usuarios';
 import { UsuariosService } from '../../services/usuarios.service';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import { RegistroComponent } from '../login/registro/registro.component';
 import { Estudiantes } from '../../modelos/Estudiantes';
 import { EstudiantesService } from '../../services/estudiantes.service';
@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
 
   constructor( private fb: FormBuilder, title: Title, private _router:Router, 
     private _usuariosService:UsuariosService,private _estudiantesService:EstudiantesService,
+    public snackBar: MatSnackBar,
     private storageService: StorageService,private storageServiceE: StorageServiceE,
      public dialog: MatDialog ) { 
     title.setTitle('Login Web Simulac');
@@ -69,7 +70,7 @@ export class LoginComponent implements OnInit {
           this._router.navigate(['/home']);
           
         } else {
-          alert("Usuario o contraseña incoreccta");
+          this.openSnackBar('Usuario o contraseña incorrecta');
         }     
       
     }
@@ -94,7 +95,6 @@ ingresoEstudiante()
   if(this.estudiantesForm.value.idEstudiante != ''){
   this._estudiantesService.getEstudiante(this.estudiantesForm.value.idEstudiante).subscribe((res) => {
     this.estudiante = res['datos'][0] ;
-    console.log(res['datos'][0]);
     if(this.estudiante!=null){
       let data: SessionE=new SessionE();
       data.token=this.generarTocken();
@@ -113,9 +113,15 @@ ingresoEstudiante()
 }
 else
 {
-  alert("Ingrese su identificación");
+  this.openSnackBar('Ingrese su identificación');
 }
 }
+openSnackBar(message: string) {
+  this.snackBar.open(message, 'Aceptar', {
+    duration: 2000,
+  });
+}
+
 registrarNuevo(){
   
   this.estudiante = new Estudiantes(this.estudiantesForm.value.idEstudiante , "","","");
@@ -140,13 +146,14 @@ registrarNuevo(){
     this._estudiantesService.postEstudiantes(estu).subscribe(datos => {
       if (datos['estado'] == 1) {
         
-        alert(datos['mensaje']);
+        this.openSnackBar(datos['mensaje']);
         this.estudiante=estu;
    
         this._router.navigate(['/home']);
         
       } else {
-        alert('No registrado');
+        this.openSnackBar('No registrado');
+
       }
 
     });

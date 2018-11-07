@@ -9,6 +9,7 @@ import { SimulacrosService } from '../../../services/simulacros.service';
 import { Router } from '@angular/router';
 import { Estudiantes } from '../../../modelos/Estudiantes';
 import { StorageServiceE } from 'src/app/services/storageE.service';
+import { MatSnackBar } from '@angular/material';
 
 
 @Component({
@@ -37,6 +38,8 @@ export class PreguntasSimulacroComponent implements OnInit {
   constructor(private _preguntasService: PreguntasService,
     private _activatedRouter: ActivatedRoute,
     private _simulacroService: SimulacrosService,
+    public snackBar: MatSnackBar,
+
     private _router: Router,
     private storageService: StorageServiceE   ) { 
 
@@ -64,6 +67,11 @@ export class PreguntasSimulacroComponent implements OnInit {
       console.log("error:::"+this.error['message']);
     }
   );
+  }
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Aceptar', {
+      duration: 2000,
+    });
   }
   
   nextTab()
@@ -96,7 +104,8 @@ export class PreguntasSimulacroComponent implements OnInit {
 
   if(j != -1){
 
-  alert("Faltan preguntas por responder");
+  this.openSnackBar('Faltan preguntas por responder');
+  
       this.selected.setValue(j);
       return false;
   }
@@ -119,7 +128,7 @@ export class PreguntasSimulacroComponent implements OnInit {
 
     if(this.estudiante.id_estudiante == null){
 
-      alert("No se encontro el estudiante");
+      this.openSnackBar('No se encontro el estudiante');
     }
     
     
@@ -176,7 +185,7 @@ export class PreguntasSimulacroComponent implements OnInit {
   
             this._simulacroService.postSimulacroRespuestas(data)
             .subscribe((res) => {
-            alert(res['mensaje']);
+            this.openSnackBar(res['mensaje']);
             this._router.navigate(['/estudiantes/simulacros']);
   
             
@@ -189,12 +198,12 @@ export class PreguntasSimulacroComponent implements OnInit {
             }
             else
             {
-            alert("No se encontró el estudiante, por favor vuelva a ingresar")
-            }
+this.openSnackBar('No se encontró el estudiante, por favor vuelva a ingresar')  ;
+          }
         }
         else
         {
-          alert("Tiempo excedido, el simulacro ya finalizó");
+          this.openSnackBar('Tiempo excedido, el simulacro ya finalizó');
         }
 
       },

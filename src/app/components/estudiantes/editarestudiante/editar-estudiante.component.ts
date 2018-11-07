@@ -1,6 +1,6 @@
 import { Component, OnInit ,Inject} from '@angular/core';
 
-import {  MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import {  MatDialogRef, MAT_DIALOG_DATA,MatSnackBar } from '@angular/material';
 
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -15,6 +15,7 @@ export class EditarEstudianteComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     public dialogRef: MatDialogRef<EditarEstudianteComponent>,
+    public snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
       this.forma = fb.group({
@@ -25,6 +26,11 @@ export class EditarEstudianteComponent implements OnInit {
       });
 
     }
+    openSnackBar(message: string, action: string) {
+      this.snackBar.open(message, action, {
+        duration: 2000,
+      });
+    }
 
   ngOnInit() {
   }
@@ -34,10 +40,12 @@ export class EditarEstudianteComponent implements OnInit {
     this.dialogRef.close(this.forma.value);
 
   }  else {
-    alert('Seleccione el sexo');
++    this.openSnackBar('Seleccione el sexo','Aceptar');
+    
   }
   } else {
-    alert('Faltan datos por llenar');
++    this.openSnackBar('Faltan datos por llenar','Aceptar');
+
   }
   }
   onNoClick(): void {

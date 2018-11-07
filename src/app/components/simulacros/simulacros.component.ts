@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { SimulacrosService } from '../../services/simulacros.service';
-import { MatDialog, MatCheckboxChange } from '@angular/material';
+import { MatDialog, MatCheckboxChange, MatSnackBar } from '@angular/material';
 import { VerDetallesSimulacroComponent } from './ver-detalles-simulacro/ver-detalles-simulacro.component';
 import { Simulacros } from 'src/app/modelos/Simulacros';
 import { EditarSimulacroComponent } from './editar-simulacro/editar-simulacro.component';
@@ -28,13 +28,18 @@ export class SimulacrosComponent implements OnInit {
 
  
   constructor(private _simulacrosServices: SimulacrosService,
+    public snackBar: MatSnackBar,
     public dialog: MatDialog) { }
 
   ngOnInit() {
    
     this.buscarSimulacro();
   }
-
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Aceptar', {
+      duration: 2000,
+    });
+  }
   crearNuevo()
   {
 
@@ -70,7 +75,7 @@ export class SimulacrosComponent implements OnInit {
     if(confirm('¿Desea eliminar este simulacro: '+id+'?,\n Si lo hace tambien se borraran sus resultados.')){
     this._simulacrosServices.eliminarSimulacro(id)
       .subscribe((res) => {
-        alert(res['mensaje']);
+        this.openSnackBar(res['mensaje']);
 
         this.buscarSimulacro();
        
@@ -109,10 +114,11 @@ export class SimulacrosComponent implements OnInit {
    
       this._simulacrosServices.editarSimulacro(result).subscribe(datos => {
         if (datos['estado'] == 1) {
-          alert(datos['mensaje']);
+          this.openSnackBar(datos['mensaje']);
           this.buscarSimulacro();
         } else {
-          alert('No guardado');
+          this.openSnackBar('No guardado');
+
         }
   
       });
@@ -159,6 +165,7 @@ export class SimulacrosComponent implements OnInit {
         this.simulacros=datos['datos'];
       } else {
         alert('Error al cargar los datos');
+        
       }
 
     });

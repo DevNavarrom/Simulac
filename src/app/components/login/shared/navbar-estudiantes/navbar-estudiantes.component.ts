@@ -10,7 +10,7 @@ import { StorageServiceE } from 'src/app/services/storageE.service';
 })
 export class NavbarEstudiantesComponent implements OnInit {
 
-  ruta: string="Estudiantes";
+   public  ruta: String="";
 
    nombres:String="";
   constructor(private storageService: StorageServiceE,
@@ -20,21 +20,26 @@ export class NavbarEstudiantesComponent implements OnInit {
     //console.log("id: "+this.estudiante.nombre);
     this.nombres=this.storageService.getCurrentUser().nombre;
     this._router.navigate(['/estudiantes/simulacros']);
+ this.ruta="Estudiantes > Simulacros";
 
   }
+ 
   public isLoggedIn() {
     return this.storageService.isAuthenticated();
   }
   mostrarDatosEstudiante()
   {
     this._router.navigate(['/estudiantes/datos']);
+this.cambiarNombreToolbar("> Datos")
+
   }
-  cambiarNombreToolbar(ruta: string)
+
+  public cambiarNombreToolbar(dato: String )
   {
-this.ruta="Estudiantes"+ruta;
+    this.ruta="Estudiantes "+dato;
   }
+
   public logout(): void{
-    console.log("logout");
    this.storageService.logout();
   // this.ngOnInit();
     

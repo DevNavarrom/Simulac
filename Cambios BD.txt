@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 Prcedimiento Almacenado: spBuscarExamen ##################
 4/11/18 - DOMINGO           ##################################
-=======
 # Domingo 04-NOVIEMBRE-2018 #############################################################################
 ##########################CAMBIOS DEIMER NAVARRO#########################################################
 
@@ -68,7 +66,6 @@ DELIMITER ;
 
 Prcedimiento Almacenado: spBuscarPreguntas ##################
 11/10/18 - Jueves           ##################################
->>>>>>> faae35945cbe6abf5b006f2b4627c4b24fdc37d4
 #####################################################
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spBuscarExamen`(IN `dato` VARCHAR(45))

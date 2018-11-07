@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Simulacros } from '../../../modelos/Simulacros';
 import {Estudiantes} from '../../../modelos/Estudiantes';
 import { StorageServiceE } from 'src/app/services/storageE.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-estudiantes-simulacro',
@@ -22,6 +23,8 @@ export class EstudiantesSimulacroComponent implements OnInit {
   success = '';
 
   constructor(private _simulacroService: SimulacrosService, 
+    public snackBar: MatSnackBar,
+
     private _router: Router,private storageService: StorageServiceE
     ) { }
 
@@ -35,10 +38,14 @@ export class EstudiantesSimulacroComponent implements OnInit {
      }
      else
      {
-       alert("No se encontro el estudiante");
+       this.openSnackBar('No se encontro el estudiante');
      }
   }
-
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Aceptar', {
+      duration: 2000,
+    });
+  }
   cargarSimulacros(): void {
     this._simulacroService.getSimulacrosActivos(this.estudiante.id_estudiante)
       .subscribe((res) => {
@@ -46,7 +53,8 @@ export class EstudiantesSimulacroComponent implements OnInit {
         //console.log(res['datos'][0]);
         if(res['datos'][0] == null)
         {
-          alert("No tiene simulacros por realizar");
+       this.openSnackBar('No tiene simulacros por realizar');
+
         }
       },
       (err) => {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Areas } from '../../modelos/Areas';
 import { AreasService } from '../../services/areas.service';
 import { Router } from '@angular/router';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import {MatDialog, MatDialogRef,MatSnackBar} from '@angular/material';
 import { EditarAreaComponent } from './editararea/editar-area.component';
 
 @Component({
@@ -18,7 +18,7 @@ export class AreasComponent implements OnInit {
   error = '';
   success = '';
   constructor(private _areasService: AreasService, private _router: Router,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.mostrarTodas();
@@ -56,15 +56,21 @@ export class AreasComponent implements OnInit {
 
       this._areasService.editarArea(ar).subscribe(datos => {
         if (datos['estado'] == 1) {
-          alert(datos['mensaje']);
+          this.openSnackBar(datos['mensaje'],'Aceptar')
+
           this.mostrarTodas();
         } else {
-          alert('No editada');
+          this.openSnackBar('No editada','')
         }
   
       });
       
       });
+  }
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
   registrar() {
 
@@ -75,18 +81,23 @@ export class AreasComponent implements OnInit {
        this.area.id_area=this.area.id_area.toUpperCase();
       this._areasService.postArea(this.area).subscribe(datos => {
       if (datos['estado'] == 1) {
-        alert(datos['mensaje']);
+        this.openSnackBar(datos['mensaje'],'Aceptar')
+
         this.mostrarTodas();
       } else if (datos['estado'] == 23000) {
-        alert('El area ya se encuentra registrada');
+        this.openSnackBar('El area ya se encuentra registrada','Aceptar')
+
       }       else {
-        alert('No guardado');
+        this.openSnackBar('No guardado','Aceptar')
+
+        
       }
 
     });
   
   } else {
-    alert('Faltan datos por llenar');
+    this.openSnackBar('Faltan datos por llenar','Aceptar')
+
   }
 
   }
@@ -94,7 +105,9 @@ export class AreasComponent implements OnInit {
     if(confirm('¿Desea eliminar esta area: '+area.desc_area+' ?')){
     this._areasService.eliminarArea(area.id_area)
       .subscribe((res) => {
-        alert(res['mensaje']);
+        this.openSnackBar(res['mensaje'],'Aceptar')
+
+        
         this.mostrarTodas();
       },
       (err) => {

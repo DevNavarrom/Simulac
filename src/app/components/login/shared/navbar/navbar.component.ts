@@ -11,6 +11,7 @@ import { Title } from '@angular/platform-browser';
 export class NavbarComponent implements OnInit {
 
   idUsuario:string;
+  ruta:String="";
 
   constructor(private _activatedRoute:ActivatedRoute,
     private storageService: StorageService,private _router:Router,title: Title) { 
@@ -27,10 +28,13 @@ export class NavbarComponent implements OnInit {
     return this.storageService.isAuthenticated();
   }
   public logout(): void{
-    console.log("logout");
    this.storageService.logout();
   // this.ngOnInit();
     
+  }
+  cambiarRuta(dato:String)
+  {
+this.ruta="Docentes > "+dato;
   }
   public estudiantes()
   {
