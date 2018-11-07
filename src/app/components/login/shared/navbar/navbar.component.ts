@@ -30,7 +30,7 @@ export class NavbarComponent implements OnInit {
   public logout(): void{
    this.storageService.logout();
   // this.ngOnInit();
-    
+    window.location.reload();
   }
   cambiarRuta(dato:String)
   {

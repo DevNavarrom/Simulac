@@ -1,3 +1,34 @@
+# Martes 06-NOVIEMBRE-2018 #############################################################################
+##########################CAMBIOS DEIMER NAVARRO#########################################################
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spExtraerPreguntas`(IN `param` VARCHAR(10))
+    NO SQL
+BEGIN
+
+SELECT id_pregunta, desc_pregunta, imagen FROM preguntas AS preg NATURAL JOIN tema as tem WHERE tem.id_tema LIKE param OR tem.id_area LIKE param;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spGuardarRespuesta`(IN `idpre` INT(6), IN `idres` VARCHAR(10), IN `descres` VARCHAR(400), IN `corr` INT(1))
+    NO SQL
+BEGIN
+
+
+IF NOT EXISTS(SELECT id_respuesta from respuestas WHERE id_pregunta = idpre AND id_respuesta = idres) THEN
+	INSERT INTO respuestas(id_pregunta, id_respuesta, desc_respuesta, correcta) VALUES(idpre,idres,descres, corr);
+ELSE
+	UPDATE respuestas SET id_pregunta=idpre, desc_respuesta=descres, correcta=corr WHERE id_pregunta=idpre AND id_respuesta=idres;
+END IF;
+
+END$$
+DELIMITER ;
+
+
+
+
+
 Prcedimiento Almacenado: spBuscarExamen ##################
 4/11/18 - DOMINGO           ##################################
 # Domingo 04-NOVIEMBRE-2018 #############################################################################

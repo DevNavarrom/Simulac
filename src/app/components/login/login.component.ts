@@ -33,11 +33,13 @@ export class LoginComponent implements OnInit {
      public dialog: MatDialog ) { 
     title.setTitle('Login Web Simulac');
     this.buildForm();
+   // window.location.reload();
+
    
   }
 
   ngOnInit() {
-  
+
   }
 
   buildForm() {

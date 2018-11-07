@@ -223,7 +223,7 @@ class Examen {
     
             $imagen_tipo = $_FILES['imagenPropia']['type'];
             $imagen_nombre = $_FILES['imagenPropia']['name'];
-            $directorio_final = "imagenes/".$imagen_nombre; 
+            $directorio_final = "../../imagenes/".$imagen_nombre; 
             
             if($imagen_tipo == "image/jpeg" || $imagen_tipo == "image/jpg" || $imagen_tipo == "image/png"){
             

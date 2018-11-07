@@ -19,12 +19,9 @@ class PreguntasControlador{
 				return Preguntas::getPreguntasExamen($peticion[1]);
 			}else if($peticion[0]=='idexamen'){
 				return Preguntas::getPreguntasPorExamen($peticion[1]);
-			}else if($peticion[0]=='areatema'){
-				return Preguntas::getPreguntasAreaTema($peticion[1]);
 			}
 			else if($peticion[0]=='tema'){
 				return Preguntas::buscarPorIdTema($peticion[1]);
-				echo $peticion[1];
 			}else{
 				return Preguntas::eliminarPregunta($peticion[1]);
 			}
@@ -79,6 +76,10 @@ class PreguntasControlador{
 					break;
 				case 'editar':
 					return Preguntas::actualizarPregunta($datosArray);
+					break;
+					case 'buscar':
+					return Preguntas::getPreguntasAreaTema($data);
+
 					break;
 				
 				default:

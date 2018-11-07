@@ -42,6 +42,7 @@ this.cambiarNombreToolbar("> Datos")
   public logout(): void{
    this.storageService.logout();
   // this.ngOnInit();
+  window.location.reload();
     
   }
 

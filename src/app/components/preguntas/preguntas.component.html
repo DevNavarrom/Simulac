@@ -1,5 +1,6 @@
 <form>
 
+    <!--
   <div class="form-row">
     <div class="form-group col-md-3">
       <label for="selArea">Area</label>
@@ -44,8 +45,13 @@
                 <input type="radio" name="radioRespuesta" (click)="actionIsSelected(i)" [checked]="respu.correcta" aria-label="Radio button for following text input">
               </div>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="respu.desc_respuesta" #txtRespu (keyup.enter)="agregarItemRespuesta(respu)"
+            <input type="text" class="form-control" [(ngModel)]="respu.desc_respuesta"
               placeholder="Respuesta {{i+1}}" aria-label="Text input with radio button" [ngModelOptions]="{standalone: true}">
+            <div class="col-xs-6 input-group-prepend">
+              <div class="input-group-text">
+                <img src="./../../../assets/images/agregar-notas.png" height="22px" width="22px" (click)="agregarItemRespuesta(i)">
+              </div>
+            </div>
           </div>
 
 
@@ -54,7 +60,7 @@
       </li>
     </ul>
 
-    <!--IMAGEN DE LA PREGUNTA-->
+    
     <div class="col-xs-12 col-md-4 form-group" style="background : #acbbc2">
       <img height="150px" src="{{ rutaImagen }}">
       <div class="custom-file">
@@ -63,49 +69,83 @@
           {{nombreImagen}}
         </label>
       </div>
-      <!--<input type="file" height="50px" class="custom-file-input col-md-12" (change)="cargandoImagen($event.target.files)">-->
+      
     </div>
 
   </div>
 
-  <!--<br>-->
-  <!--BOTON DE AGREGAR PREGUNTAS-->
+  
   <div class="form-row">
-    <div class="col-xs-12 col-md-12 form-group">
+    <div class="form-group">
       <button class="btn btn-primary pull-right btn-outline-success" (click)="registrarPregunta()" type="button">Crear pregunta</button>
+      
+    </div>
+    <div class="form-group" style="margin-left:5px;">
+      <button class="btn btn-light" (click)="limpiar()" type="button">Limpiar</button>
     </div>
   </div>
 
-  <br>
+-->
 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Descripción Pregunta</th>
-        <th scope="col">Quitar</th>
-      </tr>
-    </thead>
-    <tr *ngFor="let pregs of preguntas">
-      <th scope="row">{{pregs.id_pregunta}}</th>
-      <td>{{pregs.desc_pregunta}}</td>
-      <td>
-        <button class="btn btn-sm btn-success" (click)="editarPregunta(pregs.id_pregunta, pregs.desc_pregunta)">
+    <div class="row">
+        <div class="col-xs-12 col-md-12 form-group">
+            <button class="btn btn-primary pull-right btn-outline-success" type="button" (click)="crearNueva()">Crear Nueva Pregunta</button>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="selArea">Area</label>
+            <select class="form-control" [(ngModel)]="area_select" name="selArea" id="selArea" (ngModelChange)="cargarTemas()" [ngModelOptions]="{standalone: true}">
+        <option  value="" selected>Selecciona un area</option>
+        <option *ngFor="let _area of areas" [value]="_area.id_area">{{_area.desc_area}}</option>
+      </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="selTema">Tema</label>
+            <select id="selTema" class="form-control" name="selTema" [(ngModel)]="tema_select" (ngModelChange)="mostrarPreguntas()" [ngModelOptions]="{standalone: true}">
+        <option  value="" selected>Selecciona un tema</option>
+        <option *ngFor="let _tema of temas" [value]="_tema.id_tema">{{_tema.desc_tema}}</option>
+      </select>
+        </div>
+
+        <div class="col-xs-6 col-md-12 " style="margin-bottom: 1em">
+            <input class="form-control " id="inputBuscar " name="txtBuscar " [(ngModel)]="data" placeholder="Buscar pregunta" type="text " (ngModelChange)="mostrarPreguntas() " />
+        </div>
+    </div>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Descripción Pregunta</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Eliminar</th>
+            </tr>
+        </thead>
+        <tr *ngFor="let pregs of preguntas">
+            <th scope="row">{{pregs.id_pregunta}}</th>
+            <td>{{pregs.desc_pregunta}}</td>
+            <td>
+                <button class="btn btn-success" (click)="editarPregunta(pregs)">
           <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIC0xIDM4MS41MzQxNyAzODEiIHdpZHRoPSI1MTJweCI+PHBhdGggZD0ibTM3MC41ODk4NDQgMjMwLjk2NDg0NGMtNS41MjM0MzggMC0xMCA0LjQ3NjU2Mi0xMCAxMHY4OC43OTI5NjhjLS4wMTk1MzIgMTYuNTU4NTk0LTEzLjQzNzUgMjkuOTgwNDY5LTMwIDMwaC0yODAuNTg5ODQ0Yy0xNi41NjI1LS4wMTk1MzEtMjkuOTgwNDY5LTEzLjQ0MTQwNi0zMC0zMHYtMjYwLjU4OTg0M2MuMDE5NTMxLTE2LjU2MjUgMTMuNDM3NS0yOS45ODA0NjkgMzAtMzBoODguNzg5MDYyYzUuNTIzNDM4IDAgMTAtNC40NzY1NjMgMTAtMTAgMC01LjUyMzQzOC00LjQ3NjU2Mi0xMC0xMC0xMGgtODguNzg5MDYyYy0yNy42MDE1NjIuMDMxMjUtNDkuOTY4NzUgMjIuMzk4NDM3LTUwIDUwdjI2MC41ODk4NDNjLjAzMTI1IDI3LjYwMTU2MyAyMi4zOTg0MzggNDkuOTY4NzUgNTAgNTBoMjgwLjU4OTg0NGMyNy42MDE1NjItLjAzMTI1IDQ5Ljk2ODc1LTIyLjM5ODQzNyA1MC01MHYtODguNzg5MDYyYzAtNS41MjM0MzgtNC40NzY1NjMtMTAuMDAzOTA2LTEwLTEwLjAwMzkwNnptMCAwIiBmaWxsPSIjRkZGRkZGIi8+PHBhdGggZD0ibTE1Ni4zNjcxODggMTc4LjM0Mzc1IDE0Ni4wMTE3MTgtMTQ2LjAxNTYyNSA0Ny4wODk4NDQgNDcuMDg5ODQ0LTE0Ni4wMTE3MTkgMTQ2LjAxNTYyNXptMCAwIiBmaWxsPSIjRkZGRkZGIi8+PHBhdGggZD0ibTEzMi41NDI5NjkgMjQ5LjI1NzgxMiA1Mi4wMzkwNjItMTQuNDE0MDYyLTM3LjYyNS0zNy42MjV6bTAgMCIgZmlsbD0iI0ZGRkZGRiIvPjxwYXRoIGQ9Im0zNjIuNDg4MjgxIDcuNTc4MTI1Yy05Ljc2OTUzMS05Ljc0NjA5NC0yNS41ODU5MzctOS43NDYwOTQtMzUuMzU1NDY5IDBsLTEwLjYwNTQ2OCAxMC42MDU0NjkgNDcuMDg5ODQ0IDQ3LjA4OTg0NCAxMC42MDU0NjgtMTAuNjA1NDY5YzkuNzUtOS43Njk1MzEgOS43NS0yNS41ODU5MzggMC0zNS4zNTU0Njl6bTAgMCIgZmlsbD0iI0ZGRkZGRiIvPjwvc3ZnPgo="
           class="rounded float-left" alt="x" height="18">
         </button>
-      </td>
-      <td>
-        <button class="btn btn-sm btn-danger" (click)="quitarPregunta(pregs)">
+            </td>
+            <td>
+                <button class="btn btn-sm btn-danger" (click)="quitarPregunta(pregs)">
           <img class="rounded float-left btn-borrar" height="18" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCIgdmlld0JveD0iMCAwIDUxMCA1MTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMCA1MTA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8ZyBpZD0icmVtb3ZlLWNpcmNsZS1vdXRsaW5lIj4KCQk8cGF0aCBkPSJNMTI3LjUsMjI5LjV2NTFoMjU1di01MUgxMjcuNXogTTI1NSwwQzExNC43NSwwLDAsMTE0Ljc1LDAsMjU1czExNC43NSwyNTUsMjU1LDI1NXMyNTUtMTE0Ljc1LDI1NS0yNTVTMzk1LjI1LDAsMjU1LDB6ICAgICBNMjU1LDQ1OWMtMTEyLjIsMC0yMDQtOTEuOC0yMDQtMjA0UzE0Mi44LDUxLDI1NSw1MXMyMDQsOTEuOCwyMDQsMjA0UzM2Ny4yLDQ1OSwyNTUsNDU5eiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=">
 
         </button>
-      </td>
-    </tr>
-  </table>
+            </td>
+        </tr>
+    </table>
 
-  <div *ngIf="preguntas.length == 0" class="alert alert-danger">
-    No hay preguntas
-  </div>
+    <div *ngIf="preguntas.length == 0" class="alert alert-danger">
+        No hay preguntas
+    </div>
 
 </form>

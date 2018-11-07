@@ -12,7 +12,7 @@ export class RespuestasService {
   url = 'http://localhost/WEBSimulac/src/app/api/' + this.tabla
   constructor( private http:HttpClient ) { }
 
-  postRespuestas( respuesta:IRespuestas ){
+  postRespuestas( respuesta:IRespuestas[] ){
     return this.http.post(`${this.url}/registro`, JSON.stringify(respuesta))
       .pipe(
         map(res => {

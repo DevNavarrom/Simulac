@@ -11,6 +11,7 @@ import { RespuestasService } from '../../../services/respuestas.service';
 import { ExamenesService } from '../../../services/examenes.service';
 import { IExamen, IDetalleExamen } from 'src/app/modelos/Examen';
 import { ActivatedRoute } from '@angular/router';
+import { PreguntasModalComponent } from '../../preguntas-modal/preguntas-modal.component';
 
 
 @Component({
@@ -36,9 +37,7 @@ export class CrearexamenComponent implements OnInit {
   pregunta:DialogDataPreguntas = null;
   examen:IExamen = null;
   _examen = null;
-  private preguntas:DialogDataPreguntas[] = [];
-  respuestas:IRespuestas[] = [];
-  respuesta:IRespuestas;
+  preguntas:DialogDataPreguntas[] = [];
   detalleExamen:IDetalleExamen = null;
   id_pregunta:number = 0;
   id_examen:number = 0;
@@ -61,6 +60,23 @@ export class CrearexamenComponent implements OnInit {
     this.cargarExamen();
     
     
+  }
+
+  mostrarDialogPregunta() {
+    const dialogRef = this.dialog.open(PreguntasModalComponent, {
+      panelClass: 'my-panel',
+      width: '900px',
+      data: this.pregunta
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (!result) {
+
+        return;
+      }
+      console.log(result);
+      this.preguntas.push(result);
+    });
   }
 
   cargarExamen() {
@@ -132,6 +148,7 @@ export class CrearexamenComponent implements OnInit {
     var index = this.preguntas.indexOf(pre);
     this.preguntas.splice(index, 1);
   }
+
   cargarAreas(): void {
     this._areasService.getAreas()
       .subscribe((res) => {
@@ -154,114 +171,7 @@ export class CrearexamenComponent implements OnInit {
     );
   }
 
-  registrarPregunta() {
-    if (this.id_pregunta != 0) {//Fue ediada, entonces la borro de la tabla
-      this.quitarPregunta(this.pregunta);
-    }
-    this.pregunta = null;
-    this.pregunta = {
-      id_pregunta: this.id_pregunta,
-      desc_pregunta: this.descrip_pregunta,
-      id_area: this.area_select,
-      id_tema:this.tema_select,
-      imagen: this.nombreImagen
-    }
-    //let idPregunta:any[] = [];
-    this._preguntasService.postPreguntas(this.pregunta).subscribe(datos => {
-      if (datos['estado'] == 1) {
-        //alert(datos['datos'][0].id_pregunta);
-        //idPregunta = datos['datos'];
-        //this.id_pregunta = idPregunta[0].id_pregunta;
-        this.id_pregunta = parseInt(datos['datos'][0].id_pregunta);
-        this.pregunta = {
-          id_pregunta: this.id_pregunta,
-          desc_pregunta: this.descrip_pregunta,
-          id_area: this.area_select,
-          id_tema:this.tema_select,
-          imagen: this.nombreImagen
-        }
-        
-        this.preguntas.push(this.pregunta);
-        
-        this.guardarRespuestas();
-      } else if (datos['estado'] == 23000) {
-        alert('El area ya se encuentra registrada');
-      }       else {
-        alert('No guardado');
-      }
-    });
-  }
-
-  guardarRespuestas() {
-    this.mensaje = "No Guardado.";
-    for (let i = 0; i < this.respuestas.length; i++) {
-      this.respuestas[i].id_respuesta = this.id_pregunta+"R"+(i+1);
-      this.respuestas[i].id_pregunta = this.id_pregunta;
-      
-      this.respuesta = null;
-      this.respuesta = {
-        id_pregunta : this.respuestas[i].id_pregunta,
-        id_respuesta : this.respuestas[i].id_respuesta,
-        desc_respuesta : this.respuestas[i].desc_respuesta,
-        correcta : this.respuestas[i].correcta
-      };
-      console.log(this.respuesta);
-      this._respuService.postRespuestas(this.respuesta).subscribe(res => {
-        if (res['estado'] == 1) {
-          this.mensaje = res['mensaje'];
-        }
-      });
-    }
-    this.descrip_pregunta = "";
-    this.respuestas = null;
-    //console.log(this.respuestas);
-    alert(this.mensaje);
-  }
-
-  //Para cuando edito el input de preguntas agrego una respuesta vacia en el array
-  agregarRespuestaVacia(value:string) {
-    if (this.respuestas.length==0 && value.length > 0) {
-      let resp:IRespuestas={
-        id_pregunta : 0,
-        id_respuesta : "",
-        desc_respuesta: "",
-        correcta: 0
-      };
-      this.respuestas.push(resp);
-    }/*else{
-      console.log('sino editarPregunta()');
-      this.respuestas.splice(this.respuestas.length, 1);
-    }*/
-    console.log('Cantidad Array->'+this.respuestas.length);
-  }
-
-  //Para cuando doy enter en un input de respuesta agrego una respuesta vacia en el array
-  agregarItemRespuesta(resp:IRespuestas){
-    console.log('Caracteres Respu->'+resp.desc_respuesta.length);
-    if (resp.desc_respuesta.length >= 1) {
-      let respu:IRespuestas={
-        id_pregunta : 0,
-        id_respuesta : "",
-        desc_respuesta: "",
-        correcta: 0
-      };
-      this.respuestas.push(respu);
-    }else{
-      console.log('Sino agregarItemRespuesta()');
-    }
-  }
-
-  //Para cuando doy click en un radio button de las respuestas indico en el array cual es la correcta (1)
-  actionIsSelected(idx:number) {
-    for (let index = 0; index < this.respuestas.length; index++) {
-      this.respuestas[index].correcta = 0;
-      if (this.respuestas[idx].correcta == 0) {
-        this.respuestas[idx].correcta = 1;
-      }
-      
-    }
-    console.log(this.respuestas);
-  }
+  
 
   guardarExamen() {
     if (this.preguntas.length > 0 && this.descrip_examen.length > 0) {
@@ -306,41 +216,12 @@ export class CrearexamenComponent implements OnInit {
 
   limpiar() {
     this.preguntas.splice(0, this.preguntas.length);
-    this.respuestas.splice(0, this.respuestas.length);
     this.descrip_examen = "";
     this.descrip_pregunta = "";
     this.mensaje = "";
   }
 
-  public cargandoImagen(files: FileList){
-    console.log(files[0].name);
-    console.log(this.rutaImagen);
-    this.nombreImagen = files[0].name;
-		this._examenServie.postFileImagen(files[0]).subscribe(
-
-			response => {
-        this.rutaImagen = "../../../Api/imagenes/"+files[0].name;
-				this.respuestaImagenEnviada = response; 
-				if(this.respuestaImagenEnviada <= 1){
-					console.log("Error en el servidor"); 
-				}else{
-					if(this.respuestaImagenEnviada.code == 200 && this.respuestaImagenEnviada.status == "success"){
-
-						this.resultadoCarga = 1;
-            
-					}else{
-						this.resultadoCarga = 2;
-					}
-
-				}
-			},
-			error => {
-				console.log(<any>error);
-			}
-
-		);//FIN DE METODO SUBSCRIBE
-
-  }
+  
   
   mostrarPreguntas(idexa:number): void {
     this._preguntasService.getPreguntasExamen(idexa)
@@ -353,8 +234,8 @@ export class CrearexamenComponent implements OnInit {
     );
   }
 
-  editarPregunta(id_preg:number, desc_preg:string) {
-    this._respuService.getRespuestas(id_preg)
+  editarPregunta(preg:DialogDataPreguntas) {
+    /*this._respuService.getRespuestas(id_preg)
         .subscribe(res => {
           if (res['estado']==111) {
             this.respuestas = null;
@@ -363,6 +244,30 @@ export class CrearexamenComponent implements OnInit {
             this.id_pregunta = id_preg;
           }
     });
+    console.log('editarPregunta(): '+this.respuestas);*/
+    this.pregunta = null;
+    this.pregunta = {
+      id_pregunta : preg.id_pregunta,
+      desc_pregunta: preg.desc_pregunta,
+      id_area : this.area_select,
+      id_tema : this.tema_select,
+      imagen : preg.imagen
+    }
+    this.mostrarDialogPregunta();
+    console.log('editarPregunta(): '+this.pregunta);
+  }
+
+  crearNueva() {
+    this.pregunta = null;
+    this.pregunta = {
+      id_pregunta : 0,
+      desc_pregunta: '',
+      id_area : this.area_select,
+      id_tema : this.tema_select,
+      imagen : ''
+    }
+    this.mostrarDialogPregunta();
+
   }
 
 }

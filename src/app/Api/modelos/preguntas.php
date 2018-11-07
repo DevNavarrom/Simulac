@@ -136,11 +136,11 @@ class Preguntas {
 			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO");
 		}
 	}
-	public static function getPreguntasAreaTema($parametro){
+	public static function getPreguntasAreaTema($datos){
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 
-			$sentencia = $conexion->prepare("call spExtraerPreguntas('".$parametro."%')");
+			$sentencia = $conexion->prepare("call spExtraerPreguntas('".$datos['area_select']."%','".$datos['tema_select']."%','%".$datos['data']."%')");
 			
 		
 			if($sentencia->execute()){
@@ -154,7 +154,7 @@ class Preguntas {
 				throw new ExceptionApi(ESTADO_FALLIDO, "error en la consulta");
 			}
         }catch(PDOException $e){
-			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO");
+			throw new ExceptionApi(PDO_ERROR, "error en conexion PDO". $e->getMessage());
 		}
 	}
 	public static function buscarPorId($id){
