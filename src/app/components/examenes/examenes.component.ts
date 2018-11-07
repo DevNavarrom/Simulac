@@ -31,10 +31,15 @@ export class ExamenesComponent implements OnInit {
 
   eliminarExamen(exam: IExamenes): void {
     if(confirm('¿Desea eliminar este examen: '+exam.id+' ?')){
-    this._examenesService.deleteExamen(parseInt(exam.id))
+    this._examenesService.deleteExamen(exam.id)
       .subscribe((res) => {
-        alert(res['mensaje']);
-        this.mostrarExamenes();
+        if (res['estado']==111) {
+          alert(res['mensaje']);
+          this.mostrarExamenes();
+        }else{
+          console.log('No elimina examen');
+        }
+        
       }
     );
     }

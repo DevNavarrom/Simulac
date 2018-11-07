@@ -59,7 +59,7 @@ export class ExamenesService {
 
 	}
 
-  deleteExamen(id: number) {
+  deleteExamen(id: any) {
     return this.http.get(`${this.url}/eliminar/` + id);
   }
 

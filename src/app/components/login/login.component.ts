@@ -53,10 +53,13 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
+    
     const usuario = this.loginForm.value.usuario;
     const password = this.loginForm.value.password;
 
-    this._usuario = new Usuarios("","","",usuario, password);
+    if (usuario != "" && password != "") {
+      
+      this._usuario = new Usuarios("","","",usuario, password);
     
     this._usuariosService.login(this._usuario).subscribe((res) => {
       this.usuarioLogueado = res['datos'] ;
@@ -74,6 +77,10 @@ export class LoginComponent implements OnInit {
       
     }
     );
+    }else{
+      this.buildForm();
+    }
+    
     
 }
  generarTocken() {

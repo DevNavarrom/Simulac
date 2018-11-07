@@ -79,6 +79,16 @@ export class CrearexamenComponent implements OnInit {
     });
   }
 
+
+  eliminarExamen(idexa:number) {
+    this._examenServie.deleteExamen(idexa).subscribe(res => {
+      if (res['estado']==111) {
+        this.mensaje = res['mensaje'];
+      }
+      alert(this.mensaje);
+    });
+  }
+
   cargarExamen() {
     if (this.id_examen != 0) {
       this._examenServie.getExamen(this.id_examen).subscribe(res => {
