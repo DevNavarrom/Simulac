@@ -1,18 +1,18 @@
 <div id="wrapper" class="active">
-    <div id="sidebar-wrapper" class="">
-        <ul id="sidebar_menu" class="sidebar-nav">
+    <div id="sidebar-wrapper" style="vertical-align: top;">
+        <!--<ul id="sidebar_menu" class="sidebar-nav">
             <li class="sidebar-brand">
                 <a id="menu-toggle" href="#">
                     <p>SIMULAC</p>
                     <div>
                         <img class="user_icon" src="./assets/images/icon_user.png">
                     </div>
-                    <!--<span id="main_icon" class="glyphicon glyphicon-align-justify"></span>-->
                 </a>
-
             </li>
-        </ul>
-
+        </ul>-->
+        <div style="margin-bottom: 20px;" class="sidebar-nav">
+            <img width="150px" style="margin-top: -15px" src="./assets/images/logo_simulac.png">
+        </div>
         <ul class="sidebar-nav navbar-nav mr-auto mt-2 mt-lg-0" id="sidebar">
             <li class="nav-item" routerLinkActive="active" (click)="cambiarRuta('Estudiantes')">
                 <a [routerLink]="[ 'estudiantes' ]">

@@ -1,3 +1,18 @@
+# Lunes 19-NOVIEMBRE-2018 #############################################################################
+##########################CAMBIOS DEIMER NAVARRO#########################################################
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spExtraerPreguntas`(IN `area` VARCHAR(20), IN `tema` VARCHAR(20), IN `dato` VARCHAR(40))
+    NO SQL
+BEGIN
+
+SELECT id_pregunta, desc_pregunta,imagen,tema.id_area,tema.id_tema FROM preguntas AS preg NATURAL JOIN tema NATURAL JOIN area WHERE (tema.id_tema LIKE tema and area.id_area like area)
+and (preg.id_pregunta like dato or preg.desc_pregunta like dato) limit 10;
+
+END$$
+DELIMITER ;
+
+
 # Martes 06-NOVIEMBRE-2018 #############################################################################
 ##########################CAMBIOS DEIMER NAVARRO#########################################################
 DELIMITER $$

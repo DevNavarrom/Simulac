@@ -23,10 +23,11 @@ export class PreguntasModalComponent implements OnInit {
   descrip_pregunta:string;
   private preguntas:DialogDataPreguntas[] = [];
   respuestas:IRespuestas[] = [];
-  public respuestaImagenEnviada;
-  public resultadoCarga;
+  public respuestaImagenEnviada:any;
+  public resultadoCarga = 0;
   public nombreImagen:string = "No hay imagen selecionada";
-  public rutaImagen:string = "./assets/images/add-image.png";
+  public rutaImagen:string = "../../../assets/recursos/logo_simulac.png";
+  fileToUpload: File = null;
   pregunta:DialogDataPreguntas = null;
   id_pregunta:number = 0;
   respuesta:IRespuestas;
@@ -41,7 +42,8 @@ export class PreguntasModalComponent implements OnInit {
 
       this.id_area = data.id_area;
       this.id_tema = data.id_tema;
-      this.rutaImagen = data.imagen;
+      this.rutaImagen = "../../../assets/recursos/"+data.imagen;
+      this.nombreImagen = data.imagen;
       this.editarPregunta(data.id_pregunta, data.desc_pregunta);
 
      }
@@ -122,31 +124,51 @@ export class PreguntasModalComponent implements OnInit {
   public cargandoImagen(files: FileList){
     console.log(files[0].name);
     console.log(this.rutaImagen);
-    this.nombreImagen = files[0].name;
-		this._examenServie.postFileImagen(files[0]).subscribe(
+    this.fileToUpload = files.item(0);
+    this.nombreImagen = this.fileToUpload.name;
+    //this._examenServie.postFileImagen(files[0]).subscribe(
+    this.rutaImagen = "../../assets/recursos/"+this.nombreImagen;
+  }
 
+  onSelectFile(event, files: FileList) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        this.rutaImagen = reader.result.toString();
+        this.nombreImagen = files.item(0).name;
+        this.fileToUpload = files.item(0);
+      }
+    }
+  }
+
+  guardarImagen(){
+    this._examenServie.postFileImagen(this.fileToUpload).subscribe(
+    
 			response => {
-        this.rutaImagen = "../../../Api/imagenes/"+files[0].name;
-				this.respuestaImagenEnviada = response; 
-				if(this.respuestaImagenEnviada <= 1){
+
+        this.respuestaImagenEnviada = response; 
+        if(response['code'] == 200 && response['status'] == "success"){
+          this.rutaImagen = "../../assets/recursos/"+this.nombreImagen;
+          console.log(this.rutaImagen+"---"+response);
+          this.resultadoCarga = 1;
+          
+        }else{
+          this.resultadoCarga = 2;
+        }
+				/*if(this.respuestaImagenEnviada <= 1){
 					console.log("Error en el servidor"); 
 				}else{
-					if(this.respuestaImagenEnviada.code == 200 && this.respuestaImagenEnviada.status == "success"){
-
-						this.resultadoCarga = 1;
-            
-					}else{
-						this.resultadoCarga = 2;
-					}
-
-				}
+        }*/
+        console.log(this.resultadoCarga);
 			},
 			error => {
-				console.log(<any>error);
+				console.log("ERROR Carga de Imagen--> "+<any>error);
 			}
 
 		);//FIN DE METODO SUBSCRIBE
-
   }
 
   registrarPregunta() {
@@ -180,6 +202,7 @@ export class PreguntasModalComponent implements OnInit {
         alert('Pregunta registrada satisfactoriamente.');
         //TODO invocar metodo para guardar respuestas
         this.guardarRespuestas();
+        this.guardarImagen();
       } else if (datos['estado'] == 23000) {
         alert('El area ya se encuentra registrada');
       } else {

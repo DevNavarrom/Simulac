@@ -118,11 +118,12 @@ export class PreguntasComponent implements OnInit {
 
   editarPregunta(preg:DialogDataPreguntas) {
     this.pregunta = null;
+    console.log(preg.imagen);
     this.pregunta = {
       id_pregunta : preg.id_pregunta,
       desc_pregunta: preg.desc_pregunta,
-      id_area : this.area_select,
-      id_tema : this.tema_select,
+      id_area : preg.id_area,
+      id_tema : preg.id_tema,
       imagen : preg.imagen
     }
     this.mostrarDialogPregunta();

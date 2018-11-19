@@ -225,3 +225,11 @@
         transition: all .4s ease 0s;
     }
 }
+
+
+.table-wrapper-scroll-y {
+    display: block;
+    max-height: 300px;
+    overflow-y: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    }

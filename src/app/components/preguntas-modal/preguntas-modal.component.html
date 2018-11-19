@@ -64,11 +64,11 @@
 
 
 
-      <div class="col-xs-12 col-md-4 form-group" style="background : #acbbc2">
-        <img height="150px" src="{{ rutaImagen }}">
+      <div class="col-xs-12 col-md-4 form-group">
+        <img height="150px" [src]="rutaImagen">
         <div class="custom-file">
-          <input type="file" (change)="cargandoImagen($event.target.files)" class="custom-file-input" id="inputGroupFile04"
-            aria-describedby="inputGroupFileAddon04">
+          <input type="file" (change)="onSelectFile($event, $event.target.files)" class="custom-file-input" id="inputGroupFile04"
+            >
           <label class="custom-file-label" for="inputGroupFile04">
             {{nombreImagen}}
           </label>
