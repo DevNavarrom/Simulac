@@ -12,13 +12,46 @@ class Respuestas {
     const DESCRIPCION = "desc_respuesta";
     const CORRECTA = "correcta";
    
-  
+	public static function editarRespuesta($infoRespuesta){
+		try{
+            $conexion = Conexion::getInstancia()->getConexion();
+		$query = "DELETE from respuestas where id_pregunta=".$infoRespuesta[0]["id_pregunta"].";";
+				$sentencia = $conexion->prepare($query);
+				
+					if($sentencia->execute()){
+						for($i=0; $i<count($infoRespuesta); $i++){
+							$query = "call spGuardarRespuesta('".$infoRespuesta[$i]["id_pregunta"]."','".$infoRespuesta[$i]["id_respuesta"]."','".$infoRespuesta[$i]["desc_respuesta"]."','".$infoRespuesta[$i]["correcta"]."')";
+							$sentencia = $conexion->prepare($query);
+							
+								if($sentencia->execute()){
+									if(($i==count($infoRespuesta)-1)){
+									return 
+										[
+											"estado" => CREACION_EXITOSA,
+											"mensaje" => "Respuesta guardada satisfactoriamente.".$i
+										];
+										}
+									
+								}else{
+									throw new ExceptionApi(CREACION_FALLIDA, "error en la sentencia");
+								}
+							
+						}
+						
+					}else{
+						throw new ExceptionApi(CREACION_FALLIDA, "error en la sentencia");
+					}
+				}catch(PDOException $e){
+					throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO ".$e->getMessage());
+				}
+	}
 	
     public static function insertarRespuesta($infoRespuesta){
         try{
             $conexion = Conexion::getInstancia()->getConexion();
-			
-			//$query = "INSERT INTO ".self::TABLA."( ".self::ID.", ".self::ID_RESPUESTA.",".self::DESCRIPCION.",".self::CORRECTA.") VALUES (?, ?, ?, ?);";
+		
+
+
 			
 			for($i=0; $i<count($infoRespuesta); $i++){
 				$query = "call spGuardarRespuesta('".$infoRespuesta[$i]["id_pregunta"]."','".$infoRespuesta[$i]["id_respuesta"]."','".$infoRespuesta[$i]["desc_respuesta"]."','".$infoRespuesta[$i]["correcta"]."')";
@@ -37,9 +70,9 @@ class Respuestas {
 						throw new ExceptionApi(CREACION_FALLIDA, "error en la sentencia");
 					}
 				
-			}
 			
-		
+			
+			}
         }catch(PDOException $e){
 			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO ".$e->getMessage());
 		}

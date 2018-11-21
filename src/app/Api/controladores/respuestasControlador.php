@@ -38,7 +38,7 @@ class 	RespuestasControlador{
 					return Respuestas::insertarRespuesta($data);
 					break;
 				case 'editar':
-					return Respuestas::actualizarRespuesta($datosArray);
+					return Respuestas::editarRespuesta($data);
 					break;
 				
 				default:

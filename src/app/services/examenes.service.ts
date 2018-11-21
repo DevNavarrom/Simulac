@@ -38,8 +38,20 @@ export class ExamenesService {
 
   }
 
-  postDetalleExamen(detalle:IDetalleExamen) {
+  postDetalleExamen(detalle:IDetalleExamen[]) {
     return this.http.post(`${this.url}/registroDetalle`, JSON.stringify(detalle))
+      .pipe(
+        map(res => {
+          if (!res) {
+            throw new Error('Value expected!');
+          }
+          return res;
+        })
+      );
+
+  }
+  postEditarDetalleExamen(detalle:IDetalleExamen[]) {
+    return this.http.post(`${this.url}/editarDetalle`, JSON.stringify(detalle))
       .pipe(
         map(res => {
           if (!res) {
@@ -53,10 +65,14 @@ export class ExamenesService {
 
   public postFileImagen(imagenParaSubir: File){
 
-		const formData = new FormData(); 
-		formData.append('imagenPropia', imagenParaSubir, imagenParaSubir.name);
-		return this.http.post(`${this.url}/cargarImagen`, formData);
+    
+      const formData = new FormData(); 
+      formData.append('imagenPropia', imagenParaSubir, imagenParaSubir.name);
+      return this.http.post(`${this.url}/cargarImagen`, formData);
+  
 
+    
+	
 	}
 
   deleteExamen(id: any) {

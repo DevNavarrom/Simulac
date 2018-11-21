@@ -18,15 +18,10 @@ class Examen {
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 			
-			//$query = "INSERT INTO ".self::TABLA."( ".self::ID.", ".self::ID_TEMA.",".self::DESCRIPCION.",".self::ESTADO.") VALUES (?, ?, ?, ?);";
 			$query = "call spGuardarExamen('".$infoExamen["id_tema"]."','".$infoExamen["desc_examen"]."','".$infoExamen["id_examen"]."')";
             
             $sentencia = $conexion->prepare($query);
-            
-			/*$sentencia->bindParam(1, $infoExamen["id_examen"]);			
-            $sentencia->bindParam(2, $infoExamen["id_tema"]);
-            $sentencia->bindParam(3, $infoExamen["desc_examen"]);
-            $sentencia->bindParam(4, $infoExamen["estado"]);*/
+         
 		
             if($sentencia->execute()){
 				http_response_code(200);
@@ -40,6 +35,47 @@ class Examen {
 				throw new ExceptionApi(CREACION_FALLIDA, "error en la sentencia");
 			}
         }catch(PDOException $e){
+			throw new ExceptionApi(PDO_ERROR, "ERROR en conexionsss PDO ".$e->getMessage());
+		}
+	}
+
+	
+	public static function editarDetalleExamen($infoDetalle){
+        try{
+			$conexion = Conexion::getInstancia()->getConexion();
+			
+
+		$query = "DELETE from detalle_examen where id_examen=".$infoDetalle[0]["id_examen"].";";
+		$sentencia = $conexion->prepare($query);
+			
+		if($sentencia->execute()){
+
+			for($i=0; $i<count($infoDetalle); $i++){
+			$query = "call spGuardarDetalleExamen('".$infoDetalle[$i]["id_examen"]."','".$infoDetalle[$i]["id_pregunta"]."')";
+            
+            $sentencia = $conexion->prepare($query);
+		
+            if($sentencia->execute()){
+				if(($i==count($infoDetalle)-1)){
+					return 
+						[
+							"estado" => CREACION_EXITOSA,
+							"mensaje" => "Examen guardado satisfactoriamente"
+						];
+						}
+					
+				
+			}else{
+				throw new ExceptionApi(CREACION_FALLIDA, "error en la sentencia");
+			}
+
+
+		}
+	}
+		else{
+			throw new ExceptionApi(CREACION_FALLIDA, "error en la sentencia");
+		}
+        }catch(PDOException $e){
 			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO ".$e->getMessage());
 		}
 	}
@@ -48,21 +84,25 @@ class Examen {
         try{
             $conexion = Conexion::getInstancia()->getConexion();
 			
-			$query = "call spGuardarDetalleExamen('".$infoDetalle["id_examen"]."','".$infoDetalle["id_pregunta"]."')";
+			for($i=0; $i<count($infoDetalle); $i++){
+		   $query = "call spGuardarDetalleExamen('".$infoDetalle[$i]["id_examen"]."','".$infoDetalle[$i]["id_pregunta"]."')";
             
             $sentencia = $conexion->prepare($query);
 		
             if($sentencia->execute()){
 				//http_response_code(200);
+				if(($i==count($infoDetalle)-1)){
 				return 
 					[
 						"estado" => CREACION_EXITOSA,
 						"mensaje" => "Guardado satisfactorio"
 					];
+				}
 				
 			}else{
 				throw new ExceptionApi(CREACION_FALLIDA, "error en la sentencia");
 			}
+		}
         }catch(PDOException $e){
 			throw new ExceptionApi(PDO_ERROR, "ERROR en conexion PDO ".$e->getMessage());
 		}

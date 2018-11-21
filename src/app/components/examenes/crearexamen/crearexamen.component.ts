@@ -3,7 +3,7 @@ import { AreasService } from '../../../services/areas.service';
 import { TemasService } from '../../../services/temas.service';
 import { PreguntasService } from '../../../services/preguntas.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { PreguntasExamenComponent } from '../preguntas-examen/preguntas-examen.component';
 import { Preguntas, DialogDataPreguntas } from '../../../modelos/Preguntas';
 import { IRespuestas } from '../../../modelos/Respuestas';
@@ -29,6 +29,7 @@ export class CrearexamenComponent implements OnInit {
   areas;
   temas;
   error = '';
+  tipo="Guardar";
   area_select:string = "0";
   tema_select:string = "0";
   descrip_pregunta:string;
@@ -48,11 +49,15 @@ export class CrearexamenComponent implements OnInit {
   public rutaImagen:string = "./assets/images/add-image.png";
 
   constructor(private _preguntasService:PreguntasService, private _areasService: AreasService, private _activatedRoute:ActivatedRoute,
-    private _temasService:TemasService, private _respuService:RespuestasService, private _examenServie:ExamenesService, 
+    private _temasService:TemasService, public snackBar: MatSnackBar, private _respuService:RespuestasService, private _examenServie:ExamenesService, 
     public dialog: MatDialog) {
       this._activatedRoute.params.subscribe( params => {
-        console.log(params['id']);
         this.id_examen = params['id'];
+        if(this.id_examen!=0)
+        {
+
+          this.tipo="Editar";
+        }
       });
      }
 
@@ -61,11 +66,15 @@ export class CrearexamenComponent implements OnInit {
     
     
   }
-
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Aceptar', {
+      duration: 2000,
+    });
+  }
   mostrarDialogPregunta() {
+    console.log("imagen"+this.pregunta.imagen);
     const dialogRef = this.dialog.open(PreguntasModalComponent, {
       panelClass: 'my-panel',
-      width: '900px',
       data: this.pregunta
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -74,7 +83,6 @@ export class CrearexamenComponent implements OnInit {
 
         return;
       }
-      console.log(result);
       this.preguntas.push(result);
     });
   }
@@ -85,7 +93,7 @@ export class CrearexamenComponent implements OnInit {
       if (res['estado']==111) {
         this.mensaje = res['mensaje'];
       }
-      alert(this.mensaje);
+      this.openSnackBar(this.mensaje);
     });
   }
 
@@ -119,9 +127,7 @@ export class CrearexamenComponent implements OnInit {
   }
 
   selectPregunta() {
-    //let pregunta:Preguntas = new Preguntas(0,this.area_select,"",this.tema_select,"");
-    /*this.pregunta.id_area = this.area_select;
-    this.pregunta.id_tema = this.tema_select;*/
+ 
     if (this.area_select != "0") {
       this.pregunta = {
         id_pregunta: 0,
@@ -130,7 +136,6 @@ export class CrearexamenComponent implements OnInit {
         id_tema: this.tema_select,
         imagen: ''
       }
-      console.log(this.pregunta);
 
       const dialogRef = this.dialog.open(PreguntasExamenComponent, {
         panelClass: 'my-panel',
@@ -143,8 +148,14 @@ export class CrearexamenComponent implements OnInit {
 
           return;
         }
-        console.log(result);
-        this.preguntas.push(result);
+
+        if(!this.verificarPregunta(result.id_pregunta)){// si no esta en la tabla la agrega
+          this.preguntas.push(result);
+        }
+        else{
+          this.openSnackBar('La pregunta ya se encuentra agregada');
+        }
+
 
       });
     } else {
@@ -152,6 +163,19 @@ export class CrearexamenComponent implements OnInit {
       alert('Debe seleccionar un area.');
     }
 
+  }
+  verificarPregunta(id:Number):boolean// valida si la pregunta ya esta en la tabla
+  {
+
+    for(let i=0;i<this.preguntas.length;i++)
+    {
+      if(id==this.preguntas[i].id_pregunta)
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   quitarPregunta(pre:DialogDataPreguntas){
@@ -184,6 +208,7 @@ export class CrearexamenComponent implements OnInit {
   
 
   guardarExamen() {
+    if(this.validarDatos()){
     if (this.preguntas.length > 0 && this.descrip_examen.length > 0) {
       this.examen = {
         id_tema: this.tema_select,
@@ -193,35 +218,107 @@ export class CrearexamenComponent implements OnInit {
         desc_area: "",
         desc_tema: ""
       };
-      console.log(this.examen);
       this._examenServie.postExamen(this.examen).subscribe(resp => {
         if (resp['estado'] == 1) {
+
+          
+          if(this.tipo=="Guardar")
+           {
           this.id_examen = resp['datos'][0].id_examen;
+           }
 
+         
           //Invoco metodo para registrar detalle delexamen(preguntas)
-          this.preguntas.forEach(preg => {
-            this.detalleExamen = {
+          let detallesExamen:IDetalleExamen []=[];
+     
+          for(let i=0;i<this.preguntas.length;i++) {
+            detallesExamen[i] = {
               id_examen: this.id_examen,
-              id_pregunta: preg.id_pregunta
+              id_pregunta: this.preguntas[i].id_pregunta
             }
-            console.log(this.detalleExamen);
-            this._examenServie.postDetalleExamen(this.detalleExamen).subscribe(res => {
-              if (res['estado'] == 1) {
-                this.limpiar();
-                this.mensaje = res['mensaje'];
-                //alert(res['mensaje']);
-                console.log(res['mensaje']);
-              }
+          
+           }
 
-            })
-          });
-          alert('Examen creado satisfactoriamente.');
+           if(this.tipo=="Guardar")
+           {
+            this.guardarDetalleExamen(detallesExamen);
+           }
+           else{
 
+            this.editarDetalleExamen(detallesExamen);
+           }
+       
         }
-
       });
     }
+  }
+  }
+validarDatos():boolean
+{
+  if(this.area_select!="0")
+  {
+    if(this.tema_select!="0")
+    {
 
+      if(this.descrip_examen!="")
+      {
+
+        if(this.preguntas.length!=0)
+        {
+
+          return true;
+        }
+        else{
+    this.openSnackBar('El examen no tiene preguntas');
+
+        }
+      }
+      else
+      {
+    this.openSnackBar('Ingrese una descripción');
+
+      }
+    }
+    else
+    {
+    this.openSnackBar('Seleccione el tema');
+
+    }
+
+  }
+  else
+  {
+    this.openSnackBar('Seleccione el area');
+  }
+
+  return false;
+}
+
+editarDetalleExamen(detallesExamen:IDetalleExamen [])
+{
+         this._examenServie.postEditarDetalleExamen(detallesExamen).subscribe(res => {
+      if (res['estado'] == 1) {
+        this.limpiar();
+        this.mensaje = res['mensaje'];
+
+        this.openSnackBar('Examen editado satisfactoriamente.');
+       
+      }
+
+    });  
+}
+  guardarDetalleExamen(detallesExamen:IDetalleExamen [])
+  {
+           this._examenServie.postDetalleExamen(detallesExamen).subscribe(res => {
+        if (res['estado'] == 1) {
+          this.limpiar();
+          this.mensaje = res['mensaje'];
+
+          this.openSnackBar('Examen creado satisfactoriamente.');
+         
+        }
+
+      });  
   }
 
   limpiar() {
@@ -264,13 +361,12 @@ export class CrearexamenComponent implements OnInit {
       imagen : preg.imagen
     }
     this.mostrarDialogPregunta();
-    console.log('editarPregunta(): '+this.pregunta);
   }
 
   crearNueva() {
     this.pregunta = null;
     this.pregunta = {
-      id_pregunta : 0,
+      id_pregunta : -1,
       desc_pregunta: '',
       id_area : this.area_select,
       id_tema : this.tema_select,

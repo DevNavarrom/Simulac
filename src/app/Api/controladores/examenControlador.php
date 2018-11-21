@@ -51,6 +51,11 @@ class ExamenControlador{
 				case 'registroDetalle':
 					return Examen::insertarDetalleExamen($data);
 					break;
+					case 'editarDetalle':
+					return Examen::editarDetalleExamen($data);
+					break;
+
+					
 				case 'cargarImagen':
 					return Examen::postImagen();
 					break;

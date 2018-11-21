@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ExamenesService } from '../../services/examenes.service';
 import { IExamenes, IExamen } from '../../modelos/Examen';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-examenes',
@@ -12,7 +13,7 @@ export class ExamenesComponent implements OnInit {
 
   examenes:IExamenes[] = [];
 
-  constructor( private _router:Router, private _examenesService:ExamenesService ) { }
+  constructor( private _router:Router,public snackBar: MatSnackBar, private _examenesService:ExamenesService ) { }
 
   ngOnInit() {
     this.mostrarExamenes();
@@ -28,13 +29,18 @@ export class ExamenesComponent implements OnInit {
       this.examenes = res['datos'];
     });
   }
-
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Aceptar', {
+      duration: 2000,
+    });
+  }
   eliminarExamen(exam: IExamenes): void {
     if(confirm('¿Desea eliminar este examen: '+exam.id+' ?')){
     this._examenesService.deleteExamen(exam.id)
       .subscribe((res) => {
         if (res['estado']==111) {
-          alert(res['mensaje']);
+
+          this.openSnackBar(res['mensaje']);
           this.mostrarExamenes();
         }else{
           console.log('No elimina examen');
