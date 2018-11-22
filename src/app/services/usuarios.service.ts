@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 export class UsuariosService {
 
   url = 'http://localhost/WEBSimulac/src/app/api/';
+  //url = 'http://localhost/WEBSimulacro/api/';
 
   usuarios:Usuarios[];
   constructor(private http:HttpClient) { }

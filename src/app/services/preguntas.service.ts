@@ -16,6 +16,7 @@ export class PreguntasService {
 
   tabla: string = "preguntas";
   url = 'http://localhost/WEBSimulac/src/app/api/' + this.tabla
+  //url = 'http://localhost/WEBSimulacro/api/'+ this.tabla;
   constructor(private http: HttpClient) { }
 
 

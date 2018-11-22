@@ -2,14 +2,36 @@ import { Injectable } from '@angular/core';
 import { Areas } from '../modelos/Areas';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+//import * as data  from './../../../configHostServer.json';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AreasService {
 
+  //url = '';
   url = 'http://localhost/WEBSimulac/src/app/api/';
-  constructor(private http: HttpClient) { }
+  //url = 'http://localhost/WEBSimulacro/api/';
+  host:String = "";
+  private _host = './WEBSimulac/src/assets/configHostServer.json';   
+
+    getHost() {
+            return this.http.get(this._host).pipe(
+              map(response => {
+                return response;
+              })
+            ).subscribe((res) => {
+              this.host = res['host'];
+            }
+
+            );
+    }
+
+  constructor(private http: HttpClient) {
+    /*this.getHost();
+    this.url = 'http://'+this.host+'/WEBSimulac/src/app/api/';*/
+  }
 
   
   getAreas() {

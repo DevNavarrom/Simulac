@@ -26,7 +26,7 @@ export class PreguntasModalComponent implements OnInit {
   public respuestaImagenEnviada:any;
   public resultadoCarga = 0;
   public nombreImagen:string = "No hay imagen selecionada";
-  public rutaImagen:string = "../../../assets/recursos/logo_simulac.png";
+  public rutaImagen:string = "./assets/recursos/logo_simulac.png";
   fileToUpload: File = null;
   pregunta:DialogDataPreguntas = null;
   id_pregunta:number = 0;

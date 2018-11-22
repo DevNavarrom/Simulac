@@ -10,6 +10,7 @@ export class ExamenesService {
 
   tabla: string = "examen";
   url = 'http://localhost/WEBSimulac/src/app/api/' + this.tabla
+  //url = 'http://localhost/WEBSimulacro/api/'+ this.tabla;
 
   constructor(private http:HttpClient) { }
 

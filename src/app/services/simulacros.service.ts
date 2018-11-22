@@ -15,6 +15,7 @@ export class SimulacrosService {
 
   recurso="simulacros";
   url = 'http://localhost/WEBSimulac/src/app/api/'+this.recurso;
+  //url = 'http://localhost/WEBSimulacro/api/'+ this.recurso;
 
   constructor(private http: HttpClient) { }
 

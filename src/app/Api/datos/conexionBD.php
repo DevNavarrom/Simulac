@@ -1,19 +1,22 @@
 <?php
 require_once 'utils/constantes.php';
+require_once './config.php';
 
 class Conexion {
 	private static $pdo;// Conexion
 	private static $instancia = null;// unica instancia de esta clase
-
+	/*
 	// Constantes para crear la conexion con PDO
 	const HOST = "localhost";// Nombre del host
 	const BASE_DE_DATOS = "simulacro"; // Nombre de la base de modelos
 	const USUARIO = "root"; // Nombre del usuario
 	const PASS = "admin123"; // Constraseña
+	*/
 
-	private static $dsn = "mysql:host=localhost;dbname=secudb";
-	private static $myuser = "root"; // Nombre del usuario
-	private static $mypass = "2504"; // Constraseña
+	//private static $dsn = "mysql:host=localhost;dbname=secudb";
+	private static $dsn = SERVER.DB;
+	private static $myuser = USER; // Nombre del usuario
+	private static $mypass = PASS; // Constraseña
 	private static $opciones = array(
 		PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
 	);

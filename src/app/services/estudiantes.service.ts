@@ -16,6 +16,7 @@ export class EstudiantesService {
   estudiantes: Estudiantes[];
 
   url = 'http://localhost/WEBSimulac/src/app/api/';
+  //url = 'http://localhost/WEBSimulacro/api/';
 
   constructor(private http: HttpClient) { }
 
