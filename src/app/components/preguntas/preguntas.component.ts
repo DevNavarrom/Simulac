@@ -57,12 +57,7 @@ export class PreguntasComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
 
-      if (!result) {
-
-        return;
-      }
-      console.log(result);
-      //this.preguntas.push(result);
+    
       this.mostrarPreguntas();
     });
   }
@@ -118,7 +113,6 @@ export class PreguntasComponent implements OnInit {
 
   editarPregunta(preg:DialogDataPreguntas) {
     this.pregunta = null;
-    console.log(preg.imagen);
     this.pregunta = {
       id_pregunta : preg.id_pregunta,
       desc_pregunta: preg.desc_pregunta,
@@ -127,7 +121,6 @@ export class PreguntasComponent implements OnInit {
       imagen : preg.imagen
     }
     this.mostrarDialogPregunta();
-    console.log('editarPregunta(): '+this.pregunta);
   }
 
   crearNueva() {

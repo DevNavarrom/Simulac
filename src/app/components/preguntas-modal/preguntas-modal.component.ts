@@ -21,18 +21,20 @@ export class PreguntasModalComponent implements OnInit {
   area_select:string = "0";
   tema_select:string = "0";
   descrip_pregunta:string;
+  tipo="Guardar";
   private preguntas:DialogDataPreguntas[] = [];
   respuestas:IRespuestas[] = [];
   public respuestaImagenEnviada:any;
   public resultadoCarga = 0;
   public nombreImagen:string = "No hay imagen selecionada";
-  public rutaImagen:string = "./assets/recursos/logo_simulac.png";
+  public rutaImagen:string = "../../../assets/recursos/sin_imagen.jpg";
   fileToUpload: File = null;
   pregunta:DialogDataPreguntas = null;
   id_pregunta:number = 0;
   respuesta:IRespuestas;
   id_tema:string;
   id_area:string;
+  parent=0;
 
   constructor( private _areasService: AreasService, private _temasService:TemasService, 
     private _preguntasService:PreguntasService, private _examenServie:ExamenesService,
@@ -42,10 +44,17 @@ export class PreguntasModalComponent implements OnInit {
 
       this.id_area = data.id_area;
       this.id_tema = data.id_tema;
+      if(data.id_pregunta>0){
+      this.tipo="Editar";
+      
+      if(data.imagen!=''){
+
       this.rutaImagen = "../../../assets/recursos/"+data.imagen;
       this.nombreImagen = data.imagen;
+      }
       this.editarPregunta(data.id_pregunta, data.desc_pregunta);
-
+      }
+      this.parent=data.id_pregunta;
      }
 
   ngOnInit() {
@@ -89,12 +98,10 @@ export class PreguntasModalComponent implements OnInit {
       console.log('sino editarPregunta()');
       this.respuestas.splice(this.respuestas.length, 1);
     }*/
-    console.log('Cantidad Array->'+this.respuestas.length);
   }
 
   //Para cuando doy enter en un input de respuesta agrego una respuesta vacia en el array
   agregarItemRespuesta(i:number){
-    console.log('Caracteres Respu->'+this.respuestas[i].desc_respuesta.length);
     if (this.respuestas[i].desc_respuesta.length >= 1) {
       let respuest:IRespuestas={
         id_pregunta : 0,
@@ -103,7 +110,6 @@ export class PreguntasModalComponent implements OnInit {
         correcta: 0
       };
       this.respuestas.push(respuest);
-      console.log(this.respuestas);
     }else{
       console.log('Sino agregarItemRespuesta()');
     }
@@ -118,12 +124,10 @@ export class PreguntasModalComponent implements OnInit {
       }
       
     }
-    console.log(this.respuestas);
   }
 
   public cargandoImagen(files: FileList){
-    console.log(files[0].name);
-    console.log(this.rutaImagen);
+ 
     this.fileToUpload = files.item(0);
     this.nombreImagen = this.fileToUpload.name;
     //this._examenServie.postFileImagen(files[0]).subscribe(
@@ -152,7 +156,6 @@ export class PreguntasModalComponent implements OnInit {
         this.respuestaImagenEnviada = response; 
         if(response['code'] == 200 && response['status'] == "success"){
           this.rutaImagen = "../../assets/recursos/"+this.nombreImagen;
-          console.log(this.rutaImagen+"---"+response);
           this.resultadoCarga = 1;
           
         }else{
@@ -162,7 +165,6 @@ export class PreguntasModalComponent implements OnInit {
 					console.log("Error en el servidor"); 
 				}else{
         }*/
-        console.log(this.resultadoCarga);
 			},
 			error => {
 				console.log("ERROR Carga de Imagen--> "+<any>error);
@@ -171,7 +173,61 @@ export class PreguntasModalComponent implements OnInit {
 		);//FIN DE METODO SUBSCRIBE
   }
 
+
+  verificarRespuestaCorrecta():boolean
+  {
+    for(let i=0;i<this.respuestas.length;i++)
+    {
+
+      if(this.respuestas[i].correcta==1){
+        return true;
+      }
+    }
+
+    return false;
+  }
+  validarDatos():boolean
+  {
+
+    if(this.area_select!="0"){
+
+      if(this.tema_select!="0"){
+
+        if(this.respuestas.length!=0){
+
+
+          if(this.verificarRespuestaCorrecta())
+          {
+            return true;
+          }
+          else{
+            alert("Debe seleccionar la respuesta correcta");
+        
+          }
+         
+      
+      }  else{
+        alert("La pregunta no tiene respuestas");
+    
+      }
+        
+
+      }  else{
+        alert("Seleccione un tema");
+    
+      }
+      }else
+      {
+        alert("Seleccione un area");
+      }
+      return false;
+
+  }
+
   registrarPregunta() {
+ 
+    if(this.validarDatos()){
+
     if (this.id_pregunta != 0) {//Fue ediada, entonces la borro de la tabla
       this.quitarPregunta(this.pregunta);
     }
@@ -187,9 +243,7 @@ export class PreguntasModalComponent implements OnInit {
     //let idPregunta:any[] = [];
     this._preguntasService.postPreguntas(this.pregunta).subscribe(datos => {
       if (datos['estado'] == 1) {
-        //alert(datos['datos'][0].id_pregunta);
-        //idPregunta = datos['datos'];
-        //this.id_pregunta = idPregunta[0].id_pregunta;
+ 
         this.id_pregunta = parseInt(datos['datos'][0].id_pregunta);
         this.pregunta = {
           id_pregunta: this.id_pregunta,
@@ -199,18 +253,19 @@ export class PreguntasModalComponent implements OnInit {
           imagen: this.nombreImagen
         }
         this.preguntas.push(this.pregunta);
-        alert('Pregunta registrada satisfactoriamente.');
         //TODO invocar metodo para guardar respuestas
         this.guardarRespuestas();
-        this.guardarImagen();
+        if(this.fileToUpload!=null){this.guardarImagen();}
+        
       } else if (datos['estado'] == 23000) {
-        alert('El area ya se encuentra registrada');
+        alert('La pregunta ya se encuentra registrada');
       } else {
         //alert('No guardado');
       }
     });
     }
-    
+  
+  }
   }
 
   guardarRespuestas() {
@@ -218,20 +273,49 @@ export class PreguntasModalComponent implements OnInit {
     for (let i = 0; i < this.respuestas.length; i++) {
       this.respuestas[i].id_respuesta = this.id_pregunta+"R"+(i+1);
       this.respuestas[i].id_pregunta = this.id_pregunta;
-      console.log(this.id_pregunta+"R"+(i+1));
     }
-      console.log('guardarRespuestas():');
-      console.log(this.respuestas);
+    if(this.tipo=="Editar")
+    {
+      this._respuService.editarRespuestas(this.respuestas).subscribe(res => {
+        if (res['estado'] == 1) {
+          mensaje = res['mensaje'];
+       
+          this.dialogRef.close(this.pregunta);
+          
+          }
+
+        
+      });
+    }
+    else{
       this._respuService.postRespuestas(this.respuestas).subscribe(res => {
         if (res['estado'] == 1) {
           mensaje = res['mensaje'];
-          alert(mensaje);
-          this.dialogRef.close(this.pregunta);
+         
+
+          if(this.parent==-1)
+          {
+            this.dialogRef.close(this.pregunta);
+          }
+          else{
+          alert('Pregunta registrada satisfactoriamente.');
+          this.limpiar();
+          }
+          
+
         }
       });
+    }
     
     //console.log(this.respuestas);
     
+  }
+  
+  quitarRespuesta(index:number)
+  {
+
+ this.respuestas.splice(index,1);
+
   }
 
   editarPregunta(id_preg:number, desc_preg:string) {
@@ -248,7 +332,6 @@ export class PreguntasModalComponent implements OnInit {
             this.id_pregunta = id_preg;
           }
     });
-    console.log('editarPregunta(): '+this.respuestas);
     }
     
   }

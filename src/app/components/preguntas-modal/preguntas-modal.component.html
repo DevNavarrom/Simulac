@@ -1,94 +1,111 @@
 <form>
-  <div class="container" style="margin-top: 5%">
+    <div class="container" style="margin-top: 5%">
 
-    <div class="form-row">
-      <div class="form-group col-md-3">
-        <label for="selArea">Area</label>
-        <select class="form-control" [(ngModel)]="area_select" name="selArea" id="selArea" (ngModelChange)="cargarTemas()"
-          [ngModelOptions]="{standalone: true}">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="selArea">Area</label>
+                <select class="form-control" [(ngModel)]="area_select" name="selArea" id="selArea" (ngModelChange)="cargarTemas()" [ngModelOptions]="{standalone: true}">
           <option selected value="0">Selecciona un area</option>
           <option *ngFor="let _area of areas" [value]="_area.id_area">{{_area.desc_area}}</option>
         </select>
-      </div>
-      <div class="form-group col-md-3">
-        <label for="selTema">Tema</label>
-        <select id="selTema" class="form-control" name="selTema" [(ngModel)]="tema_select"
-          [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="selTema">Tema</label>
+                <select id="selTema" class="form-control" name="selTema" [(ngModel)]="tema_select" [ngModelOptions]="{standalone: true}">
           <option selected value="0">Selecciona un tema</option>
           <option *ngFor="let _tema of temas" [value]="_tema.id_tema">{{_tema.desc_tema}}</option>
         </select>
-      </div>
-    </div>
+            </div>
+            <div class="form-group col-md-4  btn-block" style="padding-top:  2em;">
 
-    <div class="form-row">
-      <div class="col-xs-12 col-md-12 form-group">
+                <button class="btn btn-light  btn-block" (click)="limpiar() " type="button ">Limpiar</button>
 
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <label class="input-group-text">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-xs-12 col-md-12 form-group">
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text">
               <img src="data:image/png;base64,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"
                 alt="FAQ icon" />
             </label>
-          </div>
-          <textarea class="form-control" name="txtDescripcion" [(ngModel)]="descrip_pregunta" (ngModelChange)="agregarRespuestaVacia($event)"
-            placeholder="¿ ...?" aria-label="With textarea" required></textarea>
+                    </div>
+                    <textarea class="form-control" name="txtDescripcion" [(ngModel)]="descrip_pregunta" (ngModelChange)="agregarRespuestaVacia($event)" placeholder="¿ ...?" aria-label="With textarea" required></textarea>
+                </div>
+
+            </div>
+
+            <ul class="col-xs-12 col-md-8 list-unstyled">
+                <li *ngFor="let respu of respuestas; let i = index">
+                    <div class="form-group">
+
+                        <div class="input-group">
+                            <div class="col-xs-6 input-group-prepend">
+                                <div class="input-group-text">
+
+                                    <input *ngIf="respu.correcta==1" type="radio" name="radioRespuesta" checked (click)="actionIsSelected(i)" aria-label="Radio button for following text input">
+                                    <input *ngIf="respu.correcta!=1" type="radio" name="radioRespuesta" (click)="actionIsSelected(i)" aria-label="Radio button for following text input">
+
+                                </div>
+                            </div>
+                            <input type="text" class="form-control" [(ngModel)]="respu.desc_respuesta" placeholder="Respuesta {{i+1}} " aria-label="Text input with radio button" [ngModelOptions]="{standalone: true}">
+                            <div class="col-xs-6 input-group-prepend">
+                                <div class="input-group-text">
+                                    <img src="./../../../assets/images/agregar-notas.png" height="22px" width="22px" (click)="agregarItemRespuesta(i)">
+                                </div>
+                            </div>
+                            <div class="col-xs-6 input-group-prepend" style="margin-left: 1em">
+                                <div class="input-group-text">
+                                    <img class="rounded float-left btn-borrar" (click)="quitarRespuesta(i)" height="18" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCIgdmlld0JveD0iMCAwIDUxMCA1MTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMCA1MTA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8ZyBpZD0icmVtb3ZlLWNpcmNsZS1vdXRsaW5lIj4KCQk8cGF0aCBkPSJNMTI3LjUsMjI5LjV2NTFoMjU1di01MUgxMjcuNXogTTI1NSwwQzExNC43NSwwLDAsMTE0Ljc1LDAsMjU1czExNC43NSwyNTUsMjU1LDI1NXMyNTUtMTE0Ljc1LDI1NS0yNTVTMzk1LjI1LDAsMjU1LDB6ICAgICBNMjU1LDQ1OWMtMTEyLjIsMC0yMDQtOTEuOC0yMDQtMjA0UzE0Mi44LDUxLDI1NSw1MXMyMDQsOTEuOCwyMDQsMjA0UzM2Ny4yLDQ1OSwyNTUsNDU5eiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=">
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </li>
+            </ul>
+
+
+
+            <div class="col-xs-12 col-md-4 form-group">
+                <img height="150px" [src]="rutaImagen">
+                <div class="custom-file">
+                    <input type="file" (change)="onSelectFile($event, $event.target.files)" class="custom-file-input" id="inputGroupFile04">
+                    <label class="custom-file-label" for="inputGroupFile04">
+            {{nombreImagen}}
+          </label>
+                </div>
+
+            </div>
+
         </div>
 
-      </div>
 
-      <ul class="col-xs-12 col-md-8 list-unstyled">
-        <li *ngFor="let respu of respuestas; let i = index">
-          <div class="form-group">
+        <div class="row" style="margin-bottom: 1em">
 
-            <div class="input-group">
-              <div class="col-xs-6 input-group-prepend">
-                <div class="input-group-text">
-                  <input type="radio" name="radioRespuesta" (click)="actionIsSelected(i)" [checked]="respu.correcta"
-                    aria-label="Radio button for following text input">
-                </div>
-              </div>
-              <input type="text" class="form-control" [(ngModel)]="respu.desc_respuesta" placeholder="Respuesta {{i+1}}"
-                aria-label="Text input with radio button" [ngModelOptions]="{standalone: true}">
-              <div class="col-xs-6 input-group-prepend">
-                <div class="input-group-text">
-                  <img src="../../../assets/images/agregar-notas.png" height="22px" width="22px" (click)="agregarItemRespuesta(i)">
-                </div>
-              </div>
+            <div class=" col-md-4 btn-block ">
+                <button class="btn btn-outline-primary btn-block " type="submit " (click)="onNoClick() ">Cancelar</button>
+
+            </div>
+
+            <div class=" col-md-4 btn-block " style="margin-top: 0%">
+
             </div>
 
 
+            <div class=" col-md-4 btn-block " style="margin-top: 0%">
+                <button class="btn btn-primary btn-block " type="submit " (click)="registrarPregunta() ">{{tipo}} pregunta</button>
 
-          </div>
-        </li>
-      </ul>
+            </div>
 
-
-
-      <div class="col-xs-12 col-md-4 form-group">
-        <img height="150px" [src]="rutaImagen">
-        <div class="custom-file">
-          <input type="file" (change)="onSelectFile($event, $event.target.files)" class="custom-file-input" id="inputGroupFile04"
-            >
-          <label class="custom-file-label" for="inputGroupFile04">
-            {{nombreImagen}}
-          </label>
         </div>
 
-      </div>
-
     </div>
-
-
-    <div class="form-row">
-      <div class="form-group">
-        <button class="btn btn-primary pull-right btn-outline-success" (click)="registrarPregunta()" type="button">Crear
-          pregunta</button>
-
-      </div>
-      <div class="form-group" style="margin-left:5px;">
-        <button class="btn btn-light" (click)="limpiar()" type="button">Limpiar</button>
-      </div>
-    </div>
-
-  </div>
 </form>

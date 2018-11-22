@@ -26,6 +26,19 @@ export class RespuestasService {
       );
   }
 
+  editarRespuestas( respuesta:IRespuestas[] ){
+    return this.http.post(`${this.url}/editar`, JSON.stringify(respuesta))
+      .pipe(
+        map(res => {
+          if (!res) {
+            throw  new Error('Valor esperado');
+          }
+          return res;
+        }
+        )
+      );
+  }
+
   getRespuestas( id_pregunta:number ) {
     return this.http.get(`${this.url}/` + id_pregunta);
   }
