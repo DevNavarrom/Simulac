@@ -1,14 +1,12 @@
-.bg-tabs{
-    
-    background: rgba(83,188,237,1);
-    background: -moz-linear-gradient(top, rgba(83,188,237,1) 0%, rgba(0,121,178,1) 72%, rgba(0,121,178,1) 76%, rgba(0,121,178,1) 89%, rgba(0,121,178,1) 100%);
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(83,188,237,1)), color-stop(72%, rgba(0,121,178,1)), color-stop(76%, rgba(0,121,178,1)), color-stop(89%, rgba(0,121,178,1)), color-stop(100%, rgba(0,121,178,1)));
-    background: -webkit-linear-gradient(top, rgba(83,188,237,1) 0%, rgba(0,121,178,1) 72%, rgba(0,121,178,1) 76%, rgba(0,121,178,1) 89%, rgba(0,121,178,1) 100%);
-    background: -o-linear-gradient(top, rgba(83,188,237,1) 0%, rgba(0,121,178,1) 72%, rgba(0,121,178,1) 76%, rgba(0,121,178,1) 89%, rgba(0,121,178,1) 100%);
-    background: -ms-linear-gradient(top, rgba(83,188,237,1) 0%, rgba(0,121,178,1) 72%, rgba(0,121,178,1) 76%, rgba(0,121,178,1) 89%, rgba(0,121,178,1) 100%);
-    background: linear-gradient(to bottom, rgba(83,188,237,1) 0%, rgba(0,121,178,1) 72%, rgba(0,121,178,1) 76%, rgba(0,121,178,1) 89%, rgba(0,121,178,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#53bced', endColorstr='#0079b2', GradientType=0 );
-
+.bg-tabs {
+    background: rgba(83, 188, 237, 1);
+    background: -moz-linear-gradient(top, rgba(83, 188, 237, 1) 0%, rgba(0, 121, 178, 1) 72%, rgba(0, 121, 178, 1) 76%, rgba(0, 121, 178, 1) 89%, rgba(0, 121, 178, 1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(83, 188, 237, 1)), color-stop(72%, rgba(0, 121, 178, 1)), color-stop(76%, rgba(0, 121, 178, 1)), color-stop(89%, rgba(0, 121, 178, 1)), color-stop(100%, rgba(0, 121, 178, 1)));
+    background: -webkit-linear-gradient(top, rgba(83, 188, 237, 1) 0%, rgba(0, 121, 178, 1) 72%, rgba(0, 121, 178, 1) 76%, rgba(0, 121, 178, 1) 89%, rgba(0, 121, 178, 1) 100%);
+    background: -o-linear-gradient(top, rgba(83, 188, 237, 1) 0%, rgba(0, 121, 178, 1) 72%, rgba(0, 121, 178, 1) 76%, rgba(0, 121, 178, 1) 89%, rgba(0, 121, 178, 1) 100%);
+    background: -ms-linear-gradient(top, rgba(83, 188, 237, 1) 0%, rgba(0, 121, 178, 1) 72%, rgba(0, 121, 178, 1) 76%, rgba(0, 121, 178, 1) 89%, rgba(0, 121, 178, 1) 100%);
+    background: linear-gradient(to bottom, rgba(83, 188, 237, 1) 0%, rgba(0, 121, 178, 1) 72%, rgba(0, 121, 178, 1) 76%, rgba(0, 121, 178, 1) 89%, rgba(0, 121, 178, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#53bced', endColorstr='#0079b2', GradientType=0);
 }
 
 .image {
@@ -27,7 +25,7 @@
 
 .card {
     /* Add shadows to create the "card" effect */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
     /*border-radius: 5px;*/
     /*padding: 10px;*/
@@ -35,7 +33,7 @@
 }
 
 .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 .div-content {
@@ -47,14 +45,11 @@
     /*min-height: 100%;*/
     height: 100vh;
     display: flex;
-
     /*background-image:url("https://hdwallsource.com/img/2014/9/blur-26347-27038-hd-wallpapers.jpg"); 
     background-repeat:no-repeat; */
-    background-position:center; 
-    background-size:cover; 
-    padding:10px;
-
-    
+    background-position: center;
+    background-size: cover;
+    padding: 10px;
 }
 
 .form-login {
@@ -64,31 +59,36 @@
     display: block;
 }
 
+
 /***********************************************************************************/
 
 body {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
-  }
-  .tabs {
+}
+
+.tabs {
     max-width: 640px;
     margin: 0 auto;
     /*padding: 0 20px;*/
     padding: 0;
-  }
-  #tab-button {
+}
+
+#tab-button {
     display: table;
     table-layout: fixed;
     width: 100%;
     margin: 0;
     padding: 0;
     list-style: none;
-  }
-  #tab-button li {
+}
+
+#tab-button li {
     display: table-cell;
     width: 20%;
-  }
-  #tab-button li a {
+}
+
+#tab-button li a {
     display: block;
     padding: .5em;
     background: #eee;
@@ -96,41 +96,226 @@ body {
     text-align: center;
     color: #000;
     text-decoration: none;
-  }
-  #tab-button li:not(:first-child) a {
+}
+
+#tab-button li:not(:first-child) a {
     border-left: none;
-  }
-  #tab-button li a:hover,
-  #tab-button .is-active a {
+}
+
+#tab-button li a:hover,
+#tab-button .is-active a {
     border-bottom-color: transparent;
     background: #fff;
-  }
-  .tab-contents {
+}
+
+.tab-contents {
     padding: .5em 2em 1em;
     /*border: 1px solid #ddd;*/
     margin: 0;
-  }
-  
-  
-  
-  .tab-button-outer {
+}
+
+.tab-button-outer {
     display: none;
-  }
-  .tab-contents {
+}
+
+.tab-contents {
     margin-top: 20px;
-  }
-  @media screen and (min-width: 768px) {
+}
+
+@media screen and (min-width: 768px) {
     .tab-button-outer {
-      position: relative;
-      z-index: 2;
-      display: block;
+        position: relative;
+        z-index: 2;
+        display: block;
     }
     .tab-select-outer {
-      display: none;
+        display: none;
     }
     .tab-contents {
-      position: relative;
-      top: -1px;
-      margin-top: 0;
+        position: relative;
+        top: -1px;
+        margin-top: 0;
     }
-  }
+}
+
+.bg-tabs {
+    background: rgba(83, 188, 237, 1);
+    background: -moz-linear-gradient(top, rgba(83, 188, 237, 1) 0%, rgba(0, 121, 178, 1) 72%, rgba(0, 121, 178, 1) 76%, rgba(0, 121, 178, 1) 89%, rgba(0, 121, 178, 1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(83, 188, 237, 1)), color-stop(72%, rgba(0, 121, 178, 1)), color-stop(76%, rgba(0, 121, 178, 1)), color-stop(89%, rgba(0, 121, 178, 1)), color-stop(100%, rgba(0, 121, 178, 1)));
+    background: -webkit-linear-gradient(top, rgba(83, 188, 237, 1) 0%, rgba(0, 121, 178, 1) 72%, rgba(0, 121, 178, 1) 76%, rgba(0, 121, 178, 1) 89%, rgba(0, 121, 178, 1) 100%);
+    background: -o-linear-gradient(top, rgba(83, 188, 237, 1) 0%, rgba(0, 121, 178, 1) 72%, rgba(0, 121, 178, 1) 76%, rgba(0, 121, 178, 1) 89%, rgba(0, 121, 178, 1) 100%);
+    background: -ms-linear-gradient(top, rgba(83, 188, 237, 1) 0%, rgba(0, 121, 178, 1) 72%, rgba(0, 121, 178, 1) 76%, rgba(0, 121, 178, 1) 89%, rgba(0, 121, 178, 1) 100%);
+    background: linear-gradient(to bottom, rgba(83, 188, 237, 1) 0%, rgba(0, 121, 178, 1) 72%, rgba(0, 121, 178, 1) 76%, rgba(0, 121, 178, 1) 89%, rgba(0, 121, 178, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#53bced', endColorstr='#0079b2', GradientType=0);
+}
+
+.image {
+    height: 100px;
+    width: 200px;
+}
+
+.text-labels {
+    color: #fff;
+}
+
+.div-image {
+    float: none;
+    margin: 0 auto;
+}
+
+.card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    /*border-radius: 5px;*/
+    /*padding: 10px;*/
+    align-self: center;
+}
+
+.example-card {
+    max-width: 400px;
+}
+
+.example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.div-content {
+    /*align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;*/
+    /*height: 100%;*/
+    /*min-height: 100%;*/
+    height: 100vh;
+    display: flex;
+    /*background-image:url("https://hdwallsource.com/img/2014/9/blur-26347-27038-hd-wallpapers.jpg"); 
+    background-repeat:no-repeat; */
+    background-position: center;
+    background-size: cover;
+    padding: 10px;
+}
+
+.form-login {
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+
+/***********************************************************************************/
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+.tabs {
+    max-width: 640px;
+    margin: 0 auto;
+    /*padding: 0 20px;*/
+    padding: 0;
+}
+
+#tab-button {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#tab-button li {
+    display: table-cell;
+    width: 20%;
+}
+
+#tab-button li a {
+    display: block;
+    padding: .5em;
+    background: #eee;
+    border: 1px solid #ddd;
+    text-align: center;
+    color: #000;
+    text-decoration: none;
+}
+
+body,
+html {
+    height: 100%;
+}
+
+.full-width-div {
+    position: absolute;
+    width: 100%;
+    left: 0;
+}
+
+.bg {
+    /* The image used */
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bgg {
+    /* The image used 
+ background-image: url("../../../assets/images/loginb.jpg");
+ */
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#tab-button li:not(:first-child) a {
+    border-left: none;
+}
+
+#tab-button li a:hover,
+#tab-button .is-active a {
+    border-bottom-color: transparent;
+    background: #fff;
+}
+
+.tab-contents {
+    padding: .5em 2em 1em;
+    /*border: 1px solid #ddd;*/
+    margin: 0;
+}
+
+.tab-button-outer {
+    display: none;
+}
+
+.tab-contents {
+    margin-top: 20px;
+}
+
+@media screen and (min-width: 768px) {
+    .tab-button-outer {
+        position: relative;
+        z-index: 2;
+        display: block;
+    }
+    .tab-select-outer {
+        display: none;
+    }
+    .tab-contents {
+        position: relative;
+        top: -1px;
+        margin-top: 0;
+    }
+}

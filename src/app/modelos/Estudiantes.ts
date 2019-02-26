@@ -2,13 +2,13 @@
 export class Estudiantes{
     public id_estudiante: string; 
     public nombre: string; 
-    public programa: string; 
-    public sexo: string;
-    constructor(ides: string, nombre: string, programa: string, sexo: string){
+    public user: string; 
+    public password: string;
+    constructor(ides: string, nombre: string, user: string, password: string){
         this.id_estudiante = ides;
         this.nombre = nombre;
-        this.programa = programa;
-        this.sexo = sexo;
+        this.user = user;
+        this.password = password;
     }
 
 }

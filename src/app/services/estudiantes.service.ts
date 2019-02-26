@@ -5,6 +5,7 @@ import { Http } from '@angular/http';
 // import{map,catchError}from'rxjs/operators';
 // import 'rxjs/Rx';
 import { map } from 'rxjs/operators';
+import { ConfigService } from './config.service';
 
 
 @Injectable({
@@ -15,10 +16,12 @@ export class EstudiantesService {
   private estudiante: Estudiantes = null;
   estudiantes: Estudiantes[];
 
-  url = 'http://localhost/WEBSimulac/src/app/api/';
+  url = '';
   //url = 'http://localhost/WEBSimulacro/api/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private cs:ConfigService) {
+    this.url=cs.getUrlAPI();
+   }
 
   getEstudiantes() {
     return this.http.get(`${this.url}estudiantes`);

@@ -24,7 +24,7 @@ export class EstudiantesDatosComponent implements OnInit {
     }
     else
     {
-      console.log(this.estudiante);
+     // console.log(this.estudiante);
     }
 
 
@@ -32,7 +32,7 @@ export class EstudiantesDatosComponent implements OnInit {
 
   editarEstudiante()
   {
-    this.estudiante.programa=  this.estudiante.programa.toUpperCase();
+    //this.estudiante.programa=  this.estudiante.programa.toUpperCase();
     this._estudiantesService.editarEstudiantes(this.estudiante).subscribe(datos => {
        if (datos['estado'] == 1) {
          alert("Cambios guardados correctamente");

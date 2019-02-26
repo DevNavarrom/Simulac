@@ -1,100 +1,82 @@
-<div class="div-content container col-md-12">
+<div class="bg div-content container col-md-12" style="padding-top: 4em">
 
 
-    <div class="tabs justify-content-center align-self-center card">
-        <div class="tab-button-outer">
-            <ul id="tab-button">
-                <li><a href="#tab01">Docente</a></li>
-                <li><a href="#tab02">Estudiante</a></li>
-            </ul>
-        </div>
-        <div class="tab-select-outer">
-            <select id="tab-select">
-        <option value="#tab01">Docente</option>
-        <option value="#tab02">Estudiante</option>
-      </select>
-        </div>
+    <mat-card class=" bgg mdc-card col-md-5" [class.mat-elevation-z11]="true" style="float: none; margin: 0 auto ">
 
 
-        <div id="tab01" class="tab-contents bg-tabs">
+        <mat-card-content>
 
-            <form class="form-login col-md-12 justify-content-center align-items-center" [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
+            <form class="form-login col-md-12 justify-content-center align-items-center" [formGroup]="loginForm" novalidate>
 
                 <div class="row div-image justify-content-center align-self-center">
-                    <img src="../../../assets/images/logo_simulac.png">
+                    <img src="./assets/images/logo_simulac.png">
                 </div>
                 <div class="form-group">
-                    <!--<label class="center-block text-labels">Usuario
-            <input class="form-control" formControlName="usuario">
-          </label>-->
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">
-                  <img src="../../../assets/images/user_login.png">
-                </span>
+                <img src="./assets/images/user_login.png">
+              </span>
                         </div>
                         <input type="text" class="form-control" formControlName="usuario" placeholder="Usuario" aria-label="Username" aria-describedby="basic-addon1">
                     </div>
 
-                    <div *ngIf="loginForm.get('usuario').errors" class="alert alert-danger">
-                        <div *ngIf="loginForm.get('usuario').errors['required']">
-                            Usuario requerido
-                        </div>
-                    </div>
                 </div>
 
                 <div class="form-group">
-                    <!--<label class="center-block text-labels">Contraseña
-            <input type="password" class="form-control" formControlName="password">
-          </label>-->
+
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">
-                  <img src="../../../assets/images/key_login.png">
-                </span>
+                <img src="assets/images/key_login.png">
+              </span>
                         </div>
                         <input type="password" class="form-control" formControlName="password" placeholder="Contraseña" aria-label="Username" aria-describedby="basic-addon1">
                     </div>
 
-                    <div *ngIf="loginForm.get('password').errors" class="alert alert-danger">
-                        <div *ngIf="loginForm.get('password').errors['required']">
-                            Contraseña requerida
-                        </div>
-                        <div *ngIf="loginForm.get('password').errors['minlength']">
-                            Contraseña insegura
-                        </div>
-                    </div>
+
                 </div>
 
-                <button type="submit" class="btn btn-outline-light btn-block" [disabled]="!loginForm.valid">Ingresar</button>
+
+
+
+                <div class="row form-group">
+
+
+                    <div class="col-md-6 ">
+                        <button type="submit" class="btn btn-primary btn-block" (click)="submit()">Ingresar</button>
+
+                    </div>
+
+
+                    <div class="col-md-6 ">
+                        <button type="submit" class="btn btn-outline-primary  btn-block" (click)="registrarNuevo()">Registro</button>
+
+                    </div>
+
+
+                </div>
+
+
 
             </form>
 
-        </div>
-        <div id="tab02" class="tab-contents bg-tabs">
-            <form class="form-login col-md-12 justify-content-center align-items-center" [formGroup]="estudiantesForm" (ngSubmit)="submit()" novalidate>
-
-                <div class="row div-image justify-content-center align-self-center">
-                    <img src="../../../assets/images/logo_simulac.png">
-                </div>
-
-                <div class="row ">
-                    <div class="col-xs-6 col-md-10 form-group">
-                        <input type="text" class="form-control" placeholder="Identificación" formControlName="idEstudiante">
-                    </div>
-                    <div class="col-xs-4 col-md-2 form-group">
-                        <button type="button" class="btn btn-outline-light" (click)="ingresoEstudiante()">Ingresar</button>
-                    </div>
-                    <a (click)="registrarNuevo()" class="btn btn-primary active" role="button" aria-pressed="true">Registrar</a>
-                </div>
-
-            </form>
-
-        </div>
+        </mat-card-content>
+    </mat-card>
 
 
-
-    </div>
 
 </div>
+<br/>
+<br/>
+<footer class="page-footer font-small special-color-dark pt-4">
+
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2019 Copyright:
+        <a href="https://unicordoba.edu.co"> unicordoba.edu.co</a>
+    </div>
+    <!-- Copyright -->
+
+</footer>

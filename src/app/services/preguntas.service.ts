@@ -3,6 +3,7 @@ import { Preguntas, DialogDataPreguntas } from '../modelos/Preguntas';
 import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Http } from '@angular/http';
+import { ConfigService } from './config.service';
 // import{map,catchError}from'rxjs/operators';
 // import 'rxjs/Rx';
 
@@ -14,10 +15,10 @@ import { Http } from '@angular/http';
 export class PreguntasService {
 
 
-  tabla: string = "preguntas";
-  url = 'http://localhost/WEBSimulac/src/app/api/' + this.tabla
+  
+  url = '' ;
   //url = 'http://localhost/WEBSimulacro/api/'+ this.tabla;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private cs:ConfigService) {  this.url=cs.getUrlAPI()+"preguntas";}
 
 
   getPreguntas(id_examen: number) {
@@ -45,6 +46,7 @@ export class PreguntasService {
 
   postPreguntas(pregunta: DialogDataPreguntas) {
 
+    console.log(`${this.url}/registro`);
 
     return this.http.post(`${this.url}/registro`, JSON.stringify(pregunta))
       .pipe(

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Temas } from '../modelos/Temas';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,9 @@ export class TemasService {
 
 
   tabla='temas';
-  url = 'http://localhost/WEBSimulac/src/app/api/'+this.tabla;
+  url = ''
   //url = 'http://localhost/WEBSimulacro/api/'+ this.tabla;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private cs:ConfigService) { this.url=cs.getUrlAPI()+this.tabla; }
 
   
   getTemas() {

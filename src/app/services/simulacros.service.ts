@@ -5,6 +5,7 @@ import { Http } from '@angular/http';
 // import{map,catchError}from'rxjs/operators';
 // import 'rxjs/Rx';
 import { map } from 'rxjs/operators';
+import { ConfigService } from './config.service';
 
 
 @Injectable({
@@ -13,11 +14,11 @@ import { map } from 'rxjs/operators';
 export class SimulacrosService {
 
 
-  recurso="simulacros";
-  url = 'http://localhost/WEBSimulac/src/app/api/'+this.recurso;
+
+  url = '';
   //url = 'http://localhost/WEBSimulacro/api/'+ this.recurso;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient ,private cs:ConfigService) { this.url=cs.getUrlAPI()+"simulacros"; }
 
   getSimulacros() {
     return this.http.get(`${this.url}`);

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { IExamen, IDetalleExamen } from '../modelos/Examen';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,12 @@ import { IExamen, IDetalleExamen } from '../modelos/Examen';
 export class ExamenesService {
 
   tabla: string = "examen";
-  url = 'http://localhost/WEBSimulac/src/app/api/' + this.tabla
+  url = '' ;
   //url = 'http://localhost/WEBSimulacro/api/'+ this.tabla;
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private cs:ConfigService) { 
+    this.url=cs.getUrlAPI()+ this.tabla;
+  }
 
   getExamenes() {
     return this.http.get(`${this.url}`);

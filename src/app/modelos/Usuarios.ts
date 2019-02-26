@@ -6,10 +6,9 @@ export class Usuarios {
     public user:string;
     public password:string;
 
-    constructor(id:string, nom:string, rol:string, user:string, pass:string){
+    constructor(id:string, nom:string, user:string, pass:string){
         this.id_usuario = id;
         this.nombres = nom;
-        this.rol = rol;
         this.user = user;
         this.password = pass;
     }

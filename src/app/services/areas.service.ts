@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Areas } from '../modelos/Areas';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { ConfigService } from './config.service';
 //import * as data  from './../../../configHostServer.json';
 
 
@@ -11,7 +12,7 @@ import { map } from 'rxjs/operators';
 export class AreasService {
 
   //url = '';
-  url = 'http://localhost/WEBSimulac/src/app/api/';
+  url = '';
   //url = 'http://localhost/WEBSimulacro/api/';
   host:String = "";
   private _host = './WEBSimulac/src/assets/configHostServer.json';   
@@ -28,9 +29,11 @@ export class AreasService {
             );
     }
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private cs:ConfigService) {
     /*this.getHost();
+      this.url=cs.getUrlAPI();
     this.url = 'http://'+this.host+'/WEBSimulac/src/app/api/';*/
+    this.url=cs.getUrlAPI();
   }
 
   

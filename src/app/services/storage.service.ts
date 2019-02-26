@@ -50,7 +50,7 @@ export class StorageService {
 
   logout(): void{
     this.removeCurrentSession();
-    this.router.navigate(['/login']);
+    //this.router.navigate(['/login']);
    
   }
 

@@ -50,10 +50,8 @@ export class EstudiantesComponent implements OnInit {
   registrar() {
 
 
-    if (this.estudiante.id_estudiante != '' && this.estudiante.nombre != '' && this.estudiante.programa !='') {
-    if (this.estudiante.sexo !== 'Sexo') {
+    if (this.estudiante.id_estudiante != '' && this.estudiante.nombre != '') {
 
-      this.estudiante.programa = this.estudiante.programa.toUpperCase();
     this._estudiantesService.postEstudiantes(this.estudiante).subscribe(datos => {
       if (datos['estado'] == 1) {
         this.openSnackBar(datos['mensaje'],'Aceptar');
@@ -67,11 +65,10 @@ export class EstudiantesComponent implements OnInit {
       }
 
     });
-  }  else {
-    this.openSnackBar('Seleccione el sexo','Aceptar');
+
 
     
-  }
+ 
   } else {
     this.openSnackBar('Faltan datos por llenar','Aceptar');
   }
@@ -109,7 +106,6 @@ export class EstudiantesComponent implements OnInit {
       }
       let est: Estudiantes;
       est= new Estudiantes(result.id_estudiante,result.nombres,result.programa,result.sexo);
-     est.programa= est.programa.toUpperCase();
 
       this._estudiantesService.editarEstudiantes(est).subscribe(datos => {
         if (datos['estado'] == 1) {

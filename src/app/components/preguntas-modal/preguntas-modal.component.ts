@@ -27,7 +27,7 @@ export class PreguntasModalComponent implements OnInit {
   public respuestaImagenEnviada:any;
   public resultadoCarga = 0;
   public nombreImagen:string = "No hay imagen selecionada";
-  public rutaImagen:string = "../../../assets/recursos/sin_imagen.jpg";
+  public rutaImagen:string = "http://localhost/WebSimulac/Api/assets/sin_imagen.jpg";
   fileToUpload: File = null;
   pregunta:DialogDataPreguntas = null;
   id_pregunta:number = 0;
@@ -49,7 +49,7 @@ export class PreguntasModalComponent implements OnInit {
       
       if(data.imagen!=''){
 
-      this.rutaImagen = "../../../assets/recursos/"+data.imagen;
+      this.rutaImagen = "http://localhost/WebSimulac/Api/assets/"+data.imagen;
       this.nombreImagen = data.imagen;
       }
       this.editarPregunta(data.id_pregunta, data.desc_pregunta);
@@ -131,7 +131,7 @@ export class PreguntasModalComponent implements OnInit {
     this.fileToUpload = files.item(0);
     this.nombreImagen = this.fileToUpload.name;
     //this._examenServie.postFileImagen(files[0]).subscribe(
-    this.rutaImagen = "../../assets/recursos/"+this.nombreImagen;
+    this.rutaImagen = "http://localhost/WebSimulac/Api/assets/"+this.nombreImagen;
   }
 
   onSelectFile(event, files: FileList) {
@@ -155,7 +155,9 @@ export class PreguntasModalComponent implements OnInit {
 
         this.respuestaImagenEnviada = response; 
         if(response['code'] == 200 && response['status'] == "success"){
-          this.rutaImagen = "../../assets/recursos/"+this.nombreImagen;
+         
+          
+          this.rutaImagen = "http://localhost/WebSimulac/Api/assets/"+this.nombreImagen;
           this.resultadoCarga = 1;
           
         }else{
@@ -167,7 +169,7 @@ export class PreguntasModalComponent implements OnInit {
         }*/
 			},
 			error => {
-				console.log("ERROR Carga de Imagen--> "+<any>error);
+				console.log(error);
 			}
 
 		);//FIN DE METODO SUBSCRIBE

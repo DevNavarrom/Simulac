@@ -203,7 +203,14 @@ this.openSnackBar('No se encontró el estudiante, por favor vuelva a ingresar') 
         }
         else
         {
-          this.openSnackBar('Tiempo excedido, el simulacro ya finalizó');
+          if(data['datos'][0].estado== "FINALIZADO")
+          {
+            this.openSnackBar('Tiempo excedido, el simulacro ya finalizó');
+
+          }
+          else{
+          this.openSnackBar('El simulacro ha sido '+data['datos'][0].estado);
+          }
         }
 
       },
